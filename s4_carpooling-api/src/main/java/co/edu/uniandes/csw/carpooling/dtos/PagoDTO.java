@@ -16,7 +16,7 @@ public class PagoDTO implements Serializable {
     private UsuarioDTO pasajero;
     private UsuarioDTO conductor;
     private TrayectoDTO trayecto;
-    private infoTCDTO infoTC;
+    private InfoTCDTO infoTC;
     
     /**
      * Método constructor.
@@ -31,56 +31,56 @@ public class PagoDTO implements Serializable {
     /**
      * @param id El identificador nuevo.
      */
-    public void setId(Long id) {this.id = id}
+    public void setId(Long id) {this.id = id;}
     
     /**
      * @return El valor a pagar.
      */
-    public Double getValor() {return valor}
+    public Double getValor() {return valor;}
     
     /**
      * @param valor El valor nuevo a pagar.
      */
-    public void setValor(Double valor) {this.valor = valor}
+    public void setValor(Double valor) {this.valor = valor;}
   
     /**
      * @return El pasajero.
      */
-    public UsuarioDTO getPasajero() {return pasajero}
+    public UsuarioDTO getPasajero() {return pasajero;}
     
     /**
      * @param pasajero El pasajero nuevo asociado.
      */
-    public void setPasajero(UsuarioDTO pasajero) {this.pasajero = pasajero}
+    public void setPasajero(UsuarioDTO pasajero) {this.pasajero = pasajero;}
     
     /**
      * @return El conductor.
      */
-    public UsuarioDTO getConductor() {return conductor}
+    public UsuarioDTO getConductor() {return conductor;}
     
     /**
      * @param conductor El conductor nuevo asociado.
      */
-    public void setConductor(UsuarioDTO conductor) {this.conductor = conductor}
+    public void setConductor(UsuarioDTO conductor) {this.conductor = conductor;}
     
     /**
      * @return El trayecto asociado.
      */
-    public TrayectoDTO getTrayecto() {return trayecto}
+    public TrayectoDTO getTrayecto() {return trayecto;}
     
     /**
      * @param trayecto El nuevo trayecto asociado.
      */
-    public void setTrayecto(TrayectoDTO trayecto) {this.trayecto = trayecto}
+    public void setTrayecto(TrayectoDTO trayecto) {this.trayecto = trayecto;}
     
     /**
      * @return La información de la tarjeta de crédito.
      */
-    public InfoTCDTO getInfo() {return infoTC}
+    public InfoTCDTO getInfo() {return infoTC;}
     
     /**
      * @param infoTC Nueva información de tarjeta.
      */
-    public void setInfo(infoTCDTO infoTC) {this.infoTC = infoTC}
+    public void setInfo(InfoTCDTO infoTC) {this.infoTC = infoTC;}
     
 }

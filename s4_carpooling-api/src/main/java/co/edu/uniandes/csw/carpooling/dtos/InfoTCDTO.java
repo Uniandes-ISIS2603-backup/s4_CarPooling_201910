@@ -29,7 +29,7 @@ public class InfoTCDTO implements Serializable{
     /**
      * @param id El identificador nuevo.
      */
-    public void setId(Long id) {this.id = id}
+    public void setId(Long id) {this.id = id;}
     
     /**
      * @return Tarjeta 1.
@@ -39,7 +39,7 @@ public class InfoTCDTO implements Serializable{
     /**
      * @param t1 La nueva tarjeta.
      */
-    public void setT1(Integer t1) {this.t1 = t1}
+    public void setT1(Integer t1) {this.t1 = t1;}
     
     /**
      * @return Tarjeta 2.
@@ -49,7 +49,7 @@ public class InfoTCDTO implements Serializable{
     /**
      * @param t2 La nueva tarjeta.
      */
-    public void setT2(Integer t2) {this.t2 = t2}
+    public void setT2(Integer t2) {this.t2 = t2;}
     
     /**
      * @return Entidad bancaria 1.
@@ -59,7 +59,7 @@ public class InfoTCDTO implements Serializable{
     /**
      * @param entidad1 La nueva entidad.
      */
-    public void setEntidad1(String entidad1) {this.entidad1 = entidad1}
+    public void setEntidad1(String entidad1) {this.entidad1 = entidad1;}
     
     /**
      * @return Entidad bancaria 2.
@@ -69,5 +69,5 @@ public class InfoTCDTO implements Serializable{
     /**
      * @param entidad2 La nueva entidad.
      */
-    public void setEntidad2(String entidad2) {this.entidad2 = entidad2}
+    public void setEntidad2(String entidad2) {this.entidad2 = entidad2;}
 }
