@@ -26,7 +26,7 @@ public class NotificacionResource {
     private static final Logger LOGGER = Logger.getLogger(NotificacionResource.class.getName());
     
      @POST
-    public NotificacionDTO createNotificacion (NotificacionDTO calificacion)
+    public NotificacionDTO createNotificacion (NotificacionDTO notificacion)
     {
         return notificacion;
     }
