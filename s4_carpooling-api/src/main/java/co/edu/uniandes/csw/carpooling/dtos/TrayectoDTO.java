@@ -39,7 +39,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @param idTrayecto the idTrayecto to set
      */
-    public void setIdTrayecto(long idTrayecto) {
+    public void setIdTrayecto(Long idTrayecto) {
         this.idTrayecto = idTrayecto;
     }
 
@@ -53,7 +53,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @param horaInicial the horaInicial to set
      */
-    public void setHoraInicial(int horaInicial) {
+    public void setHoraInicial(Integer horaInicial) {
         this.horaInicial = horaInicial;
     }
 
@@ -67,7 +67,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @param horaFinal the horaFinal to set
      */
-    public void setHoraFinal(int horaFinal) {
+    public void setHoraFinal(Integer horaFinal) {
         this.horaFinal = horaFinal;
     }
 
@@ -109,7 +109,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @param cupos the cupos to set
      */
-    public void setCupos(int cupos) {
+    public void setCupos(Integer cupos) {
         this.cupos = cupos;
     }
 
@@ -140,6 +140,9 @@ public class TrayectoDTO implements Serializable{
     public void setConductor(UsuarioDTO conductor) {
         this.conductor = conductor;
     }
-    
+
+
+
+
     
 }

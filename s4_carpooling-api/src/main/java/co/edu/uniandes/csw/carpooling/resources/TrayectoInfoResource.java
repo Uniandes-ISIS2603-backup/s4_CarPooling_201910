@@ -25,7 +25,14 @@ public class TrayectoInfoResource {
     private static final Logger LOGGER = Logger.getLogger(TrayectoInfoResource.class.getName());
     
     @POST
-    public TrayectoInfoDTO createInfoTrayeecto(TrayectoInfoDTO info){
+    public TrayectoInfoDTO createInfoTrayeecto(){
+        
+        TrayectoInfoDTO info = new TrayectoInfoDTO();
+        info.setCombustiblePrecio(20);
+        info.setIdDetalle(new Long(10));
+        info.setCombustiblePrecio(40);
+        info.setDuracionMins(30);
+        
         return info;
     }
 }

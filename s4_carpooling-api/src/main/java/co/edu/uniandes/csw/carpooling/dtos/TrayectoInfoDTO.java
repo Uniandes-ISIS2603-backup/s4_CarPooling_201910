@@ -12,15 +12,17 @@ import java.io.Serializable;
  * @author estudiante
  */
 public class TrayectoInfoDTO implements Serializable {
+
+
     
     private Long idDetalle;
     private Integer costo;
     private Integer combustiblePrecio;
-    private Integer ducracionMins;
+    private Integer duracionMins;
     //private VehiculoDTO carro;
 
     public TrayectoInfoDTO(){
-    
+        
     }
     
     /**
@@ -40,43 +42,45 @@ public class TrayectoInfoDTO implements Serializable {
     /**
      * @return the costo
      */
-    public int getCosto() {
+    public Integer getCosto() {
         return costo;
     }
 
     /**
      * @param costo the costo to set
      */
-    public void setCosto(int costo) {
+    public void setCosto(Integer costo) {
         this.costo = costo;
     }
 
     /**
      * @return the combustiblePrecio
      */
-    public int getCombustiblePrecio() {
+    public Integer getCombustiblePrecio() {
         return combustiblePrecio;
     }
 
     /**
      * @param combustiblePrecio the combustiblePrecio to set
      */
-    public void setCombustiblePrecio(int combustiblePrecio) {
+    public void setCombustiblePrecio(Integer combustiblePrecio) {
         this.combustiblePrecio = combustiblePrecio;
     }
 
     /**
-     * @return the ducracionMins
+     * @return the duracionMins
      */
-    public int getDucracionMins() {
-        return ducracionMins;
+    public Integer getDuracionMins() {
+        return duracionMins;
     }
 
     /**
-     * @param ducracionMins the ducracionMins to set
+     * @param duracionMins the duracionMins to set
      */
-    public void setDucracionMins(int ducracionMins) {
-        this.ducracionMins = ducracionMins;
+    public void setDuracionMins(Integer duracionMins) {
+        this.duracionMins = duracionMins;
     }
+
+
     
 }
