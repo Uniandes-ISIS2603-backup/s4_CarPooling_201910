@@ -14,12 +14,12 @@ import java.util.Calendar;
  */
 public class TrayectoDTO implements Serializable{
     
-    private long idTrayecto;
-    private int horaInicial;
-    private int horaFinal;
+    private Long idTrayecto;
+    private Integer horaInicial;
+    private Integer horaFinal;
     private Calendar fechaSalida;
     private Calendar fechaLlegada;
-    private int cupos;
+    private Integer cupos;
     private TrayectoInfoDTO info;
     private UsuarioDTO conductor;
     //private Ciudad salida;
@@ -32,7 +32,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the idTrayecto
      */
-    public long getIdTrayecto() {
+    public Long getIdTrayecto() {
         return idTrayecto;
     }
 
@@ -46,7 +46,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the horaInicial
      */
-    public int getHoraInicial() {
+    public Integer getHoraInicial() {
         return horaInicial;
     }
 
@@ -60,7 +60,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the horaFinal
      */
-    public int getHoraFinal() {
+    public Integer getHoraFinal() {
         return horaFinal;
     }
 
@@ -102,7 +102,7 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the cupos
      */
-    public int getCupos() {
+    public Integer getCupos() {
         return cupos;
     }
 

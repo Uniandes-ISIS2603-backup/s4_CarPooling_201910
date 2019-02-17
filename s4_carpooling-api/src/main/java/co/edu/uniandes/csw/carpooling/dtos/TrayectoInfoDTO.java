@@ -14,9 +14,9 @@ import java.io.Serializable;
 public class TrayectoInfoDTO implements Serializable {
     
     private Long idDetalle;
-    private int costo;
-    private int combustiblePrecio;
-    private int ducracionMins;
+    private Integer costo;
+    private Integer combustiblePrecio;
+    private Integer ducracionMins;
     //private VehiculoDTO carro;
 
     public TrayectoInfoDTO(){
