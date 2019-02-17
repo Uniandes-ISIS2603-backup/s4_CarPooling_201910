@@ -13,9 +13,9 @@ import java.io.Serializable;
  */
 public class AlquilerDTO implements Serializable{
     private Long id;
-    // private UsuarioDTO arrendatario
-    // private UsuarioDTO dueño
-    // private VehiculoDTO vehiculoAlquilado
+    private UsuarioDTO arrendatario;
+    private UsuarioDTO dueño;
+    private VehiculoDTO vehiculoAlquilado;
     private SeguroDTO seguro;
     public AlquilerDTO()
     {
@@ -48,6 +48,48 @@ public class AlquilerDTO implements Serializable{
      */
     public void setSeguro(SeguroDTO seguro) {
         this.seguro = seguro;
+    }
+
+    /**
+     * @return the arrendatario
+     */
+    public UsuarioDTO getArrendatario() {
+        return arrendatario;
+    }
+
+    /**
+     * @param arrendatario the arrendatario to set
+     */
+    public void setArrendatario(UsuarioDTO arrendatario) {
+        this.arrendatario = arrendatario;
+    }
+
+    /**
+     * @return the dueño
+     */
+    public UsuarioDTO getDueño() {
+        return dueño;
+    }
+
+    /**
+     * @param dueño the dueño to set
+     */
+    public void setDueño(UsuarioDTO dueño) {
+        this.dueño = dueño;
+    }
+
+    /**
+     * @return the vehiculoAlquilado
+     */
+    public VehiculoDTO getVehiculoAlquilado() {
+        return vehiculoAlquilado;
+    }
+
+    /**
+     * @param vehiculoAlquilado the vehiculoAlquilado to set
+     */
+    public void setVehiculoAlquilado(VehiculoDTO vehiculoAlquilado) {
+        this.vehiculoAlquilado = vehiculoAlquilado;
     }
     
 }
