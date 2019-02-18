@@ -110,4 +110,25 @@ public class AlquilerPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
+    @Test
+public void updateAlquilerTest() {
+    AlquilerEntity entity = data.get(0);
+    PodamFactory factory = new PodamFactoryImpl();
+    AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
+
+    newEntity.setId(entity.getId());
+
+    ap.update(newEntity);
+
+    AlquilerEntity resp = em.find(AlquilerEntity.class, entity.getId());
+
+    Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+}
+@Test
+public void deleteAlquilerTest() {
+    AlquilerEntity entity = data.get(0);
+    ap.delete(entity.getId());
+    AlquilerEntity deleted = em.find(AlquilerEntity.class, entity.getId());
+    Assert.assertNull(deleted);
+}
 }

@@ -112,4 +112,25 @@ public class SeguroPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
+    @Test
+    public void updateSeguroTest() {
+    SeguroEntity entity = data.get(0);
+    PodamFactory factory = new PodamFactoryImpl();
+    SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
+
+    newEntity.setId(entity.getId());
+
+    sp.update(newEntity);
+
+    SeguroEntity resp = em.find(SeguroEntity.class, entity.getId());
+
+    Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+}
+@Test
+public void deleteSeguroTest() {
+    SeguroEntity entity = data.get(0);
+    sp.delete(entity.getId());
+    SeguroEntity deleted = em.find(SeguroEntity.class, entity.getId());
+    Assert.assertNull(deleted);
+}
 }

@@ -35,4 +35,12 @@ public class SeguroPersistence {
         TypedQuery<SeguroEntity> query = em.createQuery("select u from SeguroEntity u", SeguroEntity.class);
         return query.getResultList();
     }
+    public SeguroEntity update(SeguroEntity alquilerEntity) {
+        return em.merge(alquilerEntity);
+    }
+    public void delete(Long alquilerId) {
+        SeguroEntity entity = em.find(SeguroEntity.class, alquilerId);
+        em.remove(entity);
+        
+    }
 }

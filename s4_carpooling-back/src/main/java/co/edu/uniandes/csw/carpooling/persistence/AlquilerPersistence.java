@@ -36,4 +36,12 @@ public class AlquilerPersistence {
         TypedQuery<AlquilerEntity> query = em.createQuery("select u from AlquilerEntity u", AlquilerEntity.class);
         return query.getResultList();
     }
+    public AlquilerEntity update(AlquilerEntity alquilerEntity) {
+        return em.merge(alquilerEntity);
+    }
+    public void delete(Long alquilerId) {
+        AlquilerEntity entity = em.find(AlquilerEntity.class, alquilerId);
+        em.remove(entity);
+        
+    }
 }
