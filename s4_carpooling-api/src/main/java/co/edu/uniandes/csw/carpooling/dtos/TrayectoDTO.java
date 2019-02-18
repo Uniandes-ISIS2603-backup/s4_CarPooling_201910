@@ -14,12 +14,12 @@ import java.util.Calendar;
  */
 public class TrayectoDTO implements Serializable{
     
-    private long idTrayecto;
-    private int horaInicial;
-    private int horaFinal;
+    private Long idTrayecto;
+    private Integer horaInicial;
+    private Integer horaFinal;
     private Calendar fechaSalida;
     private Calendar fechaLlegada;
-    private int cupos;
+    private Integer cupos;
     private TrayectoInfoDTO info;
     private UsuarioDTO conductor;
     //private Ciudad salida;
@@ -32,42 +32,42 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the idTrayecto
      */
-    public long getIdTrayecto() {
+    public Long getIdTrayecto() {
         return idTrayecto;
     }
 
     /**
      * @param idTrayecto the idTrayecto to set
      */
-    public void setIdTrayecto(long idTrayecto) {
+    public void setIdTrayecto(Long idTrayecto) {
         this.idTrayecto = idTrayecto;
     }
 
     /**
      * @return the horaInicial
      */
-    public int getHoraInicial() {
+    public Integer getHoraInicial() {
         return horaInicial;
     }
 
     /**
      * @param horaInicial the horaInicial to set
      */
-    public void setHoraInicial(int horaInicial) {
+    public void setHoraInicial(Integer horaInicial) {
         this.horaInicial = horaInicial;
     }
 
     /**
      * @return the horaFinal
      */
-    public int getHoraFinal() {
+    public Integer getHoraFinal() {
         return horaFinal;
     }
 
     /**
      * @param horaFinal the horaFinal to set
      */
-    public void setHoraFinal(int horaFinal) {
+    public void setHoraFinal(Integer horaFinal) {
         this.horaFinal = horaFinal;
     }
 
@@ -102,14 +102,14 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the cupos
      */
-    public int getCupos() {
+    public Integer getCupos() {
         return cupos;
     }
 
     /**
      * @param cupos the cupos to set
      */
-    public void setCupos(int cupos) {
+    public void setCupos(Integer cupos) {
         this.cupos = cupos;
     }
 
@@ -140,6 +140,9 @@ public class TrayectoDTO implements Serializable{
     public void setConductor(UsuarioDTO conductor) {
         this.conductor = conductor;
     }
-    
+
+
+
+
     
 }
