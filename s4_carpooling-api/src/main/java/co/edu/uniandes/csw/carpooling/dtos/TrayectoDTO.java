@@ -6,7 +6,7 @@
 package co.edu.uniandes.csw.carpooling.dtos;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -17,8 +17,8 @@ public class TrayectoDTO implements Serializable{
     private Long idTrayecto;
     private Integer horaInicial;
     private Integer horaFinal;
-    private Calendar fechaSalida;
-    private Calendar fechaLlegada;
+    private Date fechaSalida;
+    private Date fechaLlegada;
     private Integer cupos;
     private TrayectoInfoDTO info;
     private UsuarioDTO conductor;
@@ -74,28 +74,28 @@ public class TrayectoDTO implements Serializable{
     /**
      * @return the fechaSalida
      */
-    public Calendar getFechaSalida() {
+    public Date getFechaSalida() {
         return fechaSalida;
     }
 
     /**
      * @param fechaSalida the fechaSalida to set
      */
-    public void setFechaSalida(Calendar fechaSalida) {
+    public void setFechaSalida(Date fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
     /**
      * @return the fechaLlegada
      */
-    public Calendar getFechaLlegada() {
+    public Date getFechaLlegada() {
         return fechaLlegada;
     }
 
     /**
      * @param fechaLlegada the fechaLlegada to set
      */
-    public void setFechaLlegada(Calendar fechaLlegada) {
+    public void setFechaLlegada(Date fechaLlegada) {
         this.fechaLlegada = fechaLlegada;
     }
 

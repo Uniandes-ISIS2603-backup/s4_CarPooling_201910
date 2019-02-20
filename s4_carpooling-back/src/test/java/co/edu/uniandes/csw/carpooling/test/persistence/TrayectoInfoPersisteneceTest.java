@@ -5,11 +5,9 @@
  */
 package co.edu.uniandes.csw.carpooling.test.persistence;
 
-
-
-import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
-import co.edu.uniandes.csw.carpooling.persistence.TrayectoPersistence;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
+import co.edu.uniandes.csw.carpooling.persistence.TrayectoInfoPersistence;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,10 +26,11 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  * @author estudiante
  */
 @RunWith(Arquillian.class)
-public class TrayectoPersistenceTest {
+public class TrayectoInfoPersisteneceTest {
     
     @Inject
-    private TrayectoPersistence ap;
+    private TrayectoInfoPersistence tip;
+    
     @PersistenceContext
     private EntityManager em;
     
@@ -39,22 +38,21 @@ public class TrayectoPersistenceTest {
     public static  JavaArchive createDeployment()
     {
          return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(TrayectoEntity.class.getPackage())
-                .addPackage(TrayectoPersistence.class.getPackage())
+                .addPackage(TrayectoInfoEntity.class.getPackage())
+                .addPackage(TrayectoInfoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
     @Test
-    public void createAlquilerTest()
-    {
+    public void createTest(){
         PodamFactory factory = new PodamFactoryImpl();
-        TrayectoEntity newEntity = factory.manufacturePojo(TrayectoEntity.class);
-        TrayectoEntity ae = ap.create(newEntity);
-        Assert.assertNotNull(ap);
-        TrayectoEntity entity = em.find(TrayectoEntity.class, ae.getId());
-        //Assert.assertEquals(newEntity.getFechaInicial(), entity.getFechaInicial());
-        Assert.assertEquals(newEntity.getId(), entity.getId());
-        
+        TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
+        TrayectoInfoEntity ae = tip.create(newEntity);
+        Assert.assertNotNull(tip);
+        TrayectoInfoEntity entity = em.find(TrayectoInfoEntity.class, ae.getId());
+        Assert.assertEquals(newEntity.getCombustible(), entity.getCombustible());
+        //Assert.assertEquals(newEntity.getHoraFinal(), entity.getHoraFinal());
+        Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
 }
