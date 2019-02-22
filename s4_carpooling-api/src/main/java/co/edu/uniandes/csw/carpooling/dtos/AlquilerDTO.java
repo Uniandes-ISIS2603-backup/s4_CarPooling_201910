@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import java.io.Serializable;
 
 /**
@@ -13,13 +14,17 @@ import java.io.Serializable;
  */
 public class AlquilerDTO implements Serializable{
     private Long id;
+    private String nombre;
     private UsuarioDTO arrendatario;
     private UsuarioDTO dueño;
     private VehiculoDTO vehiculoAlquilado;
     private SeguroDTO seguro;
-    public AlquilerDTO()
+    public AlquilerDTO(AlquilerEntity entity)
     {
-        
+        if(entity!=null)
+        {
+            nombre=entity.getNombre();
+        }
     }
 
     /**
@@ -91,5 +96,23 @@ public class AlquilerDTO implements Serializable{
     public void setVehiculoAlquilado(VehiculoDTO vehiculoAlquilado) {
         this.vehiculoAlquilado = vehiculoAlquilado;
     }
-    
+    public AlquilerEntity toEntity(){
+        AlquilerEntity entity = new AlquilerEntity();
+        entity.setNombre(nombre);
+        return entity;
+    }
+
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
+    }
+
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }

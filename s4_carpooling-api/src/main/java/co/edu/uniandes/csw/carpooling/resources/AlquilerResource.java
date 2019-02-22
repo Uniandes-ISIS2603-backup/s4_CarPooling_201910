@@ -29,7 +29,7 @@ import javax.ws.rs.Produces;
 public class AlquilerResource {
     private static final Logger LOGGER = Logger.getLogger(AlquilerResource.class.getName());
     @GET
-    public List getAlquileres()
+    public List<AlquilerDTO> getAlquileres()
     {
         return null;
     }

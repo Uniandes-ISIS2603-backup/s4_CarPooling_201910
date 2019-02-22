@@ -14,7 +14,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class SeguroEntity extends BaseEntity implements Serializable{
-     private String nombre;
+     private String tipo;
      public SeguroEntity(){
          
      }
@@ -22,15 +22,15 @@ public class SeguroEntity extends BaseEntity implements Serializable{
     /**
      * @return the nombre
      */
-    public String getNombre() {
-        return nombre;
+    public String getTipo() {
+        return tipo;
     }
 
     /**
      * @param nombre the nombre to set
      */
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
      
 }
