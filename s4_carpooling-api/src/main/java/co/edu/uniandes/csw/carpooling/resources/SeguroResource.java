@@ -28,11 +28,7 @@ import javax.ws.rs.Produces;
 @RequestScoped
 public class SeguroResource {
      private static final Logger LOGGER = Logger.getLogger(AlquilerResource.class.getName());
-     @GET
-     public List getSeguros()
-     {
-         return null;
-     }
+     
      @POST
     public SeguroDTO createAlquiler(SeguroDTO seguro)
     {

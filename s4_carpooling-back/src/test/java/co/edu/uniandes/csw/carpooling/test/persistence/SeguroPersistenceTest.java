@@ -89,7 +89,7 @@ public class SeguroPersistenceTest {
         SeguroEntity ae = sp.create(newEntity);
         Assert.assertNotNull(sp);
         SeguroEntity entity = em.find(SeguroEntity.class, ae.getId());
-        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());  
+        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());  
     }
     @Test
     public void finAllSeguroTEst() {
@@ -110,7 +110,7 @@ public class SeguroPersistenceTest {
         SeguroEntity entity = data.get(0);
         SeguroEntity newEntity = sp.find(entity.getId());
         Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+        Assert.assertEquals(entity.getTipo(), newEntity.getTipo());
     }
     @Test
     public void updateSeguroTest() {
@@ -124,7 +124,7 @@ public class SeguroPersistenceTest {
 
     SeguroEntity resp = em.find(SeguroEntity.class, entity.getId());
 
-    Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+    Assert.assertEquals(newEntity.getTipo(), resp.getTipo());
 }
 @Test
 public void deleteSeguroTest() {
