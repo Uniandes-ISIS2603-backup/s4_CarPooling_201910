@@ -6,10 +6,15 @@
 package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -25,6 +30,22 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     private Date horaFinal;
     @Temporal(TemporalType.TIME)
     private Date horaInicial;
+    
+    /*@PodamExclude
+    @OneToOne
+    private TrayectoEntity infoTrayecto;
+    
+    @PodamExclude
+    @OneToMany
+    private List<CiudadEntity> paradas = new ArrayList<CiudadEntity>();
+    
+    @PodamExclude
+    @OneToMany
+    private List<PeajeEntity> peajes = new ArrayList<PeajeEntity>();
+    
+    @PodamExclude
+    @OneToOne
+    private VehiculoEntity vehiculo;*/
     
     public TrayectoInfoEntity(){
         
