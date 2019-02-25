@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -55,15 +57,18 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    @OneToOne
    private PagoEntity pagoAHacer;
     
+    
+   */
    @PodamExclude
    @OneToOne
    private TrayectoEntity traycetoActualConductor;
-    
+   
    @PodamExclude
    @OneToOne(mappedBy="conductor")
    private TrayectoEntity traycetoActualPasajero;
-    
-   */
+   
+   
+   
     
     public UsuarioEntity(){
     }
