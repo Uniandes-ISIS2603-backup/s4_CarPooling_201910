@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.carpooling.test.persistence;
+package co.edu.uniandes.csw.carpooling.test.logic;
 
-import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.ejb.TrayectoInfoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
 import co.edu.uniandes.csw.carpooling.persistence.TrayectoInfoPersistence;
 import javax.inject.Inject;
@@ -23,13 +23,13 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author estudiante
+ * @author Alejo
  */
 @RunWith(Arquillian.class)
-public class TrayectoInfoPersisteneceTest {
+public class TrayectoInfoLogicTest {
     
     @Inject
-    private TrayectoInfoPersistence tip;
+    private TrayectoInfoLogic info;
     
     @PersistenceContext
     private EntityManager em;
@@ -39,20 +39,25 @@ public class TrayectoInfoPersisteneceTest {
     {
          return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(TrayectoInfoEntity.class.getPackage())
+                .addPackage(TrayectoInfoLogic.class.getPackage())
                 .addPackage(TrayectoInfoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
     
     @Test
-    public void createTest(){
+    public void createTrayectoInfoTest(){
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
-        TrayectoInfoEntity ae = tip.create(newEntity);
+        TrayectoInfoEntity ae = info.createEntity(newEntity);
         Assert.assertNotNull(ae);
         TrayectoInfoEntity entity = em.find(TrayectoInfoEntity.class, ae.getId());
         Assert.assertEquals(newEntity.getCombustible(), entity.getCombustible());
         //Assert.assertEquals(newEntity.getHoraFinal(), entity.getHoraFinal());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
+    
+    
+    
+    
 }

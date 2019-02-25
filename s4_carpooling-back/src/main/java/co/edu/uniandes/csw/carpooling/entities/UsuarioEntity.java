@@ -58,14 +58,14 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    private PagoEntity pagoAHacer;
     
     
-   */
+   *//*
    @PodamExclude
    @OneToOne
    private TrayectoEntity traycetoActualConductor;
    
    @PodamExclude
    @OneToOne(mappedBy="conductor")
-   private TrayectoEntity traycetoActualPasajero;
+   private TrayectoEntity traycetoActualPasajero;*/
    
    
    

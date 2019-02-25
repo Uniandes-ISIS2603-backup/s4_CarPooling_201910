@@ -27,7 +27,7 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
     
-    @PodamExclude
+    /*@PodamExclude
     @OneToOne
     private UsuarioEntity conductor;
     
@@ -45,7 +45,7 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToOne(orphanRemoval = true)
-    private TrayectoInfoEntity infoTrayecto;
+    private TrayectoInfoEntity infoTrayecto;*/
     
     
     public TrayectoEntity(){
