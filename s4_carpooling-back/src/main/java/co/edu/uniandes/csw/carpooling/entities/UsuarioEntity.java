@@ -6,7 +6,11 @@
 package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -28,15 +32,15 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    @PodamExclude
    @OneToMany
    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
-    
+   */ 
    @PodamExclude
-   @OneToMany(mappedBy="dueño")
+   @OneToMany(mappedBy="dueño", cascade = CascadeType.PERSIST)
    private List<AlquilerEntity> alquilerDueño = new ArrayList<AlquilerEntity>();
-    
+   
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.PERSIST)
    private AlquilerEntity alquilerArrendatario;
-    
+   /* 
    @PodamExclude
    @OneToMany
    private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
@@ -168,6 +172,34 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      */
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    /**
+     * @return the alquilerArrendatario
+     */
+    public AlquilerEntity getAlquilerArrendatario() {
+        return alquilerArrendatario;
+    }
+
+    /**
+     * @param alquilerArrendatario the alquilerArrendatario to set
+     */
+    public void setAlquilerArrendatario(AlquilerEntity alquilerArrendatario) {
+        this.alquilerArrendatario = alquilerArrendatario;
+    }
+
+    /**
+     * @return the alquilerDueño
+     */
+    public List<AlquilerEntity> getAlquilerDueño() {
+        return alquilerDueño;
+    }
+
+    /**
+     * @param alquilerDueño the alquilerDueño to set
+     */
+    public void setAlquilerDueño(List<AlquilerEntity> alquilerDueño) {
+        this.alquilerDueño = alquilerDueño;
     }
    
 }

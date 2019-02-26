@@ -43,4 +43,24 @@ public class SeguroPersistence {
         em.remove(entity);
         
     }
+    public SeguroEntity findByTipo(String tipo)
+    {
+        TypedQuery<SeguroEntity> query = em.createQuery("select e from SeguroEntity e where e.tipo = :t", SeguroEntity.class);
+        query = query.setParameter("t", tipo);
+        List<SeguroEntity> sameTipo = query.getResultList();
+        SeguroEntity result;
+        if(sameTipo == null)
+        {
+            result=null;
+        }
+        else if(sameTipo.isEmpty())
+        {
+            result=null;
+        }
+        else 
+        {
+            result = sameTipo.get(0);
+        }
+        return result;
+    }
 }

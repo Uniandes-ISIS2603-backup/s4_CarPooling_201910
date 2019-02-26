@@ -6,7 +6,9 @@
 package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
 
@@ -17,20 +19,21 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class AlquilerEntity extends BaseEntity implements Serializable  {
    private String nombre;
-    /*
+    
    @PodamExclude
-   @ManyToOne
-   private usuarioEntity dueño;
+   @ManyToOne(cascade = CascadeType.PERSIST)
+   private UsuarioEntity dueño;
    @PodamExclude
-   @OneToOne(mappedBy="alquilerArrendatario")
-   private usuarioEntity arrendatario;
+   @OneToOne(mappedBy="alquilerArrendatario", cascade = CascadeType.PERSIST)
+   private UsuarioEntity arrendatario;
+   /*
    @PodamExclude
    @OneToOne(mappedBy="alquilerInfo")
-   private vehiculoEntity vehiculoAlquilado;
+   private VehiculoEntity vehiculoAlquilado;
    */
    
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.PERSIST)
    private SeguroEntity seguro;
     public AlquilerEntity()
     {
@@ -63,5 +66,33 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
      */
     public void setSeguro(SeguroEntity seguro) {
         this.seguro = seguro;
+    }
+
+    /**
+     * @return the dueño
+     */
+    public UsuarioEntity getDueño() {
+        return dueño;
+    }
+
+    /**
+     * @param dueño the dueño to set
+     */
+    public void setDueño(UsuarioEntity dueño) {
+        this.dueño = dueño;
+    }
+
+    /**
+     * @return the arrendatario
+     */
+    public UsuarioEntity getArrendatario() {
+        return arrendatario;
+    }
+
+    /**
+     * @param arrendatario the arrendatario to set
+     */
+    public void setArrendatario(UsuarioEntity arrendatario) {
+        this.arrendatario = arrendatario;
     }
 }

@@ -44,4 +44,25 @@ public class AlquilerPersistence {
         em.remove(entity);
         
     }
-}
+    public AlquilerEntity findByVehiculoAlquiladoPlaca(String placa)
+    {
+       TypedQuery<AlquilerEntity> query = em.createQuery("select e from AlquilerEntity e where e.vehiculoAlquilado.placa = :p", AlquilerEntity.class);
+        query = query.setParameter("p", placa);
+        List<AlquilerEntity> samePlaca = query.getResultList();
+        AlquilerEntity result;
+        if (samePlaca == null)
+        {
+            result=null;
+        }
+        else if (samePlaca.isEmpty())
+        {
+            result=null;
+        }
+        else 
+        {
+            result = samePlaca.get(0);
+        }
+        return result;
+    }
+    }
+
