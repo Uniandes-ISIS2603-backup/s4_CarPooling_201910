@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.carpooling.dtos;
+import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
 import java.io.Serializable;
 /**
  *
@@ -83,4 +84,46 @@ public class PagoDTO implements Serializable {
      */
     public void setInfo(InfoTCDTO infoTC) {this.infoTC = infoTC;}
     
+    
+    public PagoDTO (PagoEntity pagoEntity)
+    {
+        
+        if (pagoEntity != null) {
+            this.id = pagoEntity.getId();
+            this.valor = pagoEntity.getValor();
+            if (pagoEntity.getInfoTC() != null) {
+                this.infoTC = new InfoTCDTO();
+            }
+            if (pagoEntity.getTrayecto() != null) {
+                this.trayecto =  new TrayectoDTO();
+            }
+            if (pagoEntity.getUsuarioRecibe() != null) {
+                this.conductor = new UsuarioDTO();
+            }
+            if (pagoEntity.getUsuarioHace() != null) {
+                this.pasajero = new UsuarioDTO();
+            }
+        }
+    }
+    
+    /**
+     * Método para transfomar el DTO a una entidad.
+     * @return La entidad asociada.
+     */
+    public PagoEntity toEntity(){
+        PagoEntity pagoEntity = new PagoEntity();
+        pagoEntity.setId(this.id);
+        pagoEntity.setValor(this.valor);
+       // if (this.conductor != null) {
+       //     pagoEntity.setUsuarioRecibe(this.conductor.toEntity();
+       // }
+       // if (this.pasajero != null) {
+       //     pagoEntity.setUsuarioHace(this.pasajero.toEntity();
+       // }
+        //if (this.trayecto != null) {
+        //    pagoEntity.setTrayecto(this.trayecto.toEntity());
+        //}
+        //El código del método toEntity no se ecnuentra implementado para las tres clases anteriores.
+        return pagoEntity;
+    }
 }
