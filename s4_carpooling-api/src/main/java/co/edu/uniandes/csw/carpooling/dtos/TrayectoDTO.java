@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,6 +30,21 @@ public class TrayectoDTO implements Serializable{
         
     }
 
+    public TrayectoDTO(TrayectoEntity entity){
+        if(entity != null){
+            this.idTrayecto = entity.getId();
+            this.fechaSalida = entity.getFechaInicial();
+        }
+    }
+    
+    
+    public TrayectoEntity toEntity(){
+        TrayectoEntity retorno = new TrayectoEntity();
+        retorno.setFechaFinal(fechaSalida);
+        retorno.setFechaInicial(fechaSalida);
+        return retorno;
+    }
+    
     /**
      * @return the idTrayecto
      */

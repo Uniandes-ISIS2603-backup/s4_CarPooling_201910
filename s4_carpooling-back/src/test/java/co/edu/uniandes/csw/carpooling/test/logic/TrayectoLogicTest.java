@@ -5,10 +5,57 @@
  */
 package co.edu.uniandes.csw.carpooling.test.logic;
 
+import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.persistence.TrayectoPersistence;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.jboss.arquillian.container.test.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import uk.co.jemos.podam.api.PodamFactory;
+import uk.co.jemos.podam.api.PodamFactoryImpl;
+
 /**
  *
  * @author estudiante
  */
+@RunWith(Arquillian.class)
 public class TrayectoLogicTest {
+    
+    @Inject
+    private TrayectoLogic trayecto;
+    
+    @PersistenceContext
+    private EntityManager em;
+    
+    @Deployment
+    public static  JavaArchive createDeployment()
+    {
+         return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(TrayectoEntity.class.getPackage())
+                .addPackage(TrayectoLogic.class.getPackage())
+                .addPackage(TrayectoPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
+    
+    @Test
+    public void createAlquilerTest()
+    {
+        PodamFactory factory = new PodamFactoryImpl();
+        TrayectoEntity newEntity = factory.manufacturePojo(TrayectoEntity.class);
+        TrayectoEntity ae = trayecto.createEntity(newEntity);
+        Assert.assertNotNull(ae);
+        TrayectoEntity entity = em.find(TrayectoEntity.class, ae.getId());
+        //Assert.assertEquals(newEntity.getFechaInicial(), entity.getFechaInicial());
+        Assert.assertEquals(newEntity.getId(), entity.getId());
+        
+    }
     
 }
