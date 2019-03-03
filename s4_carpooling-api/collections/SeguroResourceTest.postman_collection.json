@@ -1,0 +1,43 @@
+{
+	"info": {
+		"_postman_id": "84f04a3f-9c86-42e5-a74f-e640b377e8b1",
+		"name": "SeguroResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/seguros",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "de1404df-532a-45d7-83d8-bdef36526ff8",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"No genera error en el Get\"] = responseCode.code===405;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/seguros",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"seguros"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
