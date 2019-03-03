@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,7 +22,7 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class UsuarioEntity extends BaseEntity implements Serializable {
-    
+
     private String nombre;
     private String apellido;
     private Integer documento;
@@ -29,7 +30,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String username;
     private String password;
     private String correo;
-    /*
+ /*
    @PodamExclude
    @OneToMany
    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
@@ -72,10 +73,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    @PodamExclude
    @ManyToOne
    private TrayectoEntity trayectoActualPasajero;
-   
-   
-   
-   
+
     
     public UsuarioEntity(){
     }
@@ -176,6 +174,20 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+    
+    /**
+     * @return the alquilerDueño
+     */
+    public List<AlquilerEntity> getAlquilerDueño() {
+        return alquilerDueño;
+    }
+
+    /**
+     * @param alquilerDueño the alquilerDueño to set
+     */
+    public void setAlquilerDueño(List<AlquilerEntity> alquilerDueño) {
+        this.alquilerDueño = alquilerDueño;
+    }
 
     /**
      * @return the alquilerArrendatario
@@ -191,18 +203,77 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.alquilerArrendatario = alquilerArrendatario;
     }
 
+
     /**
-     * @return the alquilerDueño
+     * @return the calificaciones
      */
-    public List<AlquilerEntity> getAlquilerDueño() {
-        return alquilerDueño;
+    public List<CalificacionEntity> getCalificaciones() {
+        return calificaciones;
     }
 
     /**
-     * @param alquilerDueño the alquilerDueño to set
+     * @param calificaciones the calificaciones to set
      */
-    public void setAlquilerDueño(List<AlquilerEntity> alquilerDueño) {
-        this.alquilerDueño = alquilerDueño;
+    public void setCalificaciones(List<CalificacionEntity> calificaciones) {
+        this.calificaciones = calificaciones;
     }
+
+    /**
+     * @return the pagoARecibir
+     */
+    public PagoEntity getPagoARecibir() {
+        return pagoARecibir;
+    }
+
+    /**
+     * @param pagoARecibir the pagoARecibir to set
+     */
+    public void setPagoARecibir(PagoEntity pagoARecibir) {
+        this.pagoARecibir = pagoARecibir;
+    }
+
+    /**
+     * @return the pagoAHacer
+     */
+    public PagoEntity getPagoAHacer() {
+        return pagoAHacer;
+    }
+
+    /**
+     * @param pagoAHacer the pagoAHacer to set
+     */
+    public void setPagoAHacer(PagoEntity pagoAHacer) {
+        this.pagoAHacer = pagoAHacer;
+    }
+
+    /**
+     * @return the notificacionesEnviadas
+     */
+    public List<NotificacionEntity> getNotificacionesEnviadas() {
+        return notificacionesEnviadas;
+    }
+
+    /**
+     * @param notificacionesEnviadas the notificacionesEnviadas to set
+     */
+    public void setNotificacionesEnviadas(List<NotificacionEntity> notificacionesEnviadas) {
+        this.notificacionesEnviadas = notificacionesEnviadas;
+    }
+
+    /**
+     * @return the notificacionesRecibidas
+     */
+    public List<NotificacionEntity> getNotificacionesRecibidas() {
+        return notificacionesRecibidas;
+    }
+
+    /**
+     * @param notificacionesRecibidas the notificacionesRecibidas to set
+     */
+    public void setNotificacionesRecibidas(List<NotificacionEntity> notificacionesRecibidas) {
+        this.notificacionesRecibidas = notificacionesRecibidas;
+    }
+
    
+    
 }
