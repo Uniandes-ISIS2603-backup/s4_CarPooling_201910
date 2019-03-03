@@ -24,6 +24,9 @@ public class AlquilerDTO implements Serializable{
         if(entity!=null)
         {
             nombre=entity.getNombre();
+            
+            
+          
         }
     }
 
@@ -99,6 +102,12 @@ public class AlquilerDTO implements Serializable{
     public AlquilerEntity toEntity(){
         AlquilerEntity entity = new AlquilerEntity();
         entity.setNombre(nombre);
+        /*
+        entity.setArrendatario(arrendatario.toEntity);
+        entity.setDueño(dueño);
+        */
+        entity.setSeguro(seguro.toEntity());
+        
         return entity;
     }
 

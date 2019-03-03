@@ -21,10 +21,10 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
    private String nombre;
     
    @PodamExclude
-   @ManyToOne(cascade = CascadeType.PERSIST)
+   @ManyToOne()
    private UsuarioEntity dueño;
    @PodamExclude
-   @OneToOne(mappedBy="alquilerArrendatario", cascade = CascadeType.PERSIST)
+   @OneToOne(mappedBy="alquilerArrendatario")
    private UsuarioEntity arrendatario;
    /*
    @PodamExclude
@@ -33,7 +33,7 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
    */
    
    @PodamExclude
-   @OneToOne(cascade = CascadeType.PERSIST)
+   @OneToOne
    private SeguroEntity seguro;
     public AlquilerEntity()
     {

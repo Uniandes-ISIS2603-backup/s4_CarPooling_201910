@@ -34,11 +34,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
    */ 
    @PodamExclude
-   @OneToMany(mappedBy="dueño", cascade = CascadeType.PERSIST)
+   @OneToMany(mappedBy="dueño")
    private List<AlquilerEntity> alquilerDueño = new ArrayList<AlquilerEntity>();
    
    @PodamExclude
-   @OneToOne(cascade = CascadeType.PERSIST)
+   @OneToOne
    private AlquilerEntity alquilerArrendatario;
    /* 
    @PodamExclude

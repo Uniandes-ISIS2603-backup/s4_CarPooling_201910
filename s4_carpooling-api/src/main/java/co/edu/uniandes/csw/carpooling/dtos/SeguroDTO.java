@@ -12,7 +12,7 @@ import java.io.Serializable;
  *
  * @author df.penap
  */
-public class SeguroDTO implements Serializable{
+public class SeguroDTO implements Serializable {
     private Long id;
     private String tipo;
     public SeguroDTO(SeguroEntity entity){
@@ -37,8 +37,10 @@ public class SeguroDTO implements Serializable{
         this.id = id;
     }
     public SeguroEntity toEntity(){
+        
         SeguroEntity entity = new SeguroEntity();
         entity.setTipo(tipo);
+        entity.setId(id);
         return entity;
     }
 }

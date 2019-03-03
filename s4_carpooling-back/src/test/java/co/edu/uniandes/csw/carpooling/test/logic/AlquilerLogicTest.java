@@ -34,7 +34,7 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class AlquilerLogicTest {
-     List<AlquilerEntity> data = new ArrayList<AlquilerEntity>();
+    List<AlquilerEntity> data = new ArrayList<>();
     @Inject
     private AlquilerLogic alquilerLogic;
     @Inject
@@ -43,6 +43,10 @@ public class AlquilerLogicTest {
     private EntityManager em;
     @Inject
     UserTransaction utx;
+    private UsuarioEntity arrendatario;
+    private UsuarioEntity dueno;
+    private SeguroEntity seguro;
+    
     @Before
     public void setUp() {
         try {
@@ -62,17 +66,28 @@ public class AlquilerLogicTest {
     }
     private void clearData() {
         em.createQuery("delete from AlquilerEntity").executeUpdate();
+        em.createQuery("delete from SeguroEntity").executeUpdate();
+        em.createQuery("delete from UsuarioEntity").executeUpdate();
+        
     }
 
 
  private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 6; i++) {
             AlquilerEntity entity = factory.manufacturePojo(AlquilerEntity.class);
-
-            em.persist(entity);
+            
+            em.persist(entity); 
             data.add(entity);
         }
+        arrendatario = factory.manufacturePojo(UsuarioEntity.class);
+        em.persist(arrendatario);
+        dueno = factory.manufacturePojo(UsuarioEntity.class);
+        em.persist(dueno);
+        seguro = factory.manufacturePojo(SeguroEntity.class);
+        em.persist(seguro);
+        
+        
     }
     @Deployment
    
@@ -88,94 +103,122 @@ public class AlquilerLogicTest {
     @Test
     public void createAlquilerTest() throws BusinessLogicException
     {
+       
         PodamFactory factory = new PodamFactoryImpl();
         AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
-        SeguroEntity seguro;
-        seguro = factory.manufacturePojo(SeguroEntity.class);
-        newEntity.setSeguro(seguro);
-        UsuarioEntity dueño;
-        dueño = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity arrendatario;
-        arrendatario = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setDueño(dueño);
-        newEntity.setArrendatario(arrendatario);
-        List<AlquilerEntity> entityList = new ArrayList<AlquilerEntity>();
-        entityList.add(newEntity);
-        dueño.setAlquilerDueño(entityList);
-        arrendatario.setAlquilerArrendatario(newEntity);
+        
         AlquilerEntity result = alquilerLogic.createAlquiler(newEntity);
         
         Assert.assertNotNull(result);
         AlquilerEntity entity = em.find(AlquilerEntity.class, result.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre()); 
     }
-    @Test(expected = BusinessLogicException.class)
-    public void createSinDueno() throws BusinessLogicException
+    @Test
+    public void addRelacionAlquilerTest() throws BusinessLogicException
     {
-        PodamFactory factory = new PodamFactoryImpl();
-        AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
-        SeguroEntity seguro;
-        seguro = factory.manufacturePojo(SeguroEntity.class);
-        newEntity.setSeguro(seguro);
-        UsuarioEntity dueño;
-        dueño = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity arrendatario;
-        arrendatario = factory.manufacturePojo(UsuarioEntity.class);
        
-        newEntity.setArrendatario(arrendatario);
-        List<AlquilerEntity> entityList = new ArrayList<AlquilerEntity>();
-        entityList.add(newEntity);
-        dueño.setAlquilerDueño(entityList);
-        arrendatario.setAlquilerArrendatario(newEntity);
-        AlquilerEntity result = alquilerLogic.createAlquiler(newEntity);
+        AlquilerEntity entity = data.get(0);
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId());
+        Assert.assertNotNull(resp);
+        Assert.assertEquals(resp.getArrendatario(),arrendatario);
+        Assert.assertEquals(resp.getDueño(),dueno);
+        Assert.assertEquals(resp.getSeguro(),seguro);
+        
+        
+        
+    }
+    @Test(expected = BusinessLogicException.class)
+    public void addSinDueno() throws BusinessLogicException
+    {
+        AlquilerEntity entity = data.get(0);
+        
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), Long.MIN_VALUE, arrendatario.getId(), seguro.getId());
+        
      
     }
     @Test(expected = BusinessLogicException.class)
-    public void createSinSeguro() throws BusinessLogicException
+    public void addSinSeguro() throws BusinessLogicException
     {
-        PodamFactory factory = new PodamFactoryImpl();
-        AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
-        SeguroEntity seguro;
-        seguro = factory.manufacturePojo(SeguroEntity.class);
-        
-        UsuarioEntity dueño;
-        dueño = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity arrendatario;
-        arrendatario = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setDueño(dueño);
-        newEntity.setArrendatario(arrendatario);
-        List<AlquilerEntity> entityList = new ArrayList<AlquilerEntity>();
-        entityList.add(newEntity);
-        dueño.setAlquilerDueño(entityList);
-        arrendatario.setAlquilerArrendatario(newEntity);
-        AlquilerEntity result = alquilerLogic.createAlquiler(newEntity);
+        AlquilerEntity entity = data.get(0);
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), Long.MIN_VALUE);
         
         
         
        
     }
     @Test(expected = BusinessLogicException.class)
-    public void createMismoArrendatario() throws BusinessLogicException
+    public void addMismoArrendatario() throws BusinessLogicException
     {
+        AlquilerEntity entity = data.get(0);
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), dueno.getId(), seguro.getId());
+        
+        
+        
+      
+         
+    }
+    @Test
+    public void getAlquilerTest() {
+        
+        List<AlquilerEntity> list = alquilerLogic.getAlquiler();
+        Assert.assertEquals(data.size(), list.size());
+        for (AlquilerEntity ent : list) {
+            boolean found = false;
+            for (AlquilerEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    @Test
+    public void findAlquilerTest() {
+        
+        AlquilerEntity entity = data.get(0);
+        AlquilerEntity newEntity = alquilerLogic.getAlquiler(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
+    }
+    @Test
+    public void deleteAlquilerTest() {
+        AlquilerEntity entity = data.get(5);
+        alquilerLogic.deleteAlquiler(entity.getId());
+        AlquilerEntity deleted = em.find(AlquilerEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+    @Test
+    public void updateAlquilerTest() throws BusinessLogicException{
+        AlquilerEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
-        SeguroEntity seguro;
-        seguro = factory.manufacturePojo(SeguroEntity.class);
-        newEntity.setSeguro(seguro);
-        UsuarioEntity dueño;
-        dueño = factory.manufacturePojo(UsuarioEntity.class);
-        UsuarioEntity arrendatario;
-        arrendatario = factory.manufacturePojo(UsuarioEntity.class);
-        newEntity.setDueño(dueño);
-        newEntity.setArrendatario(dueño);
-        List<AlquilerEntity> entityList = new ArrayList<AlquilerEntity>();
-        entityList.add(newEntity);
-        dueño.setAlquilerDueño(entityList);
-        arrendatario.setAlquilerArrendatario(newEntity);
-        AlquilerEntity result = alquilerLogic.createAlquiler(newEntity);
         
         
-        AlquilerEntity entity = em.find(AlquilerEntity.class, result.getId());
-         
+        
+        alquilerLogic.update(entity.getId(), newEntity);
+        
+        AlquilerEntity resp = em.find(AlquilerEntity.class, entity.getId());
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+    }
+
+    @Test(expected = BusinessLogicException.class)
+    public void replaceAlquilerSinArrendatario() throws BusinessLogicException{
+        AlquilerEntity entity = data.get(0);
+        alquilerLogic.replaceRelacionArrendatario(entity.getId(), Long.MIN_VALUE);
+    }
+    @Test(expected = BusinessLogicException.class)
+    public void replaceAlquilerMismoArrendatario() throws BusinessLogicException
+    {
+        
+       AlquilerEntity entity = data.get(0);
+       alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId());
+       alquilerLogic.replaceRelacionArrendatario(entity.getId(), dueno.getId());
+       
+    }
+    @Test(expected = BusinessLogicException.class)
+    public void replaceAlquilerSinSeguro() throws BusinessLogicException{
+        
+        AlquilerEntity entity = data.get(0);
+        alquilerLogic.replaceRelacionSeguro(entity.getId(), Long.MIN_VALUE);
     }
 }
