@@ -118,7 +118,7 @@ public class PeajePersistence {
     public PeajeEntity findByName(String name) {
         LOGGER.log(Level.INFO, "Consultando peaje por nombre ", name);
         // Se crea un query para buscar peajes con el nombre que recibe el método como argumento. ":name" es un placeholder que debe ser remplazado
-        TypedQuery query = em.createQuery("Select e From PeajeEntity e where e.name = :name", PeajeEntity.class);
+        TypedQuery query = em.createQuery("Select e From PeajeEntity e where e.nombre = :name", PeajeEntity.class);
         // Se remplaza el placeholder ":name" con el valor del argumento 
         query = query.setParameter("name", name);
         // Se invoca el query se obtiene la lista resultado

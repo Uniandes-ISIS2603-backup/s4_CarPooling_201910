@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.edu.uniandes.csw.carpooling.test.persistence;
+package co.edu.uniandes.csw.carpooling.test.logic;
 
+import co.edu.uniandes.csw.carpooling.ejb.PeajeLogic;
 import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
+import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.PeajePersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +28,26 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author im.sarmiento
+ * @author Isabela Sarmiento
  */
 @RunWith(Arquillian.class)
-public class PeajePersistenceTest {
+public class PeajeLogicTest {
+
+
+    private PodamFactory factory = new PodamFactoryImpl();
+
     @Inject
-    private PeajePersistence peajePersistence;
+    private PeajeLogic peajeLogic;
+
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
-    UserTransaction utx;
-    
+    private UserTransaction utx;
+
     private List<PeajeEntity> data = new ArrayList<PeajeEntity>();
 
-    
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -51,18 +57,19 @@ public class PeajePersistenceTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(PeajeEntity.class.getPackage())
+                .addPackage(PeajeLogic.class.getPackage())
                 .addPackage(PeajePersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-     /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
     public void configTest() {
         try {
             utx.begin();
-            em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
@@ -75,116 +82,53 @@ public class PeajePersistenceTest {
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from PeajeEntity").executeUpdate();
     }
-    
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
      */
     private void insertData() {
-        PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
-
-            PeajeEntity entity = factory.manufacturePojo(PeajeEntity.class);
-
-            em.persist(entity);
-
-            data.add(entity);
+            PeajeEntity peajes = factory.manufacturePojo(PeajeEntity.class);
+            em.persist(peajes);
+            data.add(peajes);
         }
     }
-    
-    
+
     /**
-     * Prueba para crear un peaje.
+     * Prueba para crear un Prize.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    public void createPeajeTest() {
-        PodamFactory factory = new PodamFactoryImpl();
+    public void createPeajeTest() throws BusinessLogicException {
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
-        PeajeEntity result = peajePersistence.create(newEntity);
-
+        PeajeEntity result = peajeLogic.createPeaje(newEntity);
         Assert.assertNotNull(result);
-
         PeajeEntity entity = em.find(PeajeEntity.class, result.getId());
-
+        Assert.assertEquals(newEntity.getId(), entity.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-    }
-    
-    /**
-     * Prueba para consultar la lista de Peajes.
-     */
-    @Test
-    public void getPeajesTest() {
-        List<PeajeEntity> list = peajePersistence.findAll();
-        Assert.assertEquals(data.size(), list.size());
-        for (PeajeEntity ent : list) {
-            boolean found = false;
-            for (PeajeEntity entity : data) {
-                if (ent.getId().equals(entity.getId())) {
-                    found = true;
-                }
-            }
-            Assert.assertTrue(found);
-        }
+        Assert.assertEquals(newEntity.getLatitud(), entity.getLatitud());
+        Assert.assertEquals(newEntity.getLongitud(), entity.getLongitud());
     }
 
     /**
-     * Prueba para consultar una Peaje.
+     * Prueba para crear un Prize con organizacion nula.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
-    @Test
-    public void getPeajeTest() {
-        PeajeEntity entity = data.get(0);
-        PeajeEntity newEntity = peajePersistence.find(entity.getId());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-    }
-
-    /**
-     * Prueba para eliminar una Editorial.
-     */
-    @Test
-    public void deletePeajeTest() {
-        PeajeEntity entity = data.get(0);
-        peajePersistence.delete(entity.getId());
-        PeajeEntity deleted = em.find(PeajeEntity.class, entity.getId());
-        Assert.assertNull(deleted);
-    }
-
-    /**
-     * Prueba para actualizar una Editorial.
-     */
-    @Test
-    public void updateEditorialTest() {
-        PeajeEntity entity = data.get(0);
-        PodamFactory factory = new PodamFactoryImpl();
+    @Test(expected = BusinessLogicException.class)
+    public void createPeajeConNombreRepetido() throws BusinessLogicException {
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
-
-        newEntity.setId(entity.getId());
-
-        peajePersistence.update(newEntity);
-
-        PeajeEntity resp = em.find(PeajeEntity.class, entity.getId());
-
-        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+        newEntity.setNombre(data.get(0).getNombre());
+        peajeLogic.createPeaje(newEntity);
     }
 
-    /**
-     * Prueba para consultar una Editorial por nombre.
-     */
-    @Test
-    public void findEditorialByNameTest() {
-        PeajeEntity entity = data.get(0);
-        PeajeEntity newEntity = peajePersistence.findByName(entity.getNombre());
-        Assert.assertNotNull(newEntity);
-        Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
-
-        newEntity = peajePersistence.findByName(null);
-        Assert.assertNull(newEntity);
-    }
 }

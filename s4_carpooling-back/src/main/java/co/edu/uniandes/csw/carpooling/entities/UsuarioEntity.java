@@ -250,28 +250,28 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      * @return the notificacionesEnviadas
      */
     public List<NotificacionEntity> getNotificacionesEnviadas() {
-        return notificacionesEnviadas;
+        return notificacionEnviada;
     }
 
     /**
      * @param notificacionesEnviadas the notificacionesEnviadas to set
      */
     public void setNotificacionesEnviadas(List<NotificacionEntity> notificacionesEnviadas) {
-        this.notificacionesEnviadas = notificacionesEnviadas;
+        this.notificacionEnviada = notificacionesEnviadas;
     }
 
     /**
      * @return the notificacionesRecibidas
      */
     public List<NotificacionEntity> getNotificacionesRecibidas() {
-        return notificacionesRecibidas;
+        return notificacionRecibida;
     }
 
     /**
      * @param notificacionesRecibidas the notificacionesRecibidas to set
      */
     public void setNotificacionesRecibidas(List<NotificacionEntity> notificacionesRecibidas) {
-        this.notificacionesRecibidas = notificacionesRecibidas;
+        this.notificacionRecibida = notificacionesRecibidas;
     }
 
    
