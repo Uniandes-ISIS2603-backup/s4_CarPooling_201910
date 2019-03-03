@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -40,7 +41,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    @PodamExclude
    @OneToOne
    private AlquilerEntity alquilerArrendatario;
-   /* 
+    
    @PodamExclude
    @OneToMany
    private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
@@ -62,14 +63,16 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    private PagoEntity pagoAHacer;
     
     
-   *//*
-   @PodamExclude
-   @OneToOne
-   private TrayectoEntity traycetoActualConductor;
+   
    
    @PodamExclude
    @OneToOne(mappedBy="conductor")
-   private TrayectoEntity traycetoActualPasajero;*/
+   private TrayectoEntity traycetoActualConductor;
+   
+   @PodamExclude
+   @ManyToOne
+   private TrayectoEntity trayectoActualPasajero;
+   
    
    
    

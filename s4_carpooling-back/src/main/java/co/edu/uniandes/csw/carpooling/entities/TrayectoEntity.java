@@ -27,13 +27,13 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
     
-    /*@PodamExclude
+    @PodamExclude
     @OneToOne
     private UsuarioEntity conductor;
     
     @PodamExclude
     @OneToMany(mappedBy = "trayectoActualPasajero")
-    private List<UsuarioEntity> pasajeros = new ArrayList<UsuarioEntity>();
+    private List<UsuarioEntity> pasajeros;
     
     @PodamExclude
     @OneToOne
@@ -45,7 +45,7 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToOne(orphanRemoval = true)
-    private TrayectoInfoEntity infoTrayecto;*/
+    private TrayectoInfoEntity infoTrayecto;
     
     
     public TrayectoEntity(){
