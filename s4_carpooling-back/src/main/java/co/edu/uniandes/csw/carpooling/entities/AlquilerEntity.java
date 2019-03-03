@@ -95,4 +95,6 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
     public void setArrendatario(UsuarioEntity arrendatario) {
         this.arrendatario = arrendatario;
     }
+
+ 
 }
