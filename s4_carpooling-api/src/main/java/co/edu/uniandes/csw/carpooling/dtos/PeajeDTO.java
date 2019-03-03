@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
 import java.io.Serializable;
 
 /**
@@ -21,7 +22,32 @@ public class PeajeDTO implements Serializable{
     public PeajeDTO() {
         
     }
-
+    
+    public PeajeDTO(PeajeEntity peajeEntity) {
+        if (peajeEntity != null) {
+            this.id = peajeEntity.getId();
+            this.nombre = peajeEntity.getNombre();
+            this.costo = peajeEntity.getCosto();
+            this.lat = peajeEntity.getLatitud();
+            this.lon = peajeEntity.getLongitud();
+        }
+    }
+    
+    /**
+     * Método para transformar del DTO a una entidada.
+     *
+     * @return La entidad de esta reseña.
+     */
+    public PeajeEntity toEntity() {
+        PeajeEntity peajeEntity = new PeajeEntity();
+        peajeEntity.setId(this.id);
+        peajeEntity.setNombre(this.nombre);
+        peajeEntity.setCosto(this.costo);
+        peajeEntity.setLatitud(this.lat);
+        peajeEntity.setLongitud(this.lon);
+        return peajeEntity;
+    }
+    
     /**
      * @return the nombre
      */
