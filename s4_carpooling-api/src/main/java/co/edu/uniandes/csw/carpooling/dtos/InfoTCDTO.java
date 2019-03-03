@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.uniandes.csw.carpooling.dtos;
+import co.edu.uniandes.csw.carpooling.entities.InfoTCEntity;
 import java.io.Serializable;
 /**
  *
@@ -11,8 +12,8 @@ import java.io.Serializable;
  */
 public class InfoTCDTO implements Serializable{
     private Long id;
-    private Integer t1;
-    private Integer t2;
+    private String t1;
+    private String t2;
     private String entidad1;
     private String entidad2;
     
@@ -34,22 +35,22 @@ public class InfoTCDTO implements Serializable{
     /**
      * @return Tarjeta 1.
      */
-    public Integer getT1() {return t1;}
+    public String getT1() {return t1;}
 
     /**
      * @param t1 La nueva tarjeta.
      */
-    public void setT1(Integer t1) {this.t1 = t1;}
+    public void setT1(String t1) {this.t1 = t1;}
     
     /**
      * @return Tarjeta 2.
      */
-    public Integer getT2() {return t2;}
+    public String getT2() {return t2;}
 
     /**
      * @param t2 La nueva tarjeta.
      */
-    public void setT2(Integer t2) {this.t2 = t2;}
+    public void setT2(String t2) {this.t2 = t2;}
     
     /**
      * @return Entidad bancaria 1.
@@ -70,4 +71,32 @@ public class InfoTCDTO implements Serializable{
      * @param entidad2 La nueva entidad.
      */
     public void setEntidad2(String entidad2) {this.entidad2 = entidad2;}
+    
+    /**
+     * Constructor a partir de entidad.
+     * @param pInfoTCEntity
+     */
+    public InfoTCDTO(InfoTCEntity pInfoTCEntity)
+    {
+        this.id = pInfoTCEntity.getId();
+        this.entidad1 = pInfoTCEntity.getEntidad1();
+        this.entidad2 = pInfoTCEntity.getEntidad2();
+        this.t1 = pInfoTCEntity.getT1();
+        this.t2 = pInfoTCEntity.getT2();
+    }
+    
+    /**
+     * Método para transformar DTO a una entidad.
+     * @return Entidad creada
+     */
+    public InfoTCEntity toEntity()
+    {
+        InfoTCEntity infoTCEntity = new InfoTCEntity();
+        infoTCEntity.setId(this.id);
+        infoTCEntity.setEntidad1(this.entidad1);
+        infoTCEntity.setEntidad2(this.entidad2);
+        infoTCEntity.setT1(this.t1);
+        infoTCEntity.setT2(this.t2);
+        return infoTCEntity;
+    }
 }
