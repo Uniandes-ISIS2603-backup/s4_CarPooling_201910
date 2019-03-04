@@ -26,7 +26,12 @@ public class AlquilerDTO implements Serializable{
         if(entity!=null)
         {
             nombre=entity.getNombre();
-            
+            arrendatario = new UsuarioDTO(entity.getArrendatario());
+            dueño = new UsuarioDTO(entity.getDueño());
+            seguro = new SeguroDTO(entity.getSeguro());
+            /*
+            vehiculoAlquilado = new VehiculoDTO(entity.getVehiculoAlquilado());
+            */
             
           
         }

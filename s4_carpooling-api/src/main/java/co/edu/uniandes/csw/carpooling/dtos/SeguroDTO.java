@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.BaseEntity;
 import co.edu.uniandes.csw.carpooling.entities.SeguroEntity;
 import java.io.Serializable;
 
@@ -12,8 +13,8 @@ import java.io.Serializable;
  *
  * @author df.penap
  */
-public class SeguroDTO implements Serializable {
-    private Long id;
+public class SeguroDTO extends BaseEntity implements Serializable {
+    
     private String tipo;
     public SeguroDTO(SeguroEntity entity){
         if(entity!=null)
@@ -23,24 +24,13 @@ public class SeguroDTO implements Serializable {
 
     }
 
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+
     public SeguroEntity toEntity(){
         
         SeguroEntity entity = new SeguroEntity();
         entity.setTipo(tipo);
-        entity.setId(id);
+       
         return entity;
     }
 }

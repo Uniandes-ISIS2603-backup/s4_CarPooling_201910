@@ -89,7 +89,7 @@ public class AlquilerLogic {
         return persistence.update(alquiler);
             
     }
-    public void replaceRelacionArrendatario(Long idAlquiler, Long idArrendatario) throws BusinessLogicException
+    public AlquilerEntity replaceRelacionArrendatario(Long idAlquiler, Long idArrendatario) throws BusinessLogicException
     {
         AlquilerEntity alquiler = persistence.find(idAlquiler);
         UsuarioEntity arrendatario = usuarioPersistence.find(idArrendatario);
@@ -98,9 +98,9 @@ public class AlquilerLogic {
             throw new BusinessLogicException("Relacion de alquiler no valida");
         }
         alquiler.setArrendatario(arrendatario);
-        persistence.update(alquiler);
+        return persistence.update(alquiler);
     }
-    public void replaceRelacionSeguro(Long idAlquiler, Long idSeguro) throws BusinessLogicException
+    public AlquilerEntity replaceRelacionSeguro(Long idAlquiler, Long idSeguro) throws BusinessLogicException
     {
         AlquilerEntity alquiler = persistence.find(idAlquiler);
         SeguroEntity seguro = seguroPersistence.find(idSeguro);
@@ -109,7 +109,7 @@ public class AlquilerLogic {
             throw new BusinessLogicException("Relacion de alquiler no valida");
         }
         alquiler.setSeguro(seguro);
-        persistence.update(alquiler);
+        return persistence.update(alquiler);
     }
     
 
