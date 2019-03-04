@@ -222,7 +222,7 @@ public class UsuarioLogic {
     
     public void aceptarViaje(NotificacionEntity mensaje,TrayectoEntity trayectoSolicitado, NotificacionEntity rechazo, NotificacionEntity acepto) throws BusinessLogicException
     {
-        /*
+        /**
         UsuarioEntity emisor = mensaje.getEmisor();
         UsuarioEntity receptor = mensaje.getReceptor();
         if(trayectoSolicitado.getInfoTrayecto().getCupos()-trayectoSolicitado.getPasajeros().size()!=0)
@@ -235,7 +235,7 @@ public class UsuarioLogic {
         {
             emisor.getNotificacionRecibida().add(acepto);
             receptor.getNotificacionRecibida().add(acepto);   
-        }   */
+        }     */
     }
     
     /**public void alquilarVehiculoDueño(String username, String placa)

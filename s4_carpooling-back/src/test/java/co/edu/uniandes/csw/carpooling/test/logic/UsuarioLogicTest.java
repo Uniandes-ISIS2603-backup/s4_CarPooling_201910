@@ -183,7 +183,6 @@ public class UsuarioLogicTest {
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test
-    
     public void updateUsuarioTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
@@ -200,7 +199,7 @@ public class UsuarioLogicTest {
      * Prueba para eliminar un Book.
      *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
-     *
+     */
     @Test
     public void deleteBookTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(0);
@@ -210,11 +209,22 @@ public class UsuarioLogicTest {
         entity.setTraycetoActualConductor(null);
         entity.setPagoAHacer(null);
         entity.setPagoARecibir(null);
-        UsuarioEntity mod = em.merge(entity);
+         try {
+            utx.begin();
+            UsuarioEntity mod = em.merge(entity);
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
         usuarioLogic.deleteUsuario(mod.getUsername());
         UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }*/
+    }
 
     /**
      * Prueba para eliminar un Book.
