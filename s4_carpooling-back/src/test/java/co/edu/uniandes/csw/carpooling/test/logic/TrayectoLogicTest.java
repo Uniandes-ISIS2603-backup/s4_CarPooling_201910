@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.carpooling.test.logic;
 
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.TrayectoPersistence;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -46,14 +47,14 @@ public class TrayectoLogicTest {
     }
     
     @Test
-    public void createAlquilerTest()
+    public void createTrayectoTest() throws BusinessLogicException
     {
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoEntity newEntity = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity ae = trayecto.createEntity(newEntity);
         Assert.assertNotNull(ae);
         TrayectoEntity entity = em.find(TrayectoEntity.class, ae.getId());
-        //Assert.assertEquals(newEntity.getFechaInicial(), entity.getFechaInicial());
+        Assert.assertEquals(newEntity.getFechaInicial().getDay(), entity.getFechaInicial().getDay());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         
     }

@@ -5,142 +5,104 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.adapters.DateAdapter;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
-import java.io.Serializable;
 import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
  * @author estudiante
  */
-public class TrayectoDTO implements Serializable{
+public class TrayectoDTO {
     
-    private Long idTrayecto;
-    private Integer horaInicial;
-    private Integer horaFinal;
-    private Date fechaSalida;
-    private Date fechaLlegada;
-    private Integer cupos;
-    private TrayectoInfoDTO info;
+    private Long id;
+    
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date fechaInicial;
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date fechaFinal;
+    
     private UsuarioDTO conductor;
-    //private Ciudad salida;
-    //private Ciudad llegada
+    
+    private TrayectoInfoDTO info;
     
     public TrayectoDTO(){
         
     }
-
+    
     public TrayectoDTO(TrayectoEntity entity){
         if(entity != null){
-            this.idTrayecto = entity.getId();
-            this.fechaSalida = entity.getFechaInicial();
+            this.id = entity.getId();
+
+            this.fechaInicial = entity.getFechaInicial();
+
+            this.fechaInicial = entity.getFechaFinal();
+
+            if(entity.getConductor() != null){
+                this.conductor = new UsuarioDTO(entity.getConductor());
+            }else{
+                this.conductor = null;
+            }
+            if(entity.getInfoTrayecto() != null){
+                this.info = new TrayectoInfoDTO(entity.getInfoTrayecto());
+            }
         }
     }
     
-    
     public TrayectoEntity toEntity(){
         TrayectoEntity retorno = new TrayectoEntity();
-        retorno.setFechaFinal(fechaSalida);
-        retorno.setFechaInicial(fechaSalida);
+        retorno.setFechaFinal(this.getFechaFinal());
+        retorno.setFechaInicial(this.getFechaInicial());
+        if(getInfo() != null){
+            retorno.setInfoTrayecto((this.getInfo()).toEntity());
+        }if(getConductor() != null){
+            retorno.setConductor(this.getConductor().toEntity());
+        }
+        
         return retorno;
     }
-    
+
     /**
-     * @return the idTrayecto
+     * @return the id
      */
-    public Long getIdTrayecto() {
-        return idTrayecto;
+    public Long getId() {
+        return id;
     }
 
     /**
-     * @param idTrayecto the idTrayecto to set
+     * @param id the id to set
      */
-    public void setIdTrayecto(Long idTrayecto) {
-        this.idTrayecto = idTrayecto;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     /**
-     * @return the horaInicial
+     * @return the fechaInicial
      */
-    public Integer getHoraInicial() {
-        return horaInicial;
+    public Date getFechaInicial() {
+        return fechaInicial;
     }
 
     /**
-     * @param horaInicial the horaInicial to set
+     * @param fechaInicial the fechaInicial to set
      */
-    public void setHoraInicial(Integer horaInicial) {
-        this.horaInicial = horaInicial;
+    public void setFechaInicial(Date fechaInicial) {
+        this.fechaInicial = fechaInicial;
     }
 
     /**
-     * @return the horaFinal
+     * @return the fechaFinal
      */
-    public Integer getHoraFinal() {
-        return horaFinal;
+    public Date getFechaFinal() {
+        return fechaFinal;
     }
 
     /**
-     * @param horaFinal the horaFinal to set
+     * @param fechaFinal the fechaFinal to set
      */
-    public void setHoraFinal(Integer horaFinal) {
-        this.horaFinal = horaFinal;
-    }
-
-    /**
-     * @return the fechaSalida
-     */
-    public Date getFechaSalida() {
-        return fechaSalida;
-    }
-
-    /**
-     * @param fechaSalida the fechaSalida to set
-     */
-    public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
-    }
-
-    /**
-     * @return the fechaLlegada
-     */
-    public Date getFechaLlegada() {
-        return fechaLlegada;
-    }
-
-    /**
-     * @param fechaLlegada the fechaLlegada to set
-     */
-    public void setFechaLlegada(Date fechaLlegada) {
-        this.fechaLlegada = fechaLlegada;
-    }
-
-    /**
-     * @return the cupos
-     */
-    public Integer getCupos() {
-        return cupos;
-    }
-
-    /**
-     * @param cupos the cupos to set
-     */
-    public void setCupos(Integer cupos) {
-        this.cupos = cupos;
-    }
-
-    /**
-     * @return the info
-     */
-    public TrayectoInfoDTO getInfo() {
-        return info;
-    }
-
-    /**
-     * @param info the info to set
-     */
-    public void setInfo(TrayectoInfoDTO info) {
-        this.info = info;
+    public void setFechaFinal(Date fechaFinal) {
+        this.fechaFinal = fechaFinal;
     }
 
     /**
@@ -157,8 +119,20 @@ public class TrayectoDTO implements Serializable{
         this.conductor = conductor;
     }
 
+    /**
+     * @return the info
+     */
+    public TrayectoInfoDTO getInfo() {
+        return info;
+    }
 
-
-
+    /**
+     * @param info the info to set
+     */
+    public void setInfo(TrayectoInfoDTO info) {
+        this.info = info;
+    }
+    
+    
     
 }
