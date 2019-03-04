@@ -31,7 +31,7 @@ public class TrayectoDTO {
         
     }
     
-    public TrayectoDTO(TrayectoEntity entity){
+    /*public TrayectoDTO(TrayectoEntity entity){
         if(entity != null){
             this.id = entity.getId();
 
@@ -48,9 +48,9 @@ public class TrayectoDTO {
                 this.info = new TrayectoInfoDTO(entity.getInfoTrayecto());
             }
         }
-    }
+    }*/
     
-    public TrayectoEntity toEntity(){
+    /*public TrayectoEntity toEntity(){
         TrayectoEntity retorno = new TrayectoEntity();
         retorno.setFechaFinal(this.getFechaFinal());
         retorno.setFechaInicial(this.getFechaInicial());
@@ -61,7 +61,7 @@ public class TrayectoDTO {
         }
         
         return retorno;
-    }
+    }*/
 
     /**
      * @return the id

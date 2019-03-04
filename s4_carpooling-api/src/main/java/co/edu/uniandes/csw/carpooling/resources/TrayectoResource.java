@@ -40,22 +40,22 @@ public class TrayectoResource {
     private TrayectoLogic trayectoLogic;
     
     
-    @GET
+    /*@GET
     public List<TrayectoDTO> darTrayecto(){
         
         LOGGER.info("BookResource getBooks: input: void");
         List<TrayectoDTO> listaBooks = listEntity2DetailDTO(trayectoLogic.getTrayectos());
         LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaBooks);
         return listaBooks;
-    }
+    }*/
     
-     private List<TrayectoDTO> listEntity2DetailDTO(List<TrayectoEntity> entityList) {
+    /* private List<TrayectoDTO> listEntity2DetailDTO(List<TrayectoEntity> entityList) {
         List<TrayectoDTO> list = new ArrayList<>();
         for (TrayectoEntity entity : entityList) {
             list.add(new TrayectoDTO(entity));
         }
         return list;
-    }
+    }*/
     
     
     @POST
@@ -63,11 +63,11 @@ public class TrayectoResource {
         return trayecto;
     }
     
-    @DELETE
+    /*@DELETE
     @Path("{trayectosId: \\d+}")
     public void deleteBook(@PathParam("trayectosId") Long trayectosId) throws BusinessLogicException {
        LOGGER.log(Level.INFO, "BookResource deleteBook: input: {0}", trayectosId);
        trayectoLogic.deletetTrayecto(trayectosId);
        LOGGER.info("TrayectoResource deleteTrayecto: output: void");
-    }
+    }*/
 }
