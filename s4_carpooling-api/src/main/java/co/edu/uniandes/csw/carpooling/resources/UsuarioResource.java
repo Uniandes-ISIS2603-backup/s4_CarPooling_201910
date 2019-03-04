@@ -33,6 +33,7 @@ public class UsuarioResource {
     {
         return null;
     }
+    
     @GET
     @Path("{username: [a-zA-Z][a-zA-Z]*}}")
     public UsuarioDTO getUsuario(@PathParam("username")String username)
