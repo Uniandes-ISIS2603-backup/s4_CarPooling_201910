@@ -6,6 +6,8 @@
 package co.edu.uniandes.csw.carpooling.test.logic;
 
 import co.edu.uniandes.csw.carpooling.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
+import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
@@ -119,4 +121,123 @@ public class UsuarioLogicTest {
         newEntity.setUsername(data.get(0).getUsername());
         usuarioLogic.create(newEntity);
     }
+    
+     /**
+     * Prueba para crear un Book con ISBN inválido
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUserTestConUsernameInvalido() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setUsername("");
+        usuarioLogic.create(newEntity);
+    }
+
+    /**
+     * Prueba para crear un Book con ISBN inválido
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createUsuarioTestConISBNInvalido2() throws BusinessLogicException {
+        UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
+        newEntity.setUsername(null);
+        usuarioLogic.create(newEntity);
+    }
+    
+    /**
+     * Prueba para consultar la lista de Books.
+     */
+    @Test
+    public void getUsuariosTest() {
+        List<UsuarioEntity> list =usuarioLogic.getUsuarios();
+        Assert.assertEquals(data.size(), list.size());
+        for (UsuarioEntity entity : list) {
+            boolean found = false;
+            for (UsuarioEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+
+    /**
+     * Prueba para consultar un Book.
+     */
+    @Test
+    public void getUsuarioTest() {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity resultEntity = usuarioLogic.getUsuario(entity.getUsername());
+        Assert.assertNotNull(resultEntity);
+        Assert.assertEquals(entity.getId(), resultEntity.getId());
+        Assert.assertEquals(entity.getNombre(), resultEntity.getNombre());
+        Assert.assertEquals(entity.getUsername(), resultEntity.getUsername());
+    }
+
+    /**
+     * Prueba para actualizar un Book.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void updateUsuarioTest() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        UsuarioEntity pojoEntity = factory.manufacturePojo(UsuarioEntity.class);
+        pojoEntity.setUsername(entity.getUsername());
+        usuarioLogic.updateUsuario(pojoEntity.getUsername(), pojoEntity);
+        UsuarioEntity resp = em.find(UsuarioEntity.class, entity.getId());
+        Assert.assertEquals(entity.getId(), resp.getId());
+        Assert.assertEquals(entity.getNombre(), resp.getNombre());
+        Assert.assertEquals(entity.getUsername(), resp.getUsername());
+    }
+
+
+    /**
+     * Prueba para eliminar un Book.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test
+    public void deleteBookTest() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(0);
+        entity.setAlquilerArrendatario(null);
+        entity.setAlquilerDueño(null);
+        entity.setTrayectoActualPasajero(null);
+        entity.setTraycetoActualConductor(null);
+        entity.setPagoAHacer(null);
+        entity.setPagoARecibir(null);
+         try {
+            utx.begin();
+            UsuarioEntity mod = em.merge(entity);
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        usuarioLogic.deleteUsuario(mod.getUsername());
+        UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+
+    /**
+     * Prueba para eliminar un Book.
+     *
+     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void deleteBookWithAuthorTest() throws BusinessLogicException {
+        UsuarioEntity entity = data.get(1);
+        AlquilerEntity pojoEntity = factory.manufacturePojo(AlquilerEntity.class);
+        entity.setAlquilerArrendatario(pojoEntity);
+        usuarioLogic.deleteUsuario(entity.getUsername());
+    }
+    
+    
 }
