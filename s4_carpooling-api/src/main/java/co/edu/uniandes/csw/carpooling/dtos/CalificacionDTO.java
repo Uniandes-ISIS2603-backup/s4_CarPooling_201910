@@ -5,23 +5,32 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.CalificacionEntity;
 import java.io.Serializable;
 
 /**
  *
- * @author estudiante
+ * @author ja.morales11
  */
 public class CalificacionDTO implements Serializable{
     
     private int puntaje;
     private String comentario;
     private int idTrayectoCalificacion;
+    private UsuarioDTO calificado;
+    private UsuarioDTO calificador;
+    private TrayectoDTO trayecto;
 
     /**
      * Constructor CalificacionDTO
      */
-    public CalificacionDTO() {
-    
+    public CalificacionDTO(CalificacionEntity entity) {
+        if(entity!=null)
+        {
+            puntaje = entity.getPuntaje();
+            comentario = entity.getComentario();
+            idTrayectoCalificacion = entity.getIdTrayectoCalificacion();
+        }
     }
     
     /**
@@ -66,4 +75,60 @@ public class CalificacionDTO implements Serializable{
         this.idTrayectoCalificacion = idTrayectoCalificacion;
     }
     
+ 
+
+    /**
+     * @return the calificado
+     */
+    public UsuarioDTO getCalificado() {
+        return calificado;
+    }
+
+    /**
+     * @param calificado the calificado to set
+     */
+    public void setCalificado(UsuarioDTO calificado) {
+        this.calificado = calificado;
+    }
+
+    /**
+     * @return the calificador
+     */
+    public UsuarioDTO getCalificador() {
+        return calificador;
+    }
+
+    /**
+     * @param calificador the calificador to set
+     */
+    public void setCalificador(UsuarioDTO calificador) {
+        this.calificador = calificador;
+    }
+
+    /**
+     * @return the trayecto
+     */
+    public TrayectoDTO getTrayecto() {
+        return trayecto;
+    }
+
+    /**
+     * @param trayecto the trayecto to set
+     */
+    public void setTrayecto(TrayectoDTO trayecto) {
+        this.trayecto = trayecto;
+    }
+    
+    
+    
+       
+    
+    
+    public CalificacionEntity toEntity(){
+        CalificacionEntity entity = new CalificacionEntity();
+        entity.setPuntaje(puntaje);
+        entity.setComentario(comentario);
+        entity.setIdTrayectoCalificacion(idTrayectoCalificacion);
+        return entity;
+    }
 }
