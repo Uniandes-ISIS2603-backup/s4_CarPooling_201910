@@ -30,11 +30,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String username;
     private String password;
     private String correo;
- /*
+ 
    @PodamExclude
-   @OneToMany
+   @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
-   */ 
+    
    @PodamExclude
    @OneToMany(mappedBy="dueño")
    private List<AlquilerEntity> alquilerDueño = new ArrayList<AlquilerEntity>();
@@ -250,28 +250,98 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      * @return the notificacionesEnviadas
      */
     public List<NotificacionEntity> getNotificacionesEnviadas() {
-        return notificacionEnviada;
+        return getNotificacionEnviada();
     }
 
     /**
      * @param notificacionesEnviadas the notificacionesEnviadas to set
      */
     public void setNotificacionesEnviadas(List<NotificacionEntity> notificacionesEnviadas) {
-        this.notificacionEnviada = notificacionesEnviadas;
+        this.setNotificacionEnviada(notificacionesEnviadas);
     }
 
     /**
      * @return the notificacionesRecibidas
      */
     public List<NotificacionEntity> getNotificacionesRecibidas() {
-        return notificacionRecibida;
+        return getNotificacionRecibida();
     }
 
     /**
      * @param notificacionesRecibidas the notificacionesRecibidas to set
      */
     public void setNotificacionesRecibidas(List<NotificacionEntity> notificacionesRecibidas) {
-        this.notificacionRecibida = notificacionesRecibidas;
+        this.setNotificacionRecibida(notificacionesRecibidas);
+    }
+
+    /**
+     * @return the traycetoActualConductor
+     */
+    public TrayectoEntity getTraycetoActualConductor() {
+        return traycetoActualConductor;
+    }
+
+    /**
+     * @param traycetoActualConductor the traycetoActualConductor to set
+     */
+    public void setTraycetoActualConductor(TrayectoEntity traycetoActualConductor) {
+        this.traycetoActualConductor = traycetoActualConductor;
+    }
+
+    /**
+     * @return the trayectoActualPasajero
+     */
+    public TrayectoEntity getTrayectoActualPasajero() {
+        return trayectoActualPasajero;
+    }
+
+    /**
+     * @param trayectoActualPasajero the trayectoActualPasajero to set
+     */
+    public void setTrayectoActualPasajero(TrayectoEntity trayectoActualPasajero) {
+        this.trayectoActualPasajero = trayectoActualPasajero;
+    }
+
+    /**
+     * @return the vehiculos
+     */
+    public List<VehiculoEntity> getVehiculos() {
+        return vehiculos;
+    }
+
+    /**
+     * @param vehiculos the vehiculos to set
+     */
+    public void setVehiculos(List<VehiculoEntity> vehiculos) {
+        this.vehiculos = vehiculos;
+    }
+
+    /**
+     * @return the notificacionEnviada
+     */
+    public List<NotificacionEntity> getNotificacionEnviada() {
+        return notificacionEnviada;
+    }
+
+    /**
+     * @param notificacionEnviada the notificacionEnviada to set
+     */
+    public void setNotificacionEnviada(List<NotificacionEntity> notificacionEnviada) {
+        this.notificacionEnviada = notificacionEnviada;
+    }
+
+    /**
+     * @return the notificacionRecibida
+     */
+    public List<NotificacionEntity> getNotificacionRecibida() {
+        return notificacionRecibida;
+    }
+
+    /**
+     * @param notificacionRecibida the notificacionRecibida to set
+     */
+    public void setNotificacionRecibida(List<NotificacionEntity> notificacionRecibida) {
+        this.notificacionRecibida = notificacionRecibida;
     }
 
    
