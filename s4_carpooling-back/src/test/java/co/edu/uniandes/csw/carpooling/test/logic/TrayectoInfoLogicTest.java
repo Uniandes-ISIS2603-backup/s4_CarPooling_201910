@@ -53,7 +53,7 @@ public class TrayectoInfoLogicTest {
         Assert.assertNotNull(ae);
         TrayectoInfoEntity entity = em.find(TrayectoInfoEntity.class, ae.getId());
         Assert.assertEquals(newEntity.getCombustible(), entity.getCombustible());
-        //Assert.assertEquals(newEntity.getHoraFinal(), entity.getHoraFinal());
+        //Assert.assertEquals(newEntity.getHoraFinal().getDay(), entity.getHoraFinal().getDay());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
     
