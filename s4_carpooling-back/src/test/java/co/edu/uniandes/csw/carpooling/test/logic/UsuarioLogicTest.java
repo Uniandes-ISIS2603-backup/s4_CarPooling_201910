@@ -200,18 +200,30 @@ public class UsuarioLogicTest {
      *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
+<<<<<<< Updated upstream
     /*@Test
     public void deleteBookTest() throws BusinessLogicException {
+=======
+    @Test
+    public void deleteUsuarioTest() throws BusinessLogicException {
+>>>>>>> Stashed changes
         UsuarioEntity entity = data.get(0);
-        entity.setAlquilerArrendatario(null);
-        entity.setAlquilerDueño(null);
+        UsuarioEntity mod = null;
+        try {
+            utx.begin(); 
+            entity.setAlquilerArrendatario(null);
+            entity.setAlquilerDueño(null);
         entity.setTrayectoActualPasajero(null);
         entity.setTraycetoActualConductor(null);
         entity.setPagoAHacer(null);
         entity.setPagoARecibir(null);
+<<<<<<< Updated upstream
          try {
             utx.begin();
             UsuarioEntity mod = em.merge(entity);
+=======
+         mod = em.merge(entity);
+>>>>>>> Stashed changes
             utx.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -224,7 +236,7 @@ public class UsuarioLogicTest {
         usuarioLogic.deleteUsuario(mod.getUsername());
         UsuarioEntity deleted = em.find(UsuarioEntity.class, entity.getId());
         Assert.assertNull(deleted);
-    }*/
+    }
 
     /**
      * Prueba para eliminar un Book.
