@@ -13,6 +13,8 @@ import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -47,6 +49,8 @@ public class UsuarioLogicTest {
     private UserTransaction utx;
 
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+    
+    private static final Logger LOGGER = Logger.getLogger(UsuarioLogicTest.class.getName());
 
     
     @Deployment
@@ -199,33 +203,23 @@ public class UsuarioLogicTest {
      * Prueba para eliminar un Book.
      *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
-     */
-<<<<<<< Updated upstream
-    /*@Test
-    public void deleteBookTest() throws BusinessLogicException {
-=======
+     *
     @Test
-    public void deleteUsuarioTest() throws BusinessLogicException {
->>>>>>> Stashed changes
+    public void deleteBookTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity mod = null;
         try {
             utx.begin(); 
             entity.setAlquilerArrendatario(null);
             entity.setAlquilerDueño(null);
-        entity.setTrayectoActualPasajero(null);
-        entity.setTraycetoActualConductor(null);
-        entity.setPagoAHacer(null);
-        entity.setPagoARecibir(null);
-<<<<<<< Updated upstream
-         try {
-            utx.begin();
-            UsuarioEntity mod = em.merge(entity);
-=======
-         mod = em.merge(entity);
->>>>>>> Stashed changes
-            utx.commit();
-        } catch (Exception e) {
+            entity.setTrayectoActualPasajero(null);
+            entity.setTraycetoActualConductor(null);
+            entity.setPagoAHacer(null);
+            entity.setPagoARecibir(null);
+            mod = em.merge(entity);
+            LOGGER.log(Level.INFO, "El  dueño de mod null = {0}", entity.getAlquilerDueño()==null);
+
+            } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();

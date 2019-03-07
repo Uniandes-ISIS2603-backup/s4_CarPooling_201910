@@ -94,11 +94,11 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el usuario con username = {0}", username);
         UsuarioEntity usuario = getUsuario(username);
         if(usuario.getTraycetoActualConductor()!=null || usuario.getTrayectoActualPasajero()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene trayectos asociados");
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene trayectos asociados");
         if(usuario.getAlquilerArrendatario()!=null || usuario.getAlquilerDueño()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene alquileres asociados");
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene alquileres asociados");
         if(usuario.getPagoAHacer()!=null || usuario.getPagoARecibir()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene pagos asociados");
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene pagos asociados");
  
         persistence.delete(usuario.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar el libro con id = {0}", username);

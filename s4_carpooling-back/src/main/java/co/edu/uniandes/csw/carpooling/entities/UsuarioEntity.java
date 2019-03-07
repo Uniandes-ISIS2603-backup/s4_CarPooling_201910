@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -36,42 +37,40 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
     
    @PodamExclude
-   @OneToMany(mappedBy="dueño")
+   @CascadeOnDelete
+   @OneToMany(mappedBy="dueño", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<AlquilerEntity> alquilerDueño = new ArrayList<AlquilerEntity>();
    
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private AlquilerEntity alquilerArrendatario;
     
    @PodamExclude
-   @OneToMany
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
    private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
     
    @PodamExclude
-   @OneToMany
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
    private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
     
    @PodamExclude
-   @OneToMany
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
    private List<CalificacionEntity> calificaciones =  new ArrayList<CalificacionEntity>();
     
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private PagoEntity pagoARecibir;
     
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private PagoEntity pagoAHacer;
-    
-    
-   
-   
+  
    @PodamExclude
-   @OneToOne(mappedBy="conductor")
+   @OneToOne(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
    private TrayectoEntity traycetoActualConductor;
    
    @PodamExclude
-   @ManyToOne
+   @ManyToOne(cascade = CascadeType.ALL)
    private TrayectoEntity trayectoActualPasajero;
 
     
