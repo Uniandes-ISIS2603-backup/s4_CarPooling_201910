@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 /**
  *
  * @author estudiante
@@ -33,14 +33,19 @@ public class TrayectoPersistence {
     }
     
     public TrayectoEntity find(Long idTrayecto){
-        
+         LOGGER.log(Level.INFO, "Consultando el Trayecto con id={0}", idTrayecto);
         return em.find(TrayectoEntity.class, idTrayecto);
     }
     
     public List<TrayectoEntity> findAll(){
         
-        TypedQuery<TrayectoEntity> query = em.createQuery("select u TrayectoEntity u", TrayectoEntity.class);
+        Query query = em.createQuery("select u from TrayectoEntity u");
         return query.getResultList();
+    }
+    
+    public TrayectoEntity update(TrayectoEntity trayectoEntity) {
+        LOGGER.log(Level.INFO, "Actualizando el Trayecto con id={0}", trayectoEntity.getId());
+        return em.merge(trayectoEntity);
     }
 
     public void delete(Long trayectoId) {
