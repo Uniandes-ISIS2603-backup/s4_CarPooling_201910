@@ -20,6 +20,11 @@ import javax.persistence.Query;
 @Stateless
 public class TrayectoPersistence {
     
+    public static final Integer TRAYECTO_PASADO = 1;
+    public static final Integer TRAYECTO_ACTUAL = 2;
+    public static final Integer TRAYECTO_PLANEADO = 3;
+    public static final Integer TRAYECTODENEGADO = 4;
+    
     private static final Logger LOGGER = Logger.getLogger(TrayectoPersistence.class.getName());
     
     @PersistenceContext(unitName = "carpoolingPU")

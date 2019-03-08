@@ -7,6 +7,7 @@ package co.edu.uniandes.csw.carpooling.test.logic;
 
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoInfoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
+import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.TrayectoInfoPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,14 +95,14 @@ public class TrayectoInfoLogicTest {
     }
     
     @Test
-    public void createTrayectoInfoTest(){
+    public void createTrayectoInfoTest() throws BusinessLogicException{
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
         TrayectoInfoEntity ae = info.createEntity(newEntity);
         Assert.assertNotNull(ae);
         TrayectoInfoEntity entity = em.find(TrayectoInfoEntity.class, ae.getId());
         Assert.assertEquals(newEntity.getCombustible(), entity.getCombustible());
-        Assert.assertEquals(newEntity.getHoraFinal().getDay(), entity.getHoraFinal().getDay());
+        Assert.assertEquals(newEntity.getHoraFinal().getHours(), entity.getHoraFinal().getHours());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
     

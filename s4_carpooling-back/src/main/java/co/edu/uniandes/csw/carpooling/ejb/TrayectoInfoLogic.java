@@ -30,11 +30,11 @@ public class TrayectoInfoLogic {
         
         if(info.getHoraInicial() == null){
             throw new BusinessLogicException("El trayecto debe tener una hora de salida");
-        }if(info.getDuracion() < 0){
+        }/*if(info.getDuracion() < 0){
             throw new BusinessLogicException("la duración del trayecto no puede ser negativa");
         }if(info.getCosto() < 0 ){
             throw new BusinessLogicException("El costo del trayecto no puede ser negativo");
-        }
+        }*/
         info = persistence.create(info);
         return info;
     }
