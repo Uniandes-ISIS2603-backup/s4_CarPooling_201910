@@ -81,9 +81,13 @@ public class PagoLogic {
      * @param pagoId
      * @param pagoEntity
      * @return El nuevo pago.
+     * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
-    public PagoEntity updatePago(Long pagoId, PagoEntity pagoEntity) 
+    public PagoEntity updatePago(Long pagoId, PagoEntity pagoEntity) throws BusinessLogicException 
     {
+        if (pagoEntity.getId() == null) {
+            throw new BusinessLogicException("El pago no existe");
+        }
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el pago con id = {0}", pagoId);
         PagoEntity newEntity = persistence.update(pagoEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el pago con id = {0}", pagoEntity.getId());
