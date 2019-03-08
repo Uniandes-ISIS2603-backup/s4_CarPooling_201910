@@ -182,9 +182,10 @@ public class PagoLogicTest {
 
     /**
      * Prueba para actualizar un pago.
+     * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
     @Test
-    public void updatePagoTest() {
+    public void updatePagoTest() throws BusinessLogicException {
         PagoEntity entity = data.get(0);
         PagoEntity pojoEntity = factory.manufacturePojo(PagoEntity.class);
 
@@ -210,4 +211,3 @@ public class PagoLogicTest {
     }
 
 }
-

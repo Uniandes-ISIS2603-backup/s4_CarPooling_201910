@@ -33,32 +33,30 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class PagoResource {
-    
+
     private static final Logger LOGGER = Logger.getLogger(PagoResource.class.getName());
-    
+
     @Inject
     private PagoLogic logic;
-    
+
     /**
      * Busca el pago con el id asociado recibido en la URL y lo devuelve.
      *
      * @param id Identificador del pago que se esta buscando.
-     * @return JSON {@link BookDTO} - El pago buscado
+     * @return JSON {@link PagoDTO} - El pago buscado
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el pago.
      */
     @GET
     @Path("{id: \\d+}")
-    public PagoDTO getPago(@PathParam("id")Long id)
-    {
+    public PagoDTO getPago(@PathParam("id") Long id) {
         PagoEntity pago = logic.getPago(id);
-        if(pago == null)
-        {
-            throw new WebApplicationException("El recurso pago id: "+id+" no existe", 404);
+        if (pago == null) {
+            throw new WebApplicationException("El recurso pago id: " + id + " no existe", 404);
         }
         return new PagoDTO(pago);
     }
-    
+
     /**
      * Busca y devuelve todos los pagos que existen en la aplicacion.
      *
@@ -66,29 +64,28 @@ public class PagoResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List getPagos()
-    {
+    public List getPagos() {
         List<PagoDTO> pagos = listEntityToDTO(logic.getPagos());
         return pagos;
     }
-    
+
     /**
      * Crea un nuevo pago.
      *
-     * @param pago {@link BookDTO} - EL pago que se desea guardar.
-     * @return JSON {@link BookDTO} - El pago guardado con el atributo id
+     * @param pago {@link PagoDTO} - EL pago que se desea guardar.
+     * @return JSON {@link PagoDTO} - El pago guardado con el atributo id
      * autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando ya existe el pago o no tiene tarjetas asociadas.
+     * Error de lógica que se genera cuando ya existe el pago o no tiene
+     * tarjetas asociadas.
      */
     @POST
-    public PagoDTO createPago(PagoDTO pago) throws BusinessLogicException
-    {
+    public PagoDTO createPago(PagoDTO pago) throws BusinessLogicException {
         PagoEntity entity = pago.toEntity();
         entity = logic.createPago(entity);
         return new PagoDTO(entity);
     }
-    
+
     /**
      * Actualiza el pago con el id recibido.
      *
@@ -103,13 +100,12 @@ public class PagoResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public PagoDTO updatePago(@PathParam("id")Long id, PagoDTO pago) throws BusinessLogicException
-    {
+    public PagoDTO updatePago(@PathParam("id") Long id, PagoDTO pago) throws BusinessLogicException {
         PagoEntity entity = pago.toEntity();
         entity = logic.updatePago(id, entity);
         return new PagoDTO(entity);
     }
-    
+
     /**
      * Borra el pago con el id asociado recibido en la URL.
      *
@@ -120,17 +116,17 @@ public class PagoResource {
      */
     @DELETE
     @Path("{id: \\d+}")
-    public void deletePago(@PathParam("id")Long id) throws BusinessLogicException
-    {
+    public void deletePago(@PathParam("id") Long id) throws BusinessLogicException {
         PagoEntity entity = logic.getPago(id);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /pagos/" + id + "no existe." ,404);
+            throw new WebApplicationException("El recurso /pagos/" + id + "no existe.", 404);
         }
         logic.deletePago(id);
     }
-    
+
     /**
      * Se utiliza un método para convertir una lista de Entidades a DTOs.
+     *
      * @param pago
      * @return una lista de DTOs.
      */

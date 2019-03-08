@@ -21,20 +21,20 @@ import javax.inject.Inject;
  */
 @Stateless
 public class PagoLogic {
-    
+
     private static final Logger LOGGER = Logger.getLogger(PagoLogic.class.getName());
-    
+
     @Inject
     private PagoPersistence persistence;
-    
+
     /**
      * Crea un pago.
+     *
      * @param pago
      * @return pago creado
      * @throws BusinessLogicException Si existe un pago con el mismo id.
      */
-    public PagoEntity createPago(PagoEntity pago) throws BusinessLogicException
-    {
+    public PagoEntity createPago(PagoEntity pago) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del pago");
         if (persistence.find(pago.getId()) != null) {
             throw new BusinessLogicException("Ya existe una un pago con el id \"" + pago.getId() + "\"");
@@ -47,26 +47,26 @@ public class PagoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de creación del pago");
         return pago;
     }
-    
+
     /**
      * Consulta todos los pagos.
-     * @return 
+     *
+     * @return
      */
-    public List<PagoEntity> getPagos() 
-    {
+    public List<PagoEntity> getPagos() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los pagos");
         List<PagoEntity> pagos = persistence.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los pagos");
         return pagos;
     }
-        
+
     /**
      * Consultar un pago.
+     *
      * @param pagoId
      * @return El pago, si existe.
      */
-    public PagoEntity getPago(Long pagoId) 
-    {
+    public PagoEntity getPago(Long pagoId) {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar el pago con id = {0}", pagoId);
         PagoEntity pagoEntity = persistence.find(pagoId);
         if (pagoEntity == null) {
@@ -75,16 +75,16 @@ public class PagoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de consultar el pago con id = {0}", pagoId);
         return pagoEntity;
     }
-     
+
     /**
      * Actualiza el pago.
+     *
      * @param pagoId
      * @param pagoEntity
      * @return El nuevo pago.
      * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
-    public PagoEntity updatePago(Long pagoId, PagoEntity pagoEntity) throws BusinessLogicException 
-    {
+    public PagoEntity updatePago(Long pagoId, PagoEntity pagoEntity) throws BusinessLogicException {
         if (pagoEntity.getId() == null) {
             throw new BusinessLogicException("El pago no existe");
         }
@@ -93,14 +93,14 @@ public class PagoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el pago con id = {0}", pagoEntity.getId());
         return newEntity;
     }
-    
+
     /**
      * Borra el pago con el id pasado por parámetro.
+     *
      * @param pagoId
-     * @throws BusinessLogicException 
+     * @throws BusinessLogicException
      */
-    public void deletePago(Long pagoId) throws BusinessLogicException 
-    {
+    public void deletePago(Long pagoId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el pago con id = {0}", pagoId);
         if (persistence.find(pagoId) == null) {
             throw new BusinessLogicException("El pago con el id: " + pagoId + "no existe");
