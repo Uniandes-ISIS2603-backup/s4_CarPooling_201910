@@ -215,8 +215,8 @@ public class UsuarioLogicTest {
             utx.begin(); 
             entity.setAlquilerArrendatario(null);
             entity.setAlquilerDueño(new ArrayList<AlquilerEntity>());
-            entity.setTrayectoActualPasajero(null);
-            entity.setTrayecetoActualConductor(null);
+            entity.setTrayectoActualPasajero(new ArrayList<TrayectoEntity>());
+            entity.setTrayecetoActualConductor(new ArrayList<TrayectoEntity>());
             entity.setPagoAHacer(null);
             entity.setPagoARecibir(null);
             mod = em.merge(entity);
@@ -281,7 +281,7 @@ public class UsuarioLogicTest {
         try {
             utx.begin();
             entity.getVehiculos().add(vehiculoEj);
-            entity.setTrayectoActualPasajero(trayectoActual);
+            entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
             } catch (Exception e) {
             e.printStackTrace();
@@ -314,7 +314,7 @@ public class UsuarioLogicTest {
         try {
             utx.begin();
             entity.setVehiculos(new ArrayList<VehiculoEntity>());
-            entity.setTrayectoActualPasajero(trayectoActual);
+            entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
             } catch (Exception e) {
             e.printStackTrace();
@@ -348,7 +348,7 @@ public class UsuarioLogicTest {
         try {
             utx.begin();
             entity.getVehiculos().add(vehiculoEj);
-            entity.setTrayectoActualPasajero(trayectoActual);
+            entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
             } catch (Exception e) {
             e.printStackTrace();

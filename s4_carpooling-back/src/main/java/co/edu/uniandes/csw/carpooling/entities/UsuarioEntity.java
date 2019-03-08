@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -66,12 +67,12 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    private PagoEntity pagoAHacer;
   
    @PodamExclude
-   @OneToOne(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
-   private TrayectoEntity trayecetoActualConductor;
+   @OneToMany(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<TrayectoEntity> trayecetoActualConductor;
    
    @PodamExclude
-   @ManyToOne(cascade = CascadeType.ALL)
-   private TrayectoEntity trayectoActualPasajero;
+   @ManyToMany(cascade = CascadeType.ALL)
+   private  List<TrayectoEntity> trayectoActualPasajero;
 
     
     public UsuarioEntity(){
@@ -276,28 +277,28 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     /**
      * @return the trayecetoActualConductor
      */
-    public TrayectoEntity getTrayecetoActualConductor() {
+    public List<TrayectoEntity> getTrayecetoActualConductor() {
         return trayecetoActualConductor;
     }
 
     /**
      * @param trayecetoActualConductor the trayecetoActualConductor to set
      */
-    public void setTrayecetoActualConductor(TrayectoEntity trayecetoActualConductor) {
+    public void setTrayecetoActualConductor(List<TrayectoEntity>  trayecetoActualConductor) {
         this.trayecetoActualConductor = trayecetoActualConductor;
     }
 
     /**
      * @return the trayectoActualPasajero
      */
-    public TrayectoEntity getTrayectoActualPasajero() {
+    public List<TrayectoEntity>  getTrayectoActualPasajero() {
         return trayectoActualPasajero;
     }
 
     /**
      * @param trayectoActualPasajero the trayectoActualPasajero to set
      */
-    public void setTrayectoActualPasajero(TrayectoEntity trayectoActualPasajero) {
+    public void setTrayectoActualPasajero(List<TrayectoEntity>  trayectoActualPasajero) {
         this.trayectoActualPasajero = trayectoActualPasajero;
     }
 

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -30,20 +32,12 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     private Integer estado;
     
     @PodamExclude
-    @OneToOne
+    @ManyToOne
     private UsuarioEntity conductor;
     
     @PodamExclude
-    @OneToMany(mappedBy = "trayectoActualPasajero")
+    @ManyToMany(mappedBy = "trayectoActualPasajero")
     private List<UsuarioEntity> pasajeros;
-    
-    @PodamExclude
-    @OneToOne
-    private UsuarioEntity trayectoActualConductor;
-    
-    @PodamExclude
-    @OneToOne
-    private UsuarioEntity usuarioActualPasajero;
     
     @PodamExclude
     @OneToOne(orphanRemoval = true)
@@ -115,33 +109,7 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     }
 
     /**
-     * @return the trayectoActualConductor
-     */
-    public UsuarioEntity getTrayectoActualConductor() {
-        return trayectoActualConductor;
-    }
-
-    /**
-     * @param trayectoActualConductor the trayectoActualConductor to set
-     */
-    public void setTrayectoActualConductor(UsuarioEntity trayectoActualConductor) {
-        this.trayectoActualConductor = trayectoActualConductor;
-    }
-
-    /**
-     * @return the usuarioActualPasajero
-     */
-    public UsuarioEntity getUsuarioActualPasajero() {
-        return usuarioActualPasajero;
-    }
-
-    /**
-     * @param usuarioActualPasajero the usuarioActualPasajero to set
-     */
-    public void setUsuarioActualPasajero(UsuarioEntity usuarioActualPasajero) {
-        this.usuarioActualPasajero = usuarioActualPasajero;
-    }
-
+   
     /**
      * @return the infoTrayecto
      */
