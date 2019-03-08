@@ -67,7 +67,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
   
    @PodamExclude
    @OneToOne(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
-   private TrayectoEntity traycetoActualConductor;
+   private TrayectoEntity trayecetoActualConductor;
    
    @PodamExclude
    @ManyToOne(cascade = CascadeType.ALL)
@@ -274,17 +274,17 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the traycetoActualConductor
+     * @return the trayecetoActualConductor
      */
-    public TrayectoEntity getTraycetoActualConductor() {
-        return traycetoActualConductor;
+    public TrayectoEntity getTrayecetoActualConductor() {
+        return trayecetoActualConductor;
     }
 
     /**
-     * @param traycetoActualConductor the traycetoActualConductor to set
+     * @param trayecetoActualConductor the trayecetoActualConductor to set
      */
-    public void setTraycetoActualConductor(TrayectoEntity traycetoActualConductor) {
-        this.traycetoActualConductor = traycetoActualConductor;
+    public void setTrayecetoActualConductor(TrayectoEntity trayecetoActualConductor) {
+        this.trayecetoActualConductor = trayecetoActualConductor;
     }
 
     /**

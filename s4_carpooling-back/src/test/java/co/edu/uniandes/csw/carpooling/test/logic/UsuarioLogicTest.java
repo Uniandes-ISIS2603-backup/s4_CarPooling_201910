@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.carpooling.test.logic;
 import co.edu.uniandes.csw.carpooling.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
@@ -203,17 +204,17 @@ public class UsuarioLogicTest {
      * Prueba para eliminar un Book.
      *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
-     *
+     */
     @Test
-    public void deleteBookTest() throws BusinessLogicException {
+    public void deleteUsuarioTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity mod = null;
         try {
             utx.begin(); 
             entity.setAlquilerArrendatario(null);
-            entity.setAlquilerDueño(null);
+            entity.setAlquilerDueño(new ArrayList<AlquilerEntity>());
             entity.setTrayectoActualPasajero(null);
-            entity.setTraycetoActualConductor(null);
+            entity.setTrayecetoActualConductor(null);
             entity.setPagoAHacer(null);
             entity.setPagoARecibir(null);
             mod = em.merge(entity);
@@ -238,11 +239,25 @@ public class UsuarioLogicTest {
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void deleteBookWithAuthorTest() throws BusinessLogicException {
+    public void deleteUsuarioWithAuthorTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         AlquilerEntity pojoEntity = factory.manufacturePojo(AlquilerEntity.class);
-        entity.setAlquilerArrendatario(pojoEntity);
-        usuarioLogic.deleteUsuario(entity.getUsername());
+        UsuarioEntity mod = null;
+        try {
+            utx.begin(); 
+            
+            entity.setAlquilerArrendatario(pojoEntity);
+            mod = em.merge(entity);
+            LOGGER.log(Level.INFO, "El  dueño de mod null = {0}", entity.getAlquilerArrendatario()==null);
+            } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        usuarioLogic.deleteUsuario(mod.getUsername());
     }
     
     
