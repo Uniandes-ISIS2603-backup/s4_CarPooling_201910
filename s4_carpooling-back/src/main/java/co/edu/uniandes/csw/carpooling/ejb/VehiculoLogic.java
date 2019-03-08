@@ -55,7 +55,7 @@ public class VehiculoLogic
     }
     public void delete(Long id) throws BusinessLogicException
     {
-        AlquilerEntity alquiler = get(id).getInfoAlquiler();
+        AlquilerEntity alquiler = get(id).getAlquilerInfo();
         if (alquiler != null)
         {
             throw new BusinessLogicException ("No se puede borrar el vehículo con id: " + id + " porque tiene un alquiler asociado");

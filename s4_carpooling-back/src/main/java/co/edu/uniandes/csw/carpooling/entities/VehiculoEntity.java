@@ -25,11 +25,11 @@ private String color;
 private String placa;
 private Boolean alquilado;
 
-/**
+
  @PodamExclude
     @OneToOne(mappedBy="vehiculoAlquilado")
 private AlquilerEntity alquilerInfo;
- */
+
     public VehiculoEntity()
     {
         
@@ -79,18 +79,18 @@ private AlquilerEntity alquilerInfo;
 
     /**
      * @return the alquilerInfo
-     
+     */
     public AlquilerEntity getAlquilerInfo() {
         return alquilerInfo;
     }
-*/
+
     /**
      * @param alquilerInfo the alquilerInfo to set
-     
+     */
     public void setAlquilerInfo(AlquilerEntity alquilerInfo) {
         this.alquilerInfo = alquilerInfo;
     }
-    */
+   
     
     /**
      * @return the alquilado
