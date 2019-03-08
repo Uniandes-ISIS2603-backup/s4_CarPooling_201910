@@ -26,11 +26,11 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
    @PodamExclude
    @OneToOne(mappedBy="alquilerArrendatario")
    private UsuarioEntity arrendatario;
-   /*
+   
    @PodamExclude
-   @OneToOne(mappedBy="alquilerInfo")
+   @OneToOne
    private VehiculoEntity vehiculoAlquilado;
-   */
+   
    
    @PodamExclude
    @OneToOne

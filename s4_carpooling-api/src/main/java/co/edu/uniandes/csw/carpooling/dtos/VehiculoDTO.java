@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import java.io.Serializable;
 
 /**
@@ -75,10 +76,25 @@ public class VehiculoDTO implements Serializable
     /**
      * @param alquilado the alquilado to set
      */
-    public void setAlquilado(Boolean alquilado) {
+    public void setAlquilado(Boolean alquilado)
+    {
         this.alquilado = alquilado;
     }
     
     
+    /**
+     * Método para transformar el DTO a una entidad.
+     *
+     * @return La entidad del libro asociado.
+     */
     
+    public VehiculoEntity toEntity() {
+        VehiculoEntity vehiculoEntity = new VehiculoEntity();
+        vehiculoEntity.setModelo(this.modelo);
+        vehiculoEntity.setPlaca(this.placa);
+        vehiculoEntity.setAlquilado(this.alquilado);
+        
+        return vehiculoEntity;
+    }
+   
 }
