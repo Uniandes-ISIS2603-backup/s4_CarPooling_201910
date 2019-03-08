@@ -109,19 +109,19 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un trayceto en el que el usuario con username = {0} es conductor", username);
         UsuarioEntity usuario = getUsuario(username);
         if (usuario.getVehiculos().isEmpty())
-            throw new BusinessLogicException("El usuario = " + username + " no puede crear un ytrayecto puesto que no tiene vehiculos");
+            throw new BusinessLogicException("El usuario = " + username + " no puede crear un trayecto puesto que no tiene vehiculos");
         TrayectoEntity traycetoActualC = usuario.getTrayecetoActualConductor();
         TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
 
         if(traycetoActualC!=null)
         {
-            if(traycetoActualC.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualC.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualC.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualC.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
         if(traycetoActualP!=null)
         {
-            if(traycetoActualP.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualP.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualP.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualP.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }

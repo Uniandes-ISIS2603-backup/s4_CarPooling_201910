@@ -10,9 +10,11 @@ import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
+import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -259,6 +261,108 @@ public class UsuarioLogicTest {
         }
         usuarioLogic.deleteUsuario(mod.getUsername());
     }
+    /**
+     * crear un trayecto sin problemas
+     * @throws BusinessLogicException 
+     */
+    @Test
+    public void createTrayectoConductorTest() throws BusinessLogicException
+    {
+        UsuarioEntity entity = data.get(1);
+        VehiculoEntity vehiculoEj = factory.manufacturePojo(VehiculoEntity.class);
+        TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
+        TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
+        trayectoDeseado.setFechaInicial(new Date(2000, 3, 1));
+        trayectoDeseado.setFechaFinal(new Date(2000, 3, 2));
+        trayectoActual.setFechaInicial(new Date(2000, 4, 1));
+        trayectoActual.setFechaFinal(new Date(2000, 4, 2));
+        
+        UsuarioEntity mod = null;
+        try {
+            utx.begin();
+            entity.getVehiculos().add(vehiculoEj);
+            entity.setTrayectoActualPasajero(trayectoActual);
+            mod = em.merge(entity);
+            } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        usuarioLogic.createTrayectoConductor(mod.getUsername(), trayectoDeseado);
+        configTest();
+    }
+    
+    /**
+     * crear un trayecto sin vehiculo
+     * @throws BusinessLogicException 
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createTrayectoConductorSinVehiculo() throws BusinessLogicException
+    {
+        UsuarioEntity entity = data.get(1);
+        TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
+        TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
+        trayectoDeseado.setFechaInicial(new Date(2000, 3, 1));
+        trayectoDeseado.setFechaFinal(new Date(2000, 3, 2));
+        trayectoActual.setFechaInicial(new Date(2000, 4, 1));
+        trayectoActual.setFechaFinal(new Date(2000, 4, 2));
+        
+        UsuarioEntity mod = null;
+        try {
+            utx.begin();
+            entity.setVehiculos(new ArrayList<VehiculoEntity>());
+            entity.setTrayectoActualPasajero(trayectoActual);
+            mod = em.merge(entity);
+            } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        usuarioLogic.createTrayectoConductor(mod.getUsername(), trayectoDeseado);
+        configTest();
+
+    }
+    
+    /**
+     * crear un trayecto sin problemas
+     * @throws BusinessLogicException 
+     */
+    @Test(expected = BusinessLogicException.class)
+    public void createTrayectoConductorConViajesIguales() throws BusinessLogicException
+    {
+        UsuarioEntity entity = data.get(1);
+        VehiculoEntity vehiculoEj = factory.manufacturePojo(VehiculoEntity.class);
+        TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
+        TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
+        trayectoDeseado.setFechaInicial(new Date(2000, 3, 2));
+        trayectoDeseado.setFechaFinal(new Date(2000, 3, 2));
+        trayectoActual.setFechaInicial(new Date(2000, 3, 2));
+        trayectoActual.setFechaFinal(new Date(2000, 3, 2));
+        UsuarioEntity mod = null;
+        try {
+            utx.begin();
+            entity.getVehiculos().add(vehiculoEj);
+            entity.setTrayectoActualPasajero(trayectoActual);
+            mod = em.merge(entity);
+            } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        usuarioLogic.createTrayectoConductor(mod.getUsername(), trayectoDeseado);
+        configTest();
+
+    }
+    
     
     
 }
