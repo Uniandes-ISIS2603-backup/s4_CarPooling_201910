@@ -28,31 +28,29 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author jf.garcia
  */
-
 @RunWith(Arquillian.class)
 public class PagoPersistenceTest {
-   
+
     @Inject
     private PagoPersistence pagoPersistence;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private List<PagoEntity> data = new ArrayList<PagoEntity>();
 
-    
     @Deployment
-    public static JavaArchive createDeployment (){
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(PagoEntity.class.getPackage())
                 .addPackage(PagoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -102,7 +100,7 @@ public class PagoPersistenceTest {
      */
     @Test
     public void createPagoTest() {
-        
+
         PodamFactory factory = new PodamFactoryImpl();
         PagoEntity newEntity = factory.manufacturePojo(PagoEntity.class);
         PagoEntity result = pagoPersistence.create(newEntity);
@@ -113,7 +111,7 @@ public class PagoPersistenceTest {
 
         Assert.assertEquals(newEntity.getValor(), entity.getValor());
     }
-    
+
     /**
      * Prueba para consultar la lista de pagos.
      */
@@ -160,7 +158,7 @@ public class PagoPersistenceTest {
 
         Assert.assertEquals(newEntity.getValor(), resp.getValor());
     }
-    
+
     /**
      * Prueba para eliminar un pago.
      */

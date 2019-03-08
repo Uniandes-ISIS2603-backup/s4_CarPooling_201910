@@ -27,6 +27,8 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
     
+    private Integer estado;
+    
     @PodamExclude
     @OneToOne
     private UsuarioEntity conductor;
@@ -166,6 +168,20 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
      */
     public void setPago(List<PagoEntity> pago) {
         this.pago = pago;
+    }
+
+    /**
+     * @return the estado
+     */
+    public Integer getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
         
 }

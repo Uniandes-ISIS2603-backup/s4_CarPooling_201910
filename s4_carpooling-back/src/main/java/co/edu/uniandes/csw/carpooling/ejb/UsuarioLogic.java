@@ -93,12 +93,12 @@ public class UsuarioLogic {
     public void deleteUsuario(String username) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el usuario con username = {0}", username);
         UsuarioEntity usuario = getUsuario(username);
-        if(usuario.getTraycetoActualConductor()!=null || usuario.getTrayectoActualPasajero()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene trayectos asociados");
-        if(usuario.getAlquilerArrendatario()!=null || usuario.getAlquilerDueño()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene alquileres asociados");
+        if(usuario.getTrayecetoActualConductor()!=null || usuario.getTrayectoActualPasajero()!=null )
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene trayectos asociados");
+        if(usuario.getAlquilerArrendatario()!=null || !usuario.getAlquilerDueño().isEmpty() )
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene alquileres asociados");
         if(usuario.getPagoAHacer()!=null || usuario.getPagoARecibir()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene pagos asociados");
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene pagos asociados");
  
         persistence.delete(usuario.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar el libro con id = {0}", username);
@@ -109,23 +109,23 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un trayceto en el que el usuario con username = {0} es conductor", username);
         UsuarioEntity usuario = getUsuario(username);
         if (usuario.getVehiculos().isEmpty())
-            throw new BusinessLogicException("El usuario = " + username + " no puede crear un ytrayecto puesto que no tiene vehiculos");
-        TrayectoEntity traycetoActualC = usuario.getTraycetoActualConductor();
+            throw new BusinessLogicException("El usuario = " + username + " no puede crear un trayecto puesto que no tiene vehiculos");
+        TrayectoEntity traycetoActualC = usuario.getTrayecetoActualConductor();
         TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
 
         if(traycetoActualC!=null)
         {
-            if(traycetoActualC.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualC.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualC.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualC.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
         if(traycetoActualP!=null)
         {
-            if(traycetoActualP.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualP.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualP.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualP.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
-        usuario.setTraycetoActualConductor(trayectoDeseado);
+        usuario.setTrayecetoActualConductor(trayectoDeseado);
         LOGGER.log(Level.INFO, "Termina proceso de crear un trayceto en el que el usuario con username = {0} es conductor", username);
 
     }
@@ -134,7 +134,7 @@ public class UsuarioLogic {
     {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un trayceto en el que el usuario con username = {0} es pasajero", username);
         UsuarioEntity usuario = getUsuario(username);
-        TrayectoEntity traycetoActualC = usuario.getTraycetoActualConductor();
+        TrayectoEntity traycetoActualC = usuario.getTrayecetoActualConductor();
         TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
 
         if(traycetoActualC!=null)
@@ -201,7 +201,7 @@ public class UsuarioLogic {
     public void solicitarViaje(NotificacionEntity mensaje,TrayectoEntity trayectoDeseado, String username) throws BusinessLogicException
     {
         UsuarioEntity usuario = getUsuario(username);
-        TrayectoEntity traycetoActualC = usuario.getTraycetoActualConductor();
+        TrayectoEntity traycetoActualC = usuario.getTrayecetoActualConductor();
         TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
 
         if(traycetoActualC!=null)
