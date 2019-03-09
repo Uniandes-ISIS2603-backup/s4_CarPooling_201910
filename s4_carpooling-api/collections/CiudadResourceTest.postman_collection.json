@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "29ae5f72-5511-4ea6-8f1d-722ae5894bd7",
+		"name": "CiudadResourceTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/ciudades",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1417eb5d-ef2e-4e74-a7e5-87d018b45b13",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_nombre_e\",data.nombre);",
+							"tests[\"no genera error en el Post\"] = data.nombre === \"Sa\";"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nombre\" : \"Sa\",\n\"coordenadas\" : [\"019232\", \"985672\"]}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/ciudades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"ciudades"
+					]
+				},
+				"description": "Crear una ciudad sin nombre repetido."
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/ciudades",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "43f62966-40c7-4d65-bd6f-df1bccd5180d",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe la ciudad de nombre: Sa\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"nombre\" : \"Sa\",\n\"coordenadas\" : [\"019232\", \"985672\"]}\n"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/ciudades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"ciudades"
+					]
+				},
+				"description": "Crear ciudad con el mismo nombre de una ya existente"
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/ciudades",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c93b1172-bfde-49ad-9ef7-2d483df28c6e",
+						"exec": [
+							"var data= JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get all\"] = responseCode.code === 200;",
+							"tests[\"ciudades count\"] = data.length > 1;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/ciudades",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"ciudades"
+					]
+				},
+				"description": "Obtiene las ciudades en la tabla"
+			},
+			"response": []
+		}
+	]
+}
