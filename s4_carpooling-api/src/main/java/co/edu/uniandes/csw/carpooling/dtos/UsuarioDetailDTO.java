@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.carpooling.entities.NotificacionEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
  *
  * @author estudiante
  */
-public class UsuarioDetailDTO extends UsuarioDTO {
+public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     
     private List<NotificacionDTO> notificacionesEnviadas;
     private List<NotificacionDTO> notificacionesRecibidas;
