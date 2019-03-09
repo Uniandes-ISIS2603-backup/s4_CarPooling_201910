@@ -21,7 +21,7 @@ import javax.ws.rs.Produces;
 
 /**
  *
- * @author 
+ * @im.sarmiento 
  */
 
 @Path("usuarios")
@@ -29,21 +29,27 @@ import javax.ws.rs.Produces;
 @Consumes("application/json")
 @RequestScoped
 public class UsuarioResource {
-    
-    //Isa, falta documentar cada método, poner tu nombre de usuario en el autor, y revisar que la implementación funcione.
-    //Las excepciones las manejé como en los ejemplos, la clase resource también lanza las excepciones de lógica. Corrige y organiza a tu gusto.
 
     private static final Logger LOGGER = Logger.getLogger(UsuarioResource.class.getName());
     
     @Inject
     private UsuarioLogic logic;
    
+    /**
+     * 
+     * @return la lista de todos los usuarios 
+     */
     @GET
     public List getUsuarios()
     {
         List<UsuarioDTO> usuarios = listEntityToDTO(logic.getUsuarios());
         return usuarios;
     }
+    /**
+     * 
+     * @param username el nombre de usuario deseado
+     * @return el usuario especificado
+     */
     @GET
     @Path("{username: [a-zA-Z][a-zA-Z]*}}")
     public UsuarioDTO getUsuario(@PathParam("username")String username)
@@ -54,12 +60,26 @@ public class UsuarioResource {
         }
         return new UsuarioDTO(usuario);
     }
+    /**
+     * 
+     * @param usuario el usuario a crear en forma de DTO
+     * @return el usuario creado
+     * @throws BusinessLogicException segun las reglas de la lògica
+     */
     @POST
     public UsuarioDTO createUsuario(UsuarioDTO usuario) throws BusinessLogicException{
         UsuarioEntity entity = usuario.toEntity();
         entity = logic.create(entity);
         return new UsuarioDTO(entity);
     }
+    
+    /**
+     * 
+     * @param username usuario anterior que se queria aplicar 
+     * @param usuario nuevo con la nueva informacion
+     * @return el usuario modificado 
+     * @throws BusinessLogicException si no se cumplean las reglas de la lògica
+     */
     @PUT
     @Path("{username: [a-zA-Z][a-zA-Z]*}}")
     public UsuarioDTO updateUsuario(@PathParam("username")String username, UsuarioDTO usuario) throws BusinessLogicException
@@ -68,10 +88,20 @@ public class UsuarioResource {
         entity = logic.updateUsuario(username, entity);
         return new UsuarioDTO(entity);
     }
+    
+    /**
+     * 
+     * @param username del usuario que se quiere borrar
+     * @throws BusinessLogicException si no se cumplen las reglas de la logica
+     */
     @DELETE
     @Path("{username: [a-zA-Z][a-zA-Z]*}}")
     public void deleteUsuario(@PathParam("username")String username) throws BusinessLogicException
     {
+        UsuarioEntity usuario = logic.getUsuario(username);
+        if (usuario == null) {
+            throw new WebApplicationException("El usuario con nombre: " + username + "no existe", 404);
+        }
         logic.deleteUsuario(username);
     }
     
