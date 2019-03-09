@@ -2,6 +2,8 @@ delete from AlquilerEntity;
 delete from SeguroEntity;
 delete from PeajeEntity;
 delete from UsuarioEntity;
+delete from PagoEntity;
+delete from InfoTCEntity;
 
 insert into AlquilerEntity (id, nombre) values (100,'alquiler1');
 insert into AlquilerEntity (id, nombre) values (200,'alquiler2');
@@ -26,3 +28,21 @@ values (200,'Isabela','Sarmiento',2222222,31111111,'IsaPro','1s4b3ll4','1234@gma
 
 insert into UsuarioEntity (id, nombre, apellido,documento,celular,username,password,correo) 
 values (300,'Julio','Morales',333333,41111111,'juliNightmare','juli1234','12345@gmail.com');
+
+insert into PagoEntity (id, valor)
+values (100, 10);
+
+insert into PagoEntity (id, valor)
+values (200, 2);
+
+insert into PagoEntity (id, valor)
+values (300, 15);
+
+insert info InfoTCEntity (id, t1, t2, entidad1, entidad2)
+values (100, '87653432156','12323434556','BancoBogota','Davivienda');
+
+insert info InfoTCEntity (id, t1, t2, entidad1, entidad2)
+values (200, '34576567809','12323432123','Bancolombia','Itahu');
+
+insert info InfoTCEntity (id, t1, t2, entidad1, entidad2)
+values (300, '98045667832','13243253478','Itahu','BancoBogota');
