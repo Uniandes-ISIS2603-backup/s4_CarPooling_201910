@@ -21,6 +21,10 @@ public class CalificacionDTO implements Serializable{
     private UsuarioDTO calificador;
     private TrayectoDTO trayecto;
 
+    public CalificacionDTO()
+    {
+        
+    }
     /**
      * Constructor CalificacionDTO
      */

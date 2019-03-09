@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.carpooling.dtos;
 
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import java.io.Serializable;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -216,5 +218,5 @@ public class UsuarioDTO implements Serializable {
     public void setPagoARecibir(PagoDTO pagoARecibir) {
         this.pagoARecibir = pagoARecibir;
     }
-
+    
 }
