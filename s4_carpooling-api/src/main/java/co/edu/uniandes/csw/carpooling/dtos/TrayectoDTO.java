@@ -6,7 +6,9 @@
 package co.edu.uniandes.csw.carpooling.dtos;
 
 import co.edu.uniandes.csw.carpooling.adapters.DateAdapter;
+import co.edu.uniandes.csw.carpooling.entities.BaseEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import java.io.Serializable;
 import java.util.Date;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -14,9 +16,8 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  * @author estudiante
  */
-public class TrayectoDTO {
+public class TrayectoDTO  extends BaseEntity implements Serializable {
     
-    private Long id;
     
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaInicial;
@@ -33,7 +34,7 @@ public class TrayectoDTO {
     
     public TrayectoDTO(TrayectoEntity entity){
         if(entity != null){
-            this.id = entity.getId();
+            this.setId(entity.getId());
 
             this.fechaInicial = entity.getFechaInicial();
 
@@ -63,19 +64,6 @@ public class TrayectoDTO {
         return retorno;
     }
 
-    /**
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
-
-    /**
-     * @param id the id to set
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     /**
      * @return the fechaInicial
