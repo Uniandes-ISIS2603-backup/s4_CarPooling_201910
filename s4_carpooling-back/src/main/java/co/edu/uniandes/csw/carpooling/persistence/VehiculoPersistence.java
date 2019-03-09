@@ -30,11 +30,13 @@ public class VehiculoPersistence {
     }
     public VehiculoEntity find(Long vehiculoId)
     {
-      return em.find(VehiculoEntity.class, vehiculoId); 
+        
+        return em.find(VehiculoEntity.class, vehiculoId); 
+       
     }
     public List<VehiculoEntity> findAll()
     {
-        TypedQuery query = em.createQuery("select u from VehiculoEntity u", VehiculoEntity.class);
+        TypedQuery<VehiculoEntity> query = em.createQuery("select u from VehiculoEntity u", VehiculoEntity.class);
         return query.getResultList();
     }
      public VehiculoEntity update(VehiculoEntity vEntity) {

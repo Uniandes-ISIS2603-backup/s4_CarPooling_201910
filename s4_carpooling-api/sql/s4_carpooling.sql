@@ -4,6 +4,7 @@ delete from PeajeEntity;
 delete from UsuarioEntity;
 delete from PagoEntity;
 delete from InfoTCEntity;
+delete from VehiculoEntity;
 
 insert into AlquilerEntity (id, nombre) values (100,'alquiler1');
 insert into AlquilerEntity (id, nombre) values (200,'alquiler2');
@@ -38,11 +39,21 @@ values (200, 2);
 insert into PagoEntity (id, valor)
 values (300, 15);
 
-insert info InfoTCEntity (id, t1, t2, entidad1, entidad2)
+insert into InfoTCEntity (id, t1, t2, entidad1, entidad2)
 values (100, '87653432156','12323434556','BancoBogota','Davivienda');
 
-insert info InfoTCEntity (id, t1, t2, entidad1, entidad2)
+insert into InfoTCEntity (id, t1, t2, entidad1, entidad2)
 values (200, '34576567809','12323432123','Bancolombia','Itahu');
 
-insert info InfoTCEntity (id, t1, t2, entidad1, entidad2)
+insert into InfoTCEntity (id, t1, t2, entidad1, entidad2)
 values (300, '98045667832','13243253478','Itahu','BancoBogota');
+
+insert into VehiculoEntity (id, alquilado, color, modelo, placa)
+values (100, 100,'Rojo','Ford','QWE102');
+
+insert into VehiculoEntity (id, alquilado, color, modelo, placa)
+values (200, 200,'Verde','Dodge','ELD950');
+
+insert into VehiculoEntity (id, alquilado, color, modelo, placa)
+values (300, 100,'Azul','BMW','KJU798');
+

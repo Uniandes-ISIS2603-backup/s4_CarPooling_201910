@@ -12,17 +12,26 @@ import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author estudiante
  */
+@Path("vehiculos")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+@RequestScoped
 public class VehiculoResource
 {
         private static final Logger LOGGER = Logger.getLogger(VehiculoResource.class.getName());
@@ -31,7 +40,7 @@ public class VehiculoResource
         private VehiculoLogic logic;
         
         @GET 
-        public List getVehiculos()
+        public List<VehiculoDTO> getVehiculos()
         {
             List<VehiculoDTO> lista = new ArrayList<>();
             for (VehiculoEntity entity : logic.get())
@@ -42,8 +51,9 @@ public class VehiculoResource
         }
         
         @GET
-        @PathParam ("id: \\d+")
-        public VehiculoDTO get(@PathParam("id")Long id)
+        @Path("{id: \\d+}")
+        @Produces(MediaType.APPLICATION_JSON)
+        public VehiculoDTO getVehiculo(@PathParam("id")Long id)
         {
          VehiculoEntity ent = logic.get(id);
          return new VehiculoDTO(ent);
