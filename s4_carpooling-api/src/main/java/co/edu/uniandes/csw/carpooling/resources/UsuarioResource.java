@@ -53,7 +53,7 @@ public class UsuarioResource {
      * @return el usuario especificado
      */
     @GET
-    @Path("{username: [a-zA-Z][a-zA-Z]*}}")
+    @Path("{username: [a-zA-Z][a-zA-Z]*}")
     public UsuarioDetailDTO getUsuario(@PathParam("username")String username)
     {
         UsuarioEntity usuario = logic.getUsuario(username);
@@ -83,7 +83,7 @@ public class UsuarioResource {
      * @throws BusinessLogicException si no se cumplean las reglas de la lògica
      */
     @PUT
-    @Path("{username: [a-zA-Z][a-zA-Z]*}}")
+    @Path("{username: [a-zA-Z][a-zA-Z]*}")
     public UsuarioDetailDTO updateUsuario(@PathParam("username")String username, UsuarioDetailDTO usuario) throws BusinessLogicException
     {
         usuario.setUsername(username);
@@ -101,7 +101,7 @@ public class UsuarioResource {
      * @throws BusinessLogicException si no se cumplen las reglas de la logica
      */
     @DELETE
-    @Path("{username: [a-zA-Z][a-zA-Z]*}}")
+    @Path("{username: [a-zA-Z][a-zA-Z]*}")
     public void deleteUsuario(@PathParam("username")String username) throws BusinessLogicException
     {
         UsuarioEntity usuario = logic.getUsuario(username);
