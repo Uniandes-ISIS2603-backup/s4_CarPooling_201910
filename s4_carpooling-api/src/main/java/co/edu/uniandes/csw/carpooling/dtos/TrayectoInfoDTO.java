@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.BaseEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,17 +14,15 @@ import java.util.Date;
  *
  * @author estudiante
  */
-public class TrayectoInfoDTO implements Serializable {
+public class TrayectoInfoDTO extends BaseEntity implements Serializable {
 
 
-    
-    private Long idDetalle;
     private Integer costo;
     private Integer combustiblePrecio;
     private Integer duracionMins;
     private Date horaSalida;
     private Date horaLlegada;
-    //private VehiculoDTO carro;
+    private VehiculoDTO carro;
 
     public TrayectoInfoDTO(){
         
@@ -32,7 +31,7 @@ public class TrayectoInfoDTO implements Serializable {
     public TrayectoInfoDTO(TrayectoInfoEntity entity){
         
         if(entity != null){
-            this.idDetalle = entity.getId();
+            this.setId(entity.getId());
             this.horaSalida = entity.getHoraInicial();
             if(entity.getCombustible() != null){
                 this.combustiblePrecio = entity.getCombustible();
@@ -51,24 +50,10 @@ public class TrayectoInfoDTO implements Serializable {
         retorno.setCombustible(combustiblePrecio);
         retorno.setCosto(costo);
         retorno.setDuracion(duracionMins);
-        retorno.setHoraInicial(horaSalida);
-        retorno.setId(idDetalle);
+        retorno.setHoraInicial(getHoraSalida());
         return retorno;
     }
-    
-    /**
-     * @return the idDetalle
-     */
-    public Long getIdDetalle() {
-        return idDetalle;
-    }
 
-    /**
-     * @param idDetalle the idDetalle to set
-     */
-    public void setIdDetalle(Long idDetalle) {
-        this.idDetalle = idDetalle;
-    }
 
     /**
      * @return the costo
@@ -110,6 +95,48 @@ public class TrayectoInfoDTO implements Serializable {
      */
     public void setDuracionMins(Integer duracionMins) {
         this.duracionMins = duracionMins;
+    }
+
+    /**
+     * @return the horaSalida
+     */
+    public Date getHoraSalida() {
+        return horaSalida;
+    }
+
+    /**
+     * @param horaSalida the horaSalida to set
+     */
+    public void setHoraSalida(Date horaSalida) {
+        this.horaSalida = horaSalida;
+    }
+
+    /**
+     * @return the horaLlegada
+     */
+    public Date getHoraLlegada() {
+        return horaLlegada;
+    }
+
+    /**
+     * @param horaLlegada the horaLlegada to set
+     */
+    public void setHoraLlegada(Date horaLlegada) {
+        this.horaLlegada = horaLlegada;
+    }
+
+    /**
+     * @return the carro
+     */
+    public VehiculoDTO getCarro() {
+        return carro;
+    }
+
+    /**
+     * @param carro the carro to set
+     */
+    public void setCarro(VehiculoDTO carro) {
+        this.carro = carro;
     }
 
 
