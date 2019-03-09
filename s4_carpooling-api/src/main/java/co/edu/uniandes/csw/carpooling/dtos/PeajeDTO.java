@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 public class PeajeDTO implements Serializable{
     private String nombre;
-    private double costo;
-    private double lat;
-    private double lon;
+    private Double costo;
+    private Double lat;
+    private Double lon;
     private Long id;
     
     public PeajeDTO() {
@@ -65,42 +65,42 @@ public class PeajeDTO implements Serializable{
     /**
      * @return the costo
      */
-    public double getCosto() {
+    public Double getCosto() {
         return costo;
     }
 
     /**
      * @param costo the costo to set
      */
-    public void setCosto(double costo) {
+    public void setCosto(Double costo) {
         this.costo = costo;
     }
 
     /**
      * @return the lat
      */
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
     /**
      * @param lat the lat to set
      */
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
     /**
      * @return the lon
      */
-    public double getLon() {
+    public Double getLon() {
         return lon;
     }
 
     /**
      * @param lon the lon to set
      */
-    public void setLon(double lon) {
+    public void setLon(Double lon) {
         this.lon = lon;
     }
 
