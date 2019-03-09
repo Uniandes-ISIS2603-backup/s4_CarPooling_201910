@@ -1,17 +1,17 @@
 {
 	"info": {
-		"_postman_id": "7404f75d-375e-4579-a883-1351ecf5e97e",
-		"name": "AlquilerResourceTest",
+		"_postman_id": "df50467a-7e95-4efb-94c5-a74320fba5d5",
+		"name": "PeajeResourceTest",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Crear alquiler",
+			"name": "Crear un peaje",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "95ee55b3-5faf-4955-a3ae-cf7c1e9acf1b",
+						"id": "bf6de906-a6a9-45e2-bb87-70b1a6e3b01a",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_e\",data.id);",
@@ -34,10 +34,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"nombre\":\"Alq\"}"
+					"raw": "{\"nombre\":\"Cartagena\",\n\t\"costo\":1200.50,\n\t\"lat\":10.381041252136612,\n\t\"lon\": -75.44464594893455\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -46,19 +46,19 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres"
+						"peajes"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Crear un alquiler 2",
+			"name": "Crear un peaje 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "2bea82b4-0036-4e99-851e-8ab690566621",
+						"id": "97c4fe9c-c334-4640-aaa2-ae898e884c98",
 						"exec": [
 							"var data = JSON.parse(responseBody);",
 							"postman.setGlobalVariable(\"new_id_e2\",data.id);",
@@ -81,10 +81,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"nombre\":\"Alq2\"}"
+					"raw": "{\"nombre\":\"Ibague\",\n\t\"costo\":1200.50,\n\t\"lat\":4.507657257688734,\n\t\"lon\": -75.2193547501929\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -93,23 +93,23 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres"
+						"peajes"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Agregar Relaciones",
+			"name": "Crear un peaje con mismo nombre",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "3893d84e-e57e-4ef3-8007-2cac4565a4b4",
+						"id": "a6f530f8-5ed6-41e2-8b17-dd0a86338e43",
 						"exec": [
-							"var data = JSON.parse(responseBody);",
-							"tests[\"no genera error en el Post\"] = responseCode.code === 200;",
-							"console.log(data.id);"
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"Ya existe un Peaje\");",
+							"pm.globals.get(\"variable_key\");"
 						],
 						"type": "text/javascript"
 					}
@@ -117,13 +117,20 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": ""
+					"raw": "{\"nombre\":\"Ibague\",\n\t\"costo\":1200.50,\n\t\"lat\":4.507657257688734,\n\t\"lon\": -75.2193547501929\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/{{new_id_e}}/100/200/100",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -132,23 +139,19 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres",
-						"{{new_id_e}}",
-						"100",
-						"200",
-						"100"
+						"peajes"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Editar un alquiler",
+			"name": "Editar un peaje",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "3ef7be2a-be91-4ebc-8171-b982c9d6fc7e",
+						"id": "3c3e6fcb-f979-4f68-97c9-fa01c15357f6",
 						"exec": [
 							"console.log(responseBody);",
 							"var data = JSON.parse(responseBody);",
@@ -170,10 +173,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"nombre\":\"Alquiler30\"}"
+					"raw": "{\"nombre\":\"Ibague-2.0\",\n\t\"costo\":3020.3,\n\t\"lat\":4.507657257688734,\n\t\"lon\": -75.2193547501929\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/{{new_id_e}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes/{{new_id_e}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -182,7 +185,7 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres",
+						"peajes",
 						"{{new_id_e}}"
 					]
 				}
@@ -190,15 +193,15 @@
 			"response": []
 		},
 		{
-			"name": "Editar un seguro que no existe",
+			"name": "Editar un peaje que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "dcbfa7cb-6dc9-4d9f-a469-a849d4a5abe1",
+						"id": "949a11ba-cc4f-4cae-9498-ea8755c2b544",
 						"exec": [
 							"tests[\"No actualiza con id que no existe\"] = responseCode.code === 404;",
-							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso alquiler id: 0 no existe\");"
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /peaje/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -216,10 +219,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"nombre\":\"Alquiler30\"}"
+					"raw": "{\"nombre\":\"Ibague-2.0\",\n\t\"costo\":3020.3,\n\t\"lat\":4.507657257688734,\n\t\"lon\": -75.2193547501929\n}"
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/0",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -228,7 +231,7 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres",
+						"peajes",
 						"0"
 					]
 				}
@@ -236,28 +239,16 @@
 			"response": []
 		},
 		{
-			"name": "Actualizar Arrendatario",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "762ef535-e0f6-4068-8564-fa2ae87b3950",
-						"exec": [
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
+			"name": "Obtener todos los peajes",
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/{{new_id_e}}/arrendatario/300",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes/",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -266,64 +257,24 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres",
-						"{{new_id_e}}",
-						"arrendatario",
-						"300"
+						"peajes",
+						""
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Actualizar Seguro",
+			"name": "Obtener un peaje",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "1847a048-dc54-4f66-af97-e9ec63f62d82",
+						"id": "e2ead0a9-6a07-473c-b5fa-e32a52bb69d5",
 						"exec": [
-							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": ""
-				},
-				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/{{new_id_e}}/seguro/300",
-					"protocol": "http",
-					"host": [
-						"{{ip}}"
-					],
-					"port": "{{puerto}}",
-					"path": [
-						"s4_carpooling-api",
-						"api",
-						"alquileres",
-						"{{new_id_e}}",
-						"seguro",
-						"300"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obtener todos los alquileres",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"id": "4a7042e5-cf8c-4571-8689-568d249213e3",
-						"exec": [
-							"tests[\"No genera error en el Get\"] = responseCode.code===200;"
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
 						],
 						"type": "text/javascript"
 					}
@@ -337,7 +288,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes/{{new_id_e2}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -346,21 +297,23 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres"
+						"peajes",
+						"{{new_id_e2}}"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Obtener un alquiler",
+			"name": "Obtener un peaje que no existe",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "7b6febed-e7ba-4662-b61b-aafc398e7316",
+						"id": "89f27aa9-b11c-42ce-9286-7bdbb0aac040",
 						"exec": [
-							"tests[\"No genera error en el Get\"] = responseCode.code===200;"
+							"tests[\"No consulta con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /peaje/0 no existe.\");"
 						],
 						"type": "text/javascript"
 					}
@@ -374,7 +327,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/{{new_id_e}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes/0",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -383,20 +336,20 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres",
-						"{{new_id_e}}"
+						"peajes",
+						"0"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Borrar un alquiler",
+			"name": "Borrar un peaje",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "560a7754-3791-448b-8879-43d1f4d67e15",
+						"id": "e69625ab-05d8-4874-a462-2efad3ec98b1",
 						"exec": [
 							"tests[\"no genera error en el Delete\"] = responseCode.code === 204;"
 						],
@@ -412,7 +365,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/alquileres/{{new_id_e}}",
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/peajes/{{new_id_e}}",
 					"protocol": "http",
 					"host": [
 						"{{ip}}"
@@ -421,8 +374,47 @@
 					"path": [
 						"s4_carpooling-api",
 						"api",
-						"alquileres",
+						"peajes",
 						"{{new_id_e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar un peaje que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0f43a3c-91f6-4312-9859-91e8fb5ba0b8",
+						"exec": [
+							"tests[\"No borra con id que no existe\"] = responseCode.code === 404;",
+							"tests[\"Mensaje correcto de error\"] = responseBody.has(\"El recurso /seguro/0 no existe.\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/seguros/0",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"seguros",
+						"0"
 					]
 				}
 			},
