@@ -18,10 +18,27 @@ public class VehiculoDTO implements Serializable
     private String color;
     private String placa;
     private Boolean alquilado;
+    private AlquilerDTO alquilerInfo;
 
     
     public VehiculoDTO()
     {
+        
+    }
+
+    public VehiculoDTO(VehiculoEntity ent) 
+    {
+        if(ent != null)
+        {
+            this.placa = ent.getPlaca();
+            this.alquilado = ent.getAlquilado();
+            this.modelo = ent.getModelo();
+     
+        if(ent.getAlquilerInfo() != null)
+        {
+            this.alquilerInfo = new AlquilerDTO(ent.getAlquilerInfo());
+        }
+        }
         
     }
     /**
@@ -85,7 +102,7 @@ public class VehiculoDTO implements Serializable
     /**
      * Método para transformar el DTO a una entidad.
      *
-     * @return La entidad del libro asociado.
+     * @return La entidad del vehiculo asociado.
      */
     
     public VehiculoEntity toEntity() {
@@ -95,6 +112,20 @@ public class VehiculoDTO implements Serializable
         vehiculoEntity.setAlquilado(this.alquilado);
         
         return vehiculoEntity;
+    }
+
+    /**
+     * @return the alquilerInfo
+     */
+    public AlquilerDTO getAlquilerInfo() {
+        return alquilerInfo;
+    }
+
+    /**
+     * @param alquilerInfo the alquilerInfo to set
+     */
+    public void setAlquilerInfo(AlquilerDTO alquilerInfo) {
+        this.alquilerInfo = alquilerInfo;
     }
    
 }
