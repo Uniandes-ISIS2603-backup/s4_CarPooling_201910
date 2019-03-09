@@ -50,8 +50,10 @@ public class VehiculoLogic
     
     public VehiculoEntity updateVehiculo (Long id, VehiculoEntity ve)
     {
-        VehiculoEntity newEntity = persistence.update(ve);
-        return newEntity;
+        VehiculoEntity vehiculo = get(id);
+        vehiculo.setPlaca(ve.getPlaca());
+        persistence.update(vehiculo);        
+        return vehiculo;
     }
     public void delete(Long id) throws BusinessLogicException
     {
