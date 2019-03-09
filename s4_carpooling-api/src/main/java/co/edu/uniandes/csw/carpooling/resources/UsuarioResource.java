@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.carpooling.resources;
 
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.carpooling.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.carpooling.ejb.UsuarioLogic;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
@@ -41,9 +42,9 @@ public class UsuarioResource {
      * @return la lista de todos los usuarios 
      */
     @GET
-    public List getUsuarios()
+    public List<UsuarioDetailDTO> getUsuarios()
     {
-        List<UsuarioDTO> usuarios = listEntityToDTO(logic.getUsuarios());
+        List<UsuarioDetailDTO> usuarios = listEntitydeToDetailDTO(logic.getUsuarios());
         return usuarios;
     }
     /**
@@ -53,13 +54,13 @@ public class UsuarioResource {
      */
     @GET
     @Path("{username: [a-zA-Z][a-zA-Z]*}}")
-    public UsuarioDTO getUsuario(@PathParam("username")String username)
+    public UsuarioDetailDTO getUsuario(@PathParam("username")String username)
     {
         UsuarioEntity usuario = logic.getUsuario(username);
         if (usuario == null) {
             throw new WebApplicationException("El usuario con nombre: " + username + "no existe", 404);
         }
-        return new UsuarioDTO(usuario);
+        return new UsuarioDetailDTO(usuario);
     }
     /**
      * 
@@ -70,8 +71,8 @@ public class UsuarioResource {
     @POST
     public UsuarioDTO createUsuario(UsuarioDTO usuario) throws BusinessLogicException{
         UsuarioEntity entity = usuario.toEntity();
-        entity = logic.create(entity);
-        return new UsuarioDTO(entity);
+        UsuarioEntity entity2 = logic.create(entity);
+        return new UsuarioDetailDTO(entity2);
     }
     
     /**
@@ -83,11 +84,15 @@ public class UsuarioResource {
      */
     @PUT
     @Path("{username: [a-zA-Z][a-zA-Z]*}}")
-    public UsuarioDTO updateUsuario(@PathParam("username")String username, UsuarioDTO usuario) throws BusinessLogicException
+    public UsuarioDetailDTO updateUsuario(@PathParam("username")String username, UsuarioDetailDTO usuario) throws BusinessLogicException
     {
+        usuario.setUsername(username);
+        if (logic.getUsuario(username) == null) {
+            throw new WebApplicationException("El recurso /usuario/" + username + " no existe.", 404);
+        }
         UsuarioEntity entity = usuario.toEntity();
         entity = logic.updateUsuario(username, entity);
-        return new UsuarioDTO(entity);
+        return new UsuarioDetailDTO(entity);
     }
     
     /**
@@ -111,10 +116,10 @@ public class UsuarioResource {
      * @param Usuario
      * @return una lista de DTOs.
      */
-    private List<UsuarioDTO> listEntityToDTO(List<UsuarioEntity> Usuario) {
-        List<UsuarioDTO> list = new ArrayList<>();
+    private List<UsuarioDetailDTO> listEntitydeToDetailDTO(List<UsuarioEntity> Usuario) {
+        List<UsuarioDetailDTO> list = new ArrayList<>();
         for (UsuarioEntity entity : Usuario) {
-            list.add(new UsuarioDTO(entity));
+            list.add(new UsuarioDetailDTO(entity));
         }
         return list;
     }
