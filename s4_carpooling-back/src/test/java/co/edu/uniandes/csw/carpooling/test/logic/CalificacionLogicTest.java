@@ -119,25 +119,25 @@ public class CalificacionLogicTest {
 
     
     @Test(expected = BusinessLogicException.class)
-    public void addSinCalificado() throws BusinessLogicException
+    public void addSinTrayecto() throws BusinessLogicException
     {
         CalificacionEntity entity = data.get(0);
-        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), Long.MIN_VALUE, calificador.getId(), trayecto.getId());
+        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), Long.MIN_VALUE, calificado.getId(), calificador.getId());
     }
     
     
+    @Test(expected = BusinessLogicException.class)
+    public void addSinCalificado() throws BusinessLogicException
+    {
+        CalificacionEntity entity = data.get(0);
+        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), Long.MIN_VALUE,  calificador.getId());
+    }
+
     @Test(expected = BusinessLogicException.class)
     public void addSinCalificador() throws BusinessLogicException
     {
         CalificacionEntity entity = data.get(0);
-        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), calificado.getId(), Long.MIN_VALUE,  trayecto.getId());
-    }
-
-    @Test(expected = BusinessLogicException.class)
-    public void addSinTrayecto() throws BusinessLogicException
-    {
-        CalificacionEntity entity = data.get(0);
-        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), calificado.getId(), calificador.getId(),   Long.MIN_VALUE);
+        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), calificado.getId(),   Long.MIN_VALUE);
     }
     
     
@@ -146,7 +146,7 @@ public class CalificacionLogicTest {
     public void addMismoCalificador() throws BusinessLogicException
     {
         CalificacionEntity entity = data.get(0);
-        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), calificado.getId(), calificado.getId(), trayecto.getId());
+        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), calificado.getId(), calificado.getId());
        
     }
     
