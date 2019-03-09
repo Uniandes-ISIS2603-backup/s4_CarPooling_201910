@@ -146,11 +146,11 @@ public class InfoTCLogicTest {
         InfoTCEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         InfoTCEntity newEntity = factory.manufacturePojo(InfoTCEntity.class);
-
+        
         InfoTCLogic.updateInfoTC(entity.getId(), newEntity);
-
+        
         InfoTCEntity resp = em.find(InfoTCEntity.class, entity.getId());
-        Assert.assertEquals(newEntity.getT1(), resp.getT1());
+        Assert.assertEquals(entity.getT1(), resp.getT1());
     }
 
     @Test

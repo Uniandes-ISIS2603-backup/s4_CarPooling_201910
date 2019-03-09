@@ -39,7 +39,7 @@ public class PagoLogic {
         if (persistence.find(pago.getId()) != null) {
             throw new BusinessLogicException("Ya existe una un pago con el id \"" + pago.getId() + "\"");
         }
-        InfoTCEntity info = persistence.find(pago.getId()).getInfoTC();
+        InfoTCEntity info = pago.getInfoTC();
         if (info == null) {
             throw new BusinessLogicException("El pago no tiene tarjetas asociadas \"" + pago.getInfoTC() + "\"");
         }
