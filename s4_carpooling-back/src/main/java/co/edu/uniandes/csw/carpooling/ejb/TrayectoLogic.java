@@ -52,4 +52,32 @@ public class TrayectoLogic {
         LOGGER.log(Level.INFO, "Termina proceso de borrar el libro con id = {0}", trayectoId);
     }
     
+     public TrayectoEntity getTrayeto(Long idTrayecto){
+         
+         LOGGER.log(Level.INFO, "Inicia proceso de consultar el Trayecto con id = {0}", idTrayecto);
+        TrayectoEntity entity = persistence.find(idTrayecto);
+        if (entity == null) {
+            LOGGER.log(Level.SEVERE, "El Trayecto con el id = {0} no existe", idTrayecto);
+        }
+        LOGGER.log(Level.INFO, "Termina proceso de consultar el Trayecto con id = {0}", idTrayecto);
+        return entity;
+     }
+     
+     
+     public List<TrayectoEntity> getBooksTrayectos() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los libros");
+        List<TrayectoEntity> trayectos = persistence.findAll();
+        LOGGER.log(Level.INFO, "Termina proceso de consultar todos los libros");
+        return trayectos;
+    }
+     
+     public TrayectoEntity updateBook(Long trayectoId, TrayectoEntity bookEntity) throws BusinessLogicException {
+        LOGGER.log(Level.INFO, "Inicia proceso de actualizar el Trayecto con id = {0}", bookEntity);
+        if(bookEntity.getFechaInicial() == null){
+            throw new BusinessLogicException("Datos invalidos, la fecha incicial no puede ser null");
+        }
+        TrayectoEntity newEntity = persistence.update(bookEntity);
+        LOGGER.log(Level.INFO, "Termina proceso de actualizar el Trayecto con id = {0}", bookEntity.getId());
+        return newEntity;
+    }
 }

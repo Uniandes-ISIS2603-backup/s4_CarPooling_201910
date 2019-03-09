@@ -93,12 +93,12 @@ public class UsuarioLogic {
     public void deleteUsuario(String username) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el usuario con username = {0}", username);
         UsuarioEntity usuario = getUsuario(username);
-        if(usuario.getTraycetoActualConductor()!=null || usuario.getTrayectoActualPasajero()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene trayectos asociados");
-        if(usuario.getAlquilerArrendatario()!=null || usuario.getAlquilerDueño()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene alquileres asociados");
+        if(!usuario.getTrayecetoActualConductor().isEmpty()|| !usuario.getTrayectoActualPasajero().isEmpty() )
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene trayectos asociados");
+        if(usuario.getAlquilerArrendatario()!=null || !usuario.getAlquilerDueño().isEmpty() )
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene alquileres asociados");
         if(usuario.getPagoAHacer()!=null || usuario.getPagoARecibir()!=null )
-            throw new BusinessLogicException("No se puede borrar el libro con usuario = " + username + " porque tiene pagos asociados");
+            throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene pagos asociados");
  
         persistence.delete(usuario.getId());
         LOGGER.log(Level.INFO, "Termina proceso de borrar el libro con id = {0}", username);
@@ -109,23 +109,23 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un trayceto en el que el usuario con username = {0} es conductor", username);
         UsuarioEntity usuario = getUsuario(username);
         if (usuario.getVehiculos().isEmpty())
-            throw new BusinessLogicException("El usuario = " + username + " no puede crear un ytrayecto puesto que no tiene vehiculos");
-        TrayectoEntity traycetoActualC = usuario.getTraycetoActualConductor();
-        TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
+            throw new BusinessLogicException("El usuario = " + username + " no puede crear un trayecto puesto que no tiene vehiculos");
+        List<TrayectoEntity> traycetosActualC = usuario.getTrayecetoActualConductor();
+        List<TrayectoEntity> traycetosActualP = usuario.getTrayectoActualPasajero();
 
-        if(traycetoActualC!=null)
+        for(TrayectoEntity traycetoActualC :traycetosActualC)
         {
-            if(traycetoActualC.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualC.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualC.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualC.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
-        if(traycetoActualP!=null)
+        for(TrayectoEntity traycetoActualP :traycetosActualP)
         {
-            if(traycetoActualP.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualP.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualP.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualP.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
-        usuario.setTraycetoActualConductor(trayectoDeseado);
+        usuario.getTrayecetoActualConductor().add(trayectoDeseado);
         LOGGER.log(Level.INFO, "Termina proceso de crear un trayceto en el que el usuario con username = {0} es conductor", username);
 
     }
@@ -134,22 +134,22 @@ public class UsuarioLogic {
     {
         LOGGER.log(Level.INFO, "Inicia proceso de crear un trayceto en el que el usuario con username = {0} es pasajero", username);
         UsuarioEntity usuario = getUsuario(username);
-        TrayectoEntity traycetoActualC = usuario.getTraycetoActualConductor();
-        TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
+        List<TrayectoEntity> traycetosActualC = usuario.getTrayecetoActualConductor();
+        List<TrayectoEntity> traycetosActualP = usuario.getTrayectoActualPasajero();
 
-        if(traycetoActualC!=null)
+        for(TrayectoEntity traycetoActualC :traycetosActualC)
         {
-            if(traycetoActualC.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualC.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualC.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualC.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
-        if(traycetoActualP!=null)
+        for(TrayectoEntity traycetoActualP :traycetosActualP)
         {
-            if(traycetoActualP.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualP.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualP.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualP.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + "ya tiene porgramado un trayecto actual en esas horas");
 
         }
-        usuario.setTrayectoActualPasajero(trayectoDeseado);
+        usuario.getTrayectoActualPasajero().add(trayectoDeseado);
         LOGGER.log(Level.INFO, "Termina proceso de crear un trayceto en el que el usuario con username = {0} es pasajero", username);
         
     }
@@ -157,16 +157,6 @@ public class UsuarioLogic {
     public void hacerPago(PagoEntity pago, String uConductor, String uPasajero) throws BusinessLogicException
     {
         UsuarioEntity pasajero = getUsuario(uPasajero);
-        /**boolean encontrado = false;
-        List<UsuarioEntity> pasajeros = pago.getTrayecto().getPasajeros();
-        for(UsuarioEntity p : pasajeros)
-        {
-            if(p.getUsername().equals(pasajero.getUsername()))
-                encontrado = true;
-        }
-        if(!encontrado)
-            throw new BusinessLogicException("El usuario = " + uPasajero + "no es un pasajero del trayecto que desea pagar");
-        */
         if(!pago.getUsuarioHace().getUsername().equals(uPasajero))
             throw new BusinessLogicException("El usuario = " + uPasajero + "no es un pasajero del trayecto que desea pagar");
         pasajero.setPagoAHacer(pago);
@@ -201,18 +191,18 @@ public class UsuarioLogic {
     public void solicitarViaje(NotificacionEntity mensaje,TrayectoEntity trayectoDeseado, String username) throws BusinessLogicException
     {
         UsuarioEntity usuario = getUsuario(username);
-        TrayectoEntity traycetoActualC = usuario.getTraycetoActualConductor();
-        TrayectoEntity traycetoActualP = usuario.getTrayectoActualPasajero();
+        List<TrayectoEntity> traycetosActualC = usuario.getTrayecetoActualConductor();
+        List<TrayectoEntity> traycetosActualP = usuario.getTrayectoActualPasajero();
 
-        if(traycetoActualC!=null)
+        for(TrayectoEntity traycetoActualC :traycetosActualC)
         {
-            if(traycetoActualC.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualC.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualC.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualC.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + " no puede solictar un nuevo viaje puesto que ya tiene porgramado un trayecto actual en esas horas");
 
         }
-        if(traycetoActualP!=null)
+        for(TrayectoEntity traycetoActualP :traycetosActualP)
         {
-            if(traycetoActualP.getFechaInicial()==trayectoDeseado.getFechaInicial()||traycetoActualP.getFechaFinal()==trayectoDeseado.getFechaFinal())
+            if(traycetoActualP.getFechaInicial().compareTo(trayectoDeseado.getFechaInicial())==0||traycetoActualP.getFechaFinal().compareTo(trayectoDeseado.getFechaFinal())==0)
                 throw new BusinessLogicException("El usuario = " + username + " no puede solicitar un nuevo viaje puesto que ya tiene porgramado un trayecto actual en esas horas");
 
         }
@@ -221,8 +211,7 @@ public class UsuarioLogic {
     }
     
     public void aceptarViaje(NotificacionEntity mensaje,TrayectoEntity trayectoSolicitado, NotificacionEntity rechazo, NotificacionEntity acepto) throws BusinessLogicException
-    {
-        /**
+    {/**
         UsuarioEntity emisor = mensaje.getEmisor();
         UsuarioEntity receptor = mensaje.getReceptor();
         if(trayectoSolicitado.getInfoTrayecto().getCupos()-trayectoSolicitado.getPasajeros().size()!=0)
@@ -235,7 +224,7 @@ public class UsuarioLogic {
         {
             emisor.getNotificacionRecibida().add(acepto);
             receptor.getNotificacionRecibida().add(acepto);   
-        }     */
+        }    */ 
     }
     
     /**public void alquilarVehiculoDueño(String username, String placa)

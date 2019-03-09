@@ -9,14 +9,18 @@ import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.TrayectoPersistence;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
@@ -35,6 +39,11 @@ public class TrayectoLogicTest {
     @PersistenceContext
     private EntityManager em;
     
+    @Inject
+    private UserTransaction utx;
+    
+    private List<TrayectoEntity> data = new ArrayList<TrayectoEntity>();
+    
     @Deployment
     public static  JavaArchive createDeployment()
     {
@@ -45,6 +54,40 @@ public class TrayectoLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+    
+    
+    @Before
+    public void configTest() {
+        try {
+            utx.begin();
+            clearData();
+            insertData();
+            utx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+    }
+    
+    private void clearData() {
+        em.createQuery("delete from TrayectoEntity").executeUpdate();
+        
+    }
+    
+    private void insertData() {
+        PodamFactory factory = new PodamFactoryImpl();
+        for (int i = 0; i < 3; i++) {
+            TrayectoEntity entity = factory.manufacturePojo(TrayectoEntity.class);
+
+            em.persist(entity);
+            data.add(entity);
+        }
+    }
+    
     
     @Test
     public void createTrayectoTest() throws BusinessLogicException
@@ -57,6 +100,21 @@ public class TrayectoLogicTest {
         Assert.assertEquals(newEntity.getFechaInicial().getDay(), entity.getFechaInicial().getDay());
         Assert.assertEquals(newEntity.getId(), entity.getId());
         
+    }
+    
+    @Test
+    public void getTrayectosTest() {
+        List<TrayectoEntity> list = trayecto.getTrayectos();
+        Assert.assertEquals(data.size(), list.size());
+        for (TrayectoEntity entity : list) {
+            boolean found = false;
+            for (TrayectoEntity storedEntity : data) {
+                if (entity.getId().equals(storedEntity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
     }
     
 }

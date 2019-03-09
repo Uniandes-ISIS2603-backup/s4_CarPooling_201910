@@ -16,9 +16,14 @@ import java.io.Serializable;
 public class SeguroDTO extends BaseEntity implements Serializable {
     
     private String tipo;
+    
+    public SeguroDTO(){
+        
+    }
     public SeguroDTO(SeguroEntity entity){
         if(entity!=null)
         {
+            this.setId(entity.getId());
             tipo = entity.getTipo();    
         }
 
@@ -29,8 +34,22 @@ public class SeguroDTO extends BaseEntity implements Serializable {
     public SeguroEntity toEntity(){
         
         SeguroEntity entity = new SeguroEntity();
-        entity.setTipo(tipo);
+        entity.setTipo(getTipo());
        
         return entity;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public String getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 }

@@ -11,9 +11,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.eclipse.persistence.annotations.CascadeOnDelete;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -36,43 +38,41 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
     
    @PodamExclude
-   @OneToMany(mappedBy="dueño")
+   @CascadeOnDelete
+   @OneToMany(mappedBy="dueño", cascade = CascadeType.ALL, orphanRemoval = true)
    private List<AlquilerEntity> alquilerDueño = new ArrayList<AlquilerEntity>();
    
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private AlquilerEntity alquilerArrendatario;
     
    @PodamExclude
-   @OneToMany
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
    private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
     
    @PodamExclude
-   @OneToMany
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
    private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
     
    @PodamExclude
-   @OneToMany
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
    private List<CalificacionEntity> calificaciones =  new ArrayList<CalificacionEntity>();
     
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private PagoEntity pagoARecibir;
     
    @PodamExclude
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
    private PagoEntity pagoAHacer;
-    
-    
-   
+  
+   @PodamExclude
+   @OneToMany(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<TrayectoEntity> trayecetoActualConductor;
    
    @PodamExclude
-   @OneToOne(mappedBy="conductor")
-   private TrayectoEntity traycetoActualConductor;
-   
-   @PodamExclude
-   @ManyToOne
-   private TrayectoEntity trayectoActualPasajero;
+   @ManyToMany(cascade = CascadeType.ALL)
+   private  List<TrayectoEntity> trayectoActualPasajero;
 
     
     public UsuarioEntity(){
@@ -275,30 +275,30 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the traycetoActualConductor
+     * @return the trayecetoActualConductor
      */
-    public TrayectoEntity getTraycetoActualConductor() {
-        return traycetoActualConductor;
+    public List<TrayectoEntity> getTrayecetoActualConductor() {
+        return trayecetoActualConductor;
     }
 
     /**
-     * @param traycetoActualConductor the traycetoActualConductor to set
+     * @param trayecetoActualConductor the trayecetoActualConductor to set
      */
-    public void setTraycetoActualConductor(TrayectoEntity traycetoActualConductor) {
-        this.traycetoActualConductor = traycetoActualConductor;
+    public void setTrayecetoActualConductor(List<TrayectoEntity>  trayecetoActualConductor) {
+        this.trayecetoActualConductor = trayecetoActualConductor;
     }
 
     /**
      * @return the trayectoActualPasajero
      */
-    public TrayectoEntity getTrayectoActualPasajero() {
+    public List<TrayectoEntity>  getTrayectoActualPasajero() {
         return trayectoActualPasajero;
     }
 
     /**
      * @param trayectoActualPasajero the trayectoActualPasajero to set
      */
-    public void setTrayectoActualPasajero(TrayectoEntity trayectoActualPasajero) {
+    public void setTrayectoActualPasajero(List<TrayectoEntity>  trayectoActualPasajero) {
         this.trayectoActualPasajero = trayectoActualPasajero;
     }
 

@@ -28,31 +28,29 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author jf.garcia
  */
-
 @RunWith(Arquillian.class)
 public class InfoTCPersistenceTest {
-   
+
     @Inject
     private InfoTCPersistence infoTCPersistence;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private List<InfoTCEntity> data = new ArrayList<InfoTCEntity>();
 
-    
     @Deployment
-    public static JavaArchive createDeployment (){
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(InfoTCEntity.class.getPackage())
                 .addPackage(InfoTCPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -102,7 +100,7 @@ public class InfoTCPersistenceTest {
      */
     @Test
     public void createInfoTCTest() {
-        
+
         PodamFactory factory = new PodamFactoryImpl();
         InfoTCEntity newEntity = factory.manufacturePojo(InfoTCEntity.class);
         InfoTCEntity result = infoTCPersistence.create(newEntity);
@@ -116,7 +114,7 @@ public class InfoTCPersistenceTest {
         Assert.assertEquals(newEntity.getEntidad1(), entity.getEntidad1());
         Assert.assertEquals(newEntity.getEntidad2(), entity.getEntidad2());
     }
-    
+
     /**
      * Prueba para consultar la lista de tarjetas implicadas en un pago.
      */
@@ -169,7 +167,7 @@ public class InfoTCPersistenceTest {
         Assert.assertEquals(newEntity.getEntidad1(), resp.getEntidad1());
         Assert.assertEquals(newEntity.getEntidad2(), resp.getEntidad2());
     }
-    
+
     /**
      * Prueba para eliminar la información de las tarjetas.
      */
