@@ -217,7 +217,7 @@ public class UsuarioLogicTest {
             entity.setAlquilerArrendatario(null);
             entity.setAlquilerDueño(new ArrayList<AlquilerEntity>());
             entity.setTrayectoActualPasajero(new ArrayList<TrayectoEntity>());
-            entity.setTrayecetoActualConductor(new ArrayList<TrayectoEntity>());
+            entity.setTrayectoActualConductor(new ArrayList<TrayectoEntity>());
             entity.setPagoAHacer(null);
             entity.setPagoARecibir(null);
             mod = em.merge(entity);
