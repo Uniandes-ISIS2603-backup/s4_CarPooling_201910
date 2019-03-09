@@ -33,6 +33,7 @@ public class AlquilerDTO implements Serializable{
             arrendatario = new UsuarioDTO(entity.getArrendatario());
             dueño = new UsuarioDTO(entity.getDueño());
             seguro = new SeguroDTO(entity.getSeguro());
+            id= entity.getId();
             /*
             vehiculoAlquilado = new VehiculoDTO(entity.getVehiculoAlquilado());
             */
@@ -113,12 +114,18 @@ public class AlquilerDTO implements Serializable{
     public AlquilerEntity toEntity(){
         AlquilerEntity entity = new AlquilerEntity();
         entity.setNombre(nombre);
+        entity.setId(id);
+        if(arrendatario!=null){
+        entity.setArrendatario(arrendatario.toEntity());}
+        if(dueño!=null){
+        entity.setDueño(dueño.toEntity());}
         /*
         entity.setArrendatario(arrendatario.toEntity);
         entity.setDueño(dueño);
         */
-        entity.setSeguro(seguro.toEntity());
-        
+        if(seguro!=null){
+        entity.setSeguro(seguro.toEntity());}
+         
         return entity;
     }
 

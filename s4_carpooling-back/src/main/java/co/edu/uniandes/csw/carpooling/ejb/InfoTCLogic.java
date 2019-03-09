@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
 /**
  *
@@ -21,7 +22,7 @@ import javax.ejb.Stateless;
 public class InfoTCLogic {
     
     private static final Logger LOGGER = Logger.getLogger(InfoTCLogic.class.getName());
-    
+    @Inject
     private InfoTCPersistence persistence;
     
     /**

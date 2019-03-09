@@ -30,8 +30,8 @@ import javax.ws.rs.core.MediaType;
  * @author df.penap
  */
 @Path("alquileres")
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
+@Produces("application/json")
+@Consumes("application/json")
 @RequestScoped
 public class AlquilerResource {
     private static final Logger LOGGER = Logger.getLogger(AlquilerResource.class.getName());
@@ -65,6 +65,11 @@ public class AlquilerResource {
     @Path("{id: \\d+}")
     public AlquilerDTO updateAlquiler(@PathParam("id")Long id, AlquilerDTO alquiler)
     {
+        AlquilerEntity find = logic.getAlquiler(id);
+        if(find==null)
+        {
+            throw new WebApplicationException("El recurso alquiler id: "+id+" no existe", 404);
+        }
         AlquilerEntity entity = alquiler.toEntity();
         entity = logic.update(id, entity);
         return new AlquilerDTO(entity);
@@ -73,9 +78,15 @@ public class AlquilerResource {
     @Path("{id: \\d+}")
     public void deleteAlquiler(@PathParam("id")Long id)
     {
+        AlquilerEntity alquiler = logic.getAlquiler(id);
+        if(alquiler==null)
+        {
+            throw new WebApplicationException("El recurso alquiler id: "+id+" no existe", 404);
+        }
         logic.deleteAlquiler(id);
         
     }
+    
     @POST
     @Path("{idA: \\d+}/{idD: \\d+}/{idAr: \\d+}/{idS: \\d+}")    
     public AlquilerDTO addRelacion(@PathParam("idA")Long idAlquiler,@PathParam("idD")Long idDueno,@PathParam("idAr")Long idArrendatario,
@@ -85,6 +96,7 @@ public class AlquilerResource {
         return new AlquilerDTO(entity);
         
     }
+    
     @PUT
     @Path("{idA: \\d+}/arrendatario/{idAr: \\d+}")
     public AlquilerDTO ReplaceArrendatario(@PathParam("idA")Long idAlquiler,@PathParam("idAr")Long idArrendatario) throws BusinessLogicException

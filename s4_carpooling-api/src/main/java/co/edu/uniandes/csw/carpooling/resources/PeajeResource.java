@@ -22,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 
 /**
  *
@@ -40,7 +41,11 @@ public class PeajeResource {
     @Path("{id: \\d+}")
     public PeajeDTO getPeaje(@PathParam("id")Long id)
     {
-         PeajeEntity entity = logic.get(id);
+        if(logic.get(id) == null)
+       { 
+        throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
+       } 
+        PeajeEntity entity = logic.get(id);
          return new PeajeDTO(entity);
     }
     @GET
@@ -53,6 +58,7 @@ public class PeajeResource {
      @POST
     public PeajeDTO createAlquiler(PeajeDTO Peaje) throws BusinessLogicException
     {
+        
         PeajeEntity entity = Peaje.toEntity();
         entity = logic.createPeaje(entity);
         return new PeajeDTO(entity);
@@ -61,15 +67,22 @@ public class PeajeResource {
     @Path("{id: \\d+}")
     public PeajeDTO updatePeaje(@PathParam("id")Long id, PeajeDTO Peaje) throws BusinessLogicException
     {
+       if(logic.get(id) == null)
+       { 
+        throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
+       }
        PeajeEntity entity = Peaje.toEntity();
        entity = logic.update(id, entity);
        return new PeajeDTO(entity);
     }
     @DELETE
     @Path("{id: \\d+}")
-    public void deletePeaje(Long id)
+    public void deletePeaje(@PathParam("id")Long id)
     {
-        
+        if(logic.get(id) == null)
+       { 
+        throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
+       }
         logic.delete(id);
     }
     

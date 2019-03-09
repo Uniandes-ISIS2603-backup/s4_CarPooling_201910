@@ -53,7 +53,7 @@ public class PagoLogicTest {
 
     private List<InfoTCEntity> infoData = new ArrayList<>();
 
-    private List<PagoEntity> data = new ArrayList<>();
+    private List<PagoEntity> data = new ArrayList<PagoEntity>();
 
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
@@ -112,10 +112,7 @@ public class PagoLogicTest {
             data.add(entity);
             infoData.add(infoEntity);
         }
-        UsuarioEntity usuario = factory.manufacturePojo(UsuarioEntity.class);
-        em.persist(usuario);
-        usuario.setPagoAHacer(data.get(2));
-        data.get(2).setUsuarioHace(usuario);
+        
     }
 
     /**
@@ -204,10 +201,11 @@ public class PagoLogicTest {
      *
      * @throws BusinessLogicException
      */
-    @Test(expected = BusinessLogicException.class)
+    @Test
     public void deletePagoTest() throws BusinessLogicException {
         PagoEntity entity = data.get(2);
         pagoLogic.deletePago(entity.getId());
+        Assert.assertNull(em.find(PagoEntity.class, entity.getId()));
     }
 
 }

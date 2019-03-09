@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.CiudadEntity;
 import java.io.Serializable;
 
 /**
@@ -43,4 +44,28 @@ public class CiudadDTO implements Serializable
     public void setCoordenadas(String[] coordenadas) {
         this.coordenadas = coordenadas;
     }
+    
+    
+    public CiudadDTO()
+    {
+        
+    }
+    
+    public CiudadDTO(CiudadEntity entity)
+    {
+        if (entity != null)
+        {
+            this.nombre = entity.getNombre();
+            this.coordenadas = entity.getCoordenadas();
+        }
+    }
+    
+    public CiudadEntity toEntity()
+    {
+        CiudadEntity ce = new CiudadEntity();
+        ce.setCoordenadas(coordenadas);
+        ce.setNombre(nombre);
+        return ce;
+    }
 }
+

@@ -37,4 +37,26 @@ public class CiudadPersistence {
         return query.getResultList();
     }
     
+    public CiudadEntity findByName (String nombre)
+    {
+         TypedQuery<CiudadEntity> query = em.createQuery("select e from CiudadEntity e where e.nombre = :n", CiudadEntity.class);
+        query = query.setParameter("n", nombre);
+        List<CiudadEntity> sameNombre = query.getResultList();
+        CiudadEntity result;
+        if(sameNombre == null)
+        {
+            result=null;
+        }
+        else if(sameNombre.isEmpty())
+        {
+            result=null;
+        }
+        else 
+        {
+            result = sameNombre.get(0);
+        }
+        return result;
+    }
+
+   
     }

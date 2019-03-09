@@ -99,13 +99,53 @@ public void createVehiculoTest () throws BusinessLogicException
     
 }
 
-/**
-@Test (expected = BusinessLogicException.class)
-public void createVehiculoConMismoNombreTest() throws BusinessLogicException
+@Test
+public void getTest () 
 {
-    VehiculoEntity newEntity = factory.manufacturePojo(VehiculoEntity.class);
-    newEntity.setPlaca(data.get(0).getPlaca());
+    List<VehiculoEntity> list= vl.get();
+    Assert.assertEquals(data.size(), list.size());
+    
+    for (VehiculoEntity ent : list)
+    {
+        boolean encontro = false;
+        for (VehiculoEntity data: data)
+        {
+           if (ent.getPlaca().equals(data.getPlaca()))
+           {
+               encontro = true;
+           }
+        }
+        Assert.assertTrue(encontro);
+        
+    }
 }
-*/
+@Test
+ public void getTestConId() {
+        
+        VehiculoEntity entity = data.get(0);
+        VehiculoEntity newEntity = vl.get(entity.getId());
+        Assert.assertNotNull(newEntity);
+        Assert.assertEquals(entity.getPlaca(), newEntity.getPlaca());
+    }
+   @Test
+    public void updateTest() throws BusinessLogicException
+{
+        VehiculoEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        VehiculoEntity newEntity = factory.manufacturePojo(VehiculoEntity.class);
+        vl.updateVehiculo(entity.getId(), newEntity);        
+        VehiculoEntity resp = em.find(VehiculoEntity.class, entity.getId());
+        Assert.assertEquals(newEntity.getPlaca(), resp.getPlaca());
 }
 
+   
+ @Test
+    public void deleteTest() throws BusinessLogicException
+    {
+        VehiculoEntity entity = data.get(2);
+        vl.delete(entity.getId());
+        VehiculoEntity deleted = em.find(VehiculoEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+   
+}
+}
