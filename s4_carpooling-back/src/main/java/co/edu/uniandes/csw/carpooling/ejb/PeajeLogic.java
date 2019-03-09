@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.carpooling.ejb;
 import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.PeajePersistence;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -36,8 +37,66 @@ public class PeajeLogic {
         if (persistence.findByName(peajeEntity.getNombre()) != null) {
             throw new BusinessLogicException("Ya existe un Peaje con el nombre \"" + peajeEntity.getNombre() + "\"");
         }
+        if(peajeEntity.getCosto() == null)
+        {
+            throw new BusinessLogicException("Costo de peaje invalido: \"" + peajeEntity.getCosto() + "\"");
+        }
+        if(peajeEntity.getLatitud() == null)
+        {
+             throw new BusinessLogicException("Latitud de peaje invalido: \"" + peajeEntity.getLatitud() + "\"");
+        }
+        if(peajeEntity.getLongitud() == null)
+        {
+             throw new BusinessLogicException("Longitud de peaje invalido: \"" + peajeEntity.getLongitud() + "\"");
+        }
+        if(peajeEntity.getNombre() == null)
+        {
+             throw new BusinessLogicException("Nombre de peaje invalido: \"" + peajeEntity.getNombre() + "\"");
+        }
         peajeEntity = persistence.create(peajeEntity);
-        LOGGER.log(Level.INFO, "Termina proceso de creación de la editorial");
+        LOGGER.log(Level.INFO, "Termina proceso de creación de peaje");
         return peajeEntity;
+    }
+    public List<PeajeEntity> get() {
+        
+        List<PeajeEntity> Peaje = persistence.findAll();
+        
+        return Peaje;
+    }
+    public PeajeEntity get(Long booksId) {
+        
+        PeajeEntity PeajeEntity = persistence.find(booksId);
+        
+        return PeajeEntity;
+    }
+    public PeajeEntity update(Long PeajeId, PeajeEntity peajeEntity) throws BusinessLogicException {
+        
+        if (persistence.findByName(peajeEntity.getNombre()) != null) {
+            throw new BusinessLogicException("Ya existe un Peaje con el nombre \"" + peajeEntity.getNombre() + "\"");
+        }
+        if(peajeEntity.getCosto() == null)
+        {
+            throw new BusinessLogicException("Costo de peaje invalido: \"" + peajeEntity.getCosto() + "\"");
+        }
+        if(peajeEntity.getLatitud() == null)
+        {
+             throw new BusinessLogicException("Latitud de peaje invalido: \"" + peajeEntity.getLatitud() + "\"");
+        }
+        if(peajeEntity.getLongitud() == null)
+        {
+             throw new BusinessLogicException("Longitud de peaje invalido: \"" + peajeEntity.getLongitud() + "\"");
+        }
+        if(peajeEntity.getNombre() == null)
+        {
+             throw new BusinessLogicException("Nombre de peaje invalido: \"" + peajeEntity.getNombre() + "\"");
+        }
+        PeajeEntity newEntity = persistence.update(peajeEntity);
+        
+        return newEntity;
+    }
+    public void delete(Long PeajeId) {
+        
+        persistence.delete(PeajeId);
+        
     }
 }

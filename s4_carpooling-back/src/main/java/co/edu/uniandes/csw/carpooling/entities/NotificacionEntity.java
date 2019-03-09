@@ -12,7 +12,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
- * @author Julio Morales
+ * @author ja.morales11
  */
 @Entity
 public class NotificacionEntity extends BaseEntity implements Serializable {

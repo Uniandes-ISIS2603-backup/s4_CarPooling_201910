@@ -31,6 +31,8 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     @Temporal(TemporalType.TIME)
     private Date horaInicial;
     
+    private Integer cupos;
+    
     /*@PodamExclude
     @OneToOne
     private TrayectoEntity infoTrayecto;
@@ -46,6 +48,8 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     @PodamExclude
     @OneToOne
     private VehiculoEntity vehiculo;*/
+    
+    
     
     public TrayectoInfoEntity(){
         
@@ -120,4 +124,20 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     public void setHoraInicial(Date horaInicial) {
         this.horaInicial = horaInicial;
     }
+
+    /**
+     * @return the cupos
+     */
+    public Integer getCupos() {
+        return cupos;
+    }
+
+    /**
+     * @param cupos the cupos to set
+     */
+    public void setCupos(Integer cupos) {
+        this.cupos = cupos;
+    }
+
+
 }

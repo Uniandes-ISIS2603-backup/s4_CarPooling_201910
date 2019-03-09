@@ -22,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -41,6 +42,10 @@ public class SeguroResource {
     @Path("{id: \\d+}")
     public SeguroDTO getSeguro(@PathParam("id")Long id)
     {
+         if(logic.get(id) == null)
+       { 
+        throw new WebApplicationException("El recurso /seguro/" + id + " no existe.", 404);
+       }
          SeguroEntity entity = logic.get(id);
          return new SeguroDTO(entity);
     }
@@ -62,15 +67,23 @@ public class SeguroResource {
     @Path("{id: \\d+}")
     public SeguroDTO updateSeguro(@PathParam("id")Long id, SeguroDTO seguro) throws BusinessLogicException
     {
-       SeguroEntity entity = seguro.toEntity();
+       if(logic.get(id) == null)
+       {
+           throw new WebApplicationException("El recurso /seguro/" + id + " no existe.", 404);
+       }
+        SeguroEntity entity = seguro.toEntity();
+       
        entity = logic.update(id, entity);
        return new SeguroDTO(entity);
     }
     @DELETE
     @Path("{id: \\d+}")
-    public void deleteSeguro(Long id)
+    public void deleteSeguro(@PathParam("id")Long id)
     {
-        
+        if(logic.get(id) == null)
+       {
+           throw new WebApplicationException("El recurso /seguro/" + id + " no existe.", 404);
+       }
         logic.delete(id);
     }
     

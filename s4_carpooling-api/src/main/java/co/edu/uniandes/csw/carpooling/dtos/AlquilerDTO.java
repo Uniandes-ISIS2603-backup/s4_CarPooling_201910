@@ -21,6 +21,10 @@ public class AlquilerDTO implements Serializable{
     private UsuarioDTO dueño;
     private VehiculoDTO vehiculoAlquilado;
     private SeguroDTO seguro;
+    public AlquilerDTO()
+    {
+        
+    }
     public AlquilerDTO(AlquilerEntity entity)
     {
         if(entity!=null)
