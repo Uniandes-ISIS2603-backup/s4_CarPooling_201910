@@ -75,7 +75,7 @@ public class TrayectoInfoLogic {
      * @param TrayectoInfoEntity La entidad del TrayectoInfo con los cambios deseados
      * @return La entidad del libro luego de actualizarla
      */
-    public TrayectoInfoEntity updateTrayecoInfo( Long infoId, TrayectoInfoEntity bookEntity) {
+    public TrayectoInfoEntity updateTrayecoInfo(Long infoId, TrayectoInfoEntity bookEntity) {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el TrayectoInfo con id = {0}", infoId);
         TrayectoInfoEntity newEntity = persistence.update(bookEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el TrayectoInfo con id = {0}", bookEntity.getId());
