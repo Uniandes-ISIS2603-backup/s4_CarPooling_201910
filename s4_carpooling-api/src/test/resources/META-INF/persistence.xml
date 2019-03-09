@@ -6,17 +6,17 @@
     
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
      <class>co.edu.uniandes.csw.bookstore.entities.AlquilerEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.CalificacionEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.CiudadEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.InfoTCEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.NotifiacionEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.PagoEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.PeajeEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.SeguroEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.TrayectoEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.TrayectoInfoEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.UsuarioEntity</class>
-<class>co.edu.uniandes.csw.bookstore.entities.VehiculoEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.CalificacionEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.CiudadEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.InfoTCEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.NotifiacionEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.PagoEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.PeajeEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.SeguroEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.TrayectoEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.UsuarioEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.VehiculoEntity</class>
 
  <shared-cache-mode>NONE</shared-cache-mode>
     <properties>
