@@ -14,7 +14,7 @@ import javax.persistence.TypedQuery;
 
 /**
  *
- * @author Julio Morales
+ * @author ja.morales11
  */
 @Stateless
 public class NotificacionPersistence {
@@ -37,8 +37,14 @@ public class NotificacionPersistence {
     }
     
     
-    public NotificacionEntity update(NotificacionEntity ne){
-        return em.merge(ne);
+    public NotificacionEntity update(NotificacionEntity entity){
+        return em.merge(entity);
+    }
+    
+    public void delete(Long notificacionId)
+    {
+        NotificacionEntity entity = em.find(NotificacionEntity.class, notificacionId);
+        em.remove(entity);
     }
     
     

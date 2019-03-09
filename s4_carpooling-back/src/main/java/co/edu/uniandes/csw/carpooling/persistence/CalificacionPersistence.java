@@ -37,4 +37,16 @@ public class CalificacionPersistence {
         return query.getResultList();
     }
     
+    public CalificacionEntity update(CalificacionEntity entity)
+    {
+        return em.merge(entity);
+    }
+    
+    
+    public void delete(Long calificacionEntityId){
+        CalificacionEntity entity = em.find(CalificacionEntity.class, calificacionEntityId);
+        em.remove(entity);
+    }
+   
+    
 }

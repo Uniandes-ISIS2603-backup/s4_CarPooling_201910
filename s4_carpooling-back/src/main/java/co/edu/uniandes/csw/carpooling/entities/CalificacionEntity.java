@@ -7,16 +7,35 @@ package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
- * @author Julio Morales
+ * @author ja.morales11
  */
 @Entity
 public class CalificacionEntity extends BaseEntity implements Serializable {
     private int puntaje;
     private String comentario;
     private int idTrayectoCalificacion;
+    
+    @PodamExclude
+    @ManyToOne
+    private UsuarioEntity calificado;
+    
+    @PodamExclude
+    @ManyToOne
+    private UsuarioEntity calificador;
+    
+    @PodamExclude
+    @OneToOne
+    private TrayectoEntity trayecto;
+    
+    
+    
+    
 
     public CalificacionEntity (){
         
@@ -61,6 +80,48 @@ public class CalificacionEntity extends BaseEntity implements Serializable {
      */
     public void setIdTrayectoCalificacion(int idTrayectoCalificacion) {
         this.idTrayectoCalificacion = idTrayectoCalificacion;
+    }
+
+    /**
+     * @return the calificado
+     */
+    public UsuarioEntity getCalificado() {
+        return calificado;
+    }
+
+    /**
+     * @param calificado the calificado to set
+     */
+    public void setCalificado(UsuarioEntity calificado) {
+        this.calificado = calificado;
+    }
+
+    /**
+     * @return the calificador
+     */
+    public UsuarioEntity getCalificador() {
+        return calificador;
+    }
+
+    /**
+     * @param calificador the calificador to set
+     */
+    public void setCalificador(UsuarioEntity calificador) {
+        this.calificador = calificador;
+    }
+
+    /**
+     * @return the trayecto
+     */
+    public TrayectoEntity getTrayecto() {
+        return trayecto;
+    }
+
+    /**
+     * @param trayecto the trayecto to set
+     */
+    public void setTrayecto(TrayectoEntity trayecto) {
+        this.trayecto = trayecto;
     }
     
     
