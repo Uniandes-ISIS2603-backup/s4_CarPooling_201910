@@ -31,7 +31,9 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     @Temporal(TemporalType.TIME)
     private Date horaInicial;
     
-    /*@PodamExclude
+    private Integer cupos;
+    
+    @PodamExclude
     @OneToOne
     private TrayectoEntity infoTrayecto;
     
@@ -45,7 +47,9 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToOne
-    private VehiculoEntity vehiculo;*/
+    private VehiculoEntity vehiculo;
+    
+    
     
     public TrayectoInfoEntity(){
         
@@ -119,5 +123,75 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
      */
     public void setHoraInicial(Date horaInicial) {
         this.horaInicial = horaInicial;
+    }
+
+    /**
+     * @return the cupos
+     */
+    public Integer getCupos() {
+        return cupos;
+    }
+
+    /**
+     * @param cupos the cupos to set
+     */
+    public void setCupos(Integer cupos) {
+        this.cupos = cupos;
+    }
+
+    /**
+     * @return the infoTrayecto
+     */
+    public TrayectoEntity getInfoTrayecto() {
+        return infoTrayecto;
+    }
+
+    /**
+     * @param infoTrayecto the infoTrayecto to set
+     */
+    public void setInfoTrayecto(TrayectoEntity infoTrayecto) {
+        this.infoTrayecto = infoTrayecto;
+    }
+
+    /**
+     * @return the paradas
+     */
+    public List<CiudadEntity> getParadas() {
+        return paradas;
+    }
+
+    /**
+     * @param paradas the paradas to set
+     */
+    public void setParadas(List<CiudadEntity> paradas) {
+        this.paradas = paradas;
+    }
+
+    /**
+     * @return the peajes
+     */
+    public List<PeajeEntity> getPeajes() {
+        return peajes;
+    }
+
+    /**
+     * @param peajes the peajes to set
+     */
+    public void setPeajes(List<PeajeEntity> peajes) {
+        this.peajes = peajes;
+    }
+
+    /**
+     * @return the vehiculo
+     */
+    public VehiculoEntity getVehiculo() {
+        return vehiculo;
+    }
+
+    /**
+     * @param vehiculo the vehiculo to set
+     */
+    public void setVehiculo(VehiculoEntity vehiculo) {
+        this.vehiculo = vehiculo;
     }
 }
