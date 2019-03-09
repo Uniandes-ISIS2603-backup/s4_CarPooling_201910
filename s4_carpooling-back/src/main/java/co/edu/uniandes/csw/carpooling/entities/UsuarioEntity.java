@@ -68,7 +68,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
   
    @PodamExclude
    @OneToMany(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<TrayectoEntity> trayecetoActualConductor;
+   private List<TrayectoEntity> trayectoActualConductor;
    
    @PodamExclude
    @ManyToMany(cascade = CascadeType.ALL)
@@ -274,20 +274,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.setNotificacionRecibida(notificacionesRecibidas);
     }
 
-    /**
-     * @return the trayecetoActualConductor
-     */
-    public List<TrayectoEntity> getTrayecetoActualConductor() {
-        return trayecetoActualConductor;
-    }
-
-    /**
-     * @param trayecetoActualConductor the trayecetoActualConductor to set
-     */
-    public void setTrayecetoActualConductor(List<TrayectoEntity>  trayecetoActualConductor) {
-        this.trayecetoActualConductor = trayecetoActualConductor;
-    }
-
+   
+    
     /**
      * @return the trayectoActualPasajero
      */
@@ -343,6 +331,23 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setNotificacionRecibida(List<NotificacionEntity> notificacionRecibida) {
         this.notificacionRecibida = notificacionRecibida;
     }
+
+    /**
+     * @return the trayectoActualConductor
+     */
+    public List<TrayectoEntity> getTrayectoActualConductor() {
+        return trayectoActualConductor;
+    }
+
+    /**
+     * @param trayectoActualConductor the trayectoActualConductor to set
+     */
+    public void setTrayectoActualConductor(List<TrayectoEntity> trayectoActualConductor) {
+        this.trayectoActualConductor = trayectoActualConductor;
+    }
+
+
+
 
    
     

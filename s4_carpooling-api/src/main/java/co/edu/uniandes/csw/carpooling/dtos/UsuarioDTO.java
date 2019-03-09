@@ -16,15 +16,14 @@ public class UsuarioDTO implements Serializable {
     private Long id;
     private String nombre;
     private String apellido;
-    private int documento;
-    private int celular;
+    private Integer documento;
+    private Integer celular;
     private String username;
     private String password;
     private String correo;
     private PagoDTO pagoAHacer;
     private PagoDTO pagoARecibir;
-    private TrayectoDTO trayectoActualPasajero;
-    private TrayectoDTO trayectoActualConductor;
+
     
     public UsuarioDTO(){}
     
@@ -38,7 +37,7 @@ public class UsuarioDTO implements Serializable {
             this.password = entity.getPassword();
             this.correo = entity.getCorreo();
             this.id = entity.getId();
-           /** if (entity.getPagoAHacer() != null) {
+            if (entity.getPagoAHacer() != null) {
                 this.pagoAHacer = new PagoDTO(entity.getPagoAHacer());
             } else {
                 this.pagoAHacer = null;
@@ -48,16 +47,7 @@ public class UsuarioDTO implements Serializable {
             } else {
                 this.pagoARecibir = null;
             }
-            if (entity.getTrayectoActualPasajero() != null) {
-                this.trayectoActualPasajero = new PagoDTO(entity.getTrayectoActualPasajero());
-            } else {
-                this.trayectoActualPasajero = null;
-            }
-            if (entity.trayectoActualConductor() != null) {
-                this.trayectoActualConductor = new PagoDTO(entity.trayectoActualConductor());
-            } else {
-                this.trayectoActualConductor = null;
-            }*/
+            
         }
     }
     
@@ -76,18 +66,13 @@ public class UsuarioDTO implements Serializable {
         usuarioEntity.setUsername(username);
         usuarioEntity.setPassword(password);
         usuarioEntity.setCorreo(correo);
-       /** if (this.pagoAHacer != null) {
+        if (this.pagoAHacer != null) {
             usuarioEntity.setPagoAHacer(this.pagoAHacer.toEntity());
         }
         if (this.pagoARecibir != null) {
             usuarioEntity.setPagoARecibir(this.pagoARecibir.toEntity());
         }
-        if (this.trayectoActualConductor != null) {
-            usuarioEntity.setTrayectoActualConductor(this.trayectoActualConductor.toEntity());
-        }
-        if (this.trayectoActualPasajero != null) {
-            usuarioEntity.setTrayectoActualPasajero(this.trayectoActualPasajero.toEntity());
-        }*/
+        
         return usuarioEntity;
     }
 
@@ -123,28 +108,28 @@ public class UsuarioDTO implements Serializable {
     /**
      * @return the documento
      */
-    public int getDocumento() {
+    public Integer getDocumento() {
         return documento;
     }
 
     /**
      * @param documento the documento to set
      */
-    public void setDocumento(int documento) {
+    public void setDocumento(Integer documento) {
         this.documento = documento;
     }
 
     /**
      * @return the celular
      */
-    public int getCelular() {
+    public Integer getCelular() {
         return celular;
     }
 
     /**
      * @param celular the celular to set
      */
-    public void setCelular(int celular) {
+    public void setCelular(Integer celular) {
         this.celular = celular;
     }
 
@@ -232,34 +217,4 @@ public class UsuarioDTO implements Serializable {
         this.pagoARecibir = pagoARecibir;
     }
 
-    /**
-     * @return the trayectoActualPasajero
-     */
-    public TrayectoDTO getTrayectoActualPasajero() {
-        return trayectoActualPasajero;
-    }
-
-    /**
-     * @param trayectoActualPasajero the trayectoActualPasajero to set
-     */
-    public void setTrayectoActualPasajero(TrayectoDTO trayectoActualPasajero) {
-        this.trayectoActualPasajero = trayectoActualPasajero;
-    }
-
-    
-    /**
-     * @param trayectoActualConductor the trayectoActualConductor to set
-     */
-    public void setTrayectoActualConductor(TrayectoDTO trayectoActualConductor) {
-        this.trayectoActualConductor = trayectoActualConductor;
-    }
-
-    /**
-     * @return the trayectoActualConductor
-     */
-    public TrayectoDTO getTrayectoActualConductor() {
-        return trayectoActualConductor;
-    }
-    
-    
 }
