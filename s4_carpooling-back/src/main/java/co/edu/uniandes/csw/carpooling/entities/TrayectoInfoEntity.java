@@ -33,7 +33,7 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     
     private Integer cupos;
     
-    /*@PodamExclude
+    @PodamExclude
     @OneToOne
     private TrayectoEntity infoTrayecto;
     
@@ -47,7 +47,7 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToOne
-    private VehiculoEntity vehiculo;*/
+    private VehiculoEntity vehiculo;
     
     
     

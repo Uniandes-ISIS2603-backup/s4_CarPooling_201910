@@ -98,12 +98,39 @@ public class TrayectoInfoLogicTest {
     public void createTrayectoInfoTest() throws BusinessLogicException{
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
+        newEntity.setCosto(Math.abs(newEntity.getCosto()));
+        newEntity.setDuracion(Math.abs(newEntity.getDuracion()));
         TrayectoInfoEntity ae = info.createEntity(newEntity);
         Assert.assertNotNull(ae);
         TrayectoInfoEntity entity = em.find(TrayectoInfoEntity.class, ae.getId());
         Assert.assertEquals(newEntity.getCombustible(), entity.getCombustible());
         Assert.assertEquals(newEntity.getHoraFinal().getHours(), entity.getHoraFinal().getHours());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createTrayectoInfoTestConCostoInvalido() throws BusinessLogicException {
+        PodamFactory factory = new PodamFactoryImpl();
+        TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
+        newEntity.setCosto(new Integer(-1));
+        info.createEntity(newEntity);
+    }
+    
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createTrayectoInfoTestConDuracionInvalido() throws BusinessLogicException {
+        PodamFactory factory = new PodamFactoryImpl();
+        TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
+        newEntity.setDuracion(new Integer(-1));
+        info.createEntity(newEntity);
+    }
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createTrayectoInfoTestConHoraInicialIgualANull() throws BusinessLogicException {
+        PodamFactory factory = new PodamFactoryImpl();
+        TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
+        newEntity.setHoraInicial(null);
+        info.createEntity(newEntity);
     }
     
     @Test
