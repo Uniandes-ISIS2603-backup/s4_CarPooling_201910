@@ -26,7 +26,7 @@ import javax.ws.rs.core.MediaType;
  * @im.sarmiento 
  */
 
-@Path("usuarios")
+@Path("/usuarios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped

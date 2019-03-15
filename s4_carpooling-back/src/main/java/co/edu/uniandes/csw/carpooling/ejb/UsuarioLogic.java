@@ -166,27 +166,7 @@ public class UsuarioLogic {
         conductor.setPagoARecibir(pago);
     }
     
-    public void calificar(String calificador, String calificado, CalificacionEntity calificacion) throws BusinessLogicException
-    {
-        //if(!calificacion.getCalifcador().getUsername.equals(calificador) || !calificacion.getCalificado.getUsername.equals(calificado))
-            //throw new BusinessLogicException("La claificacion y los nombres de usuario no coinciden");
-        //TrayectoEntity trayecto = calificacion.getTrayecto().getConductor;
-        if(calificador.equals(calificado))
-            throw new BusinessLogicException("El usuario = " + calificador + "no puede calificarse a sí mismo");
-        /**
-        boolean encontrado = false;
-        List<UsuarioEntity> pasajeros = calificacion.getTrayecto().getPasajeros();
-        for(UsuarioEntity p : pasajeros)
-        {
-            if(p.getUsername().equals(calificado)|| p.getUsername().equals(calificador))
-                encontrado = true;
-        }
-        if((calificacion.getTrayecto().getCondutor.equals(calificador)||calificacion.getTrayecto().getCondutor.equals(calificado))&& !encontrado )
-        {
-            throw new BusinessLogicException("La calificacion no es válidad puesto que los dos usuarios no estuvieron en el mismo trayecto");
-        }*/
-        getUsuario(calificado).getCalificaciones().add(calificacion);
-    }
+    
     
     public void solicitarViaje(NotificacionEntity mensaje,TrayectoEntity trayectoDeseado, String username) throws BusinessLogicException
     {
@@ -210,62 +190,9 @@ public class UsuarioLogic {
         usuario.getNotificacionEnviada().add(mensaje);
     }
     
-    public void aceptarViaje(NotificacionEntity mensaje,TrayectoEntity trayectoSolicitado, NotificacionEntity rechazo, NotificacionEntity acepto) throws BusinessLogicException
-    {/**
-        UsuarioEntity emisor = mensaje.getEmisor();
-        UsuarioEntity receptor = mensaje.getReceptor();
-        if(trayectoSolicitado.getInfoTrayecto().getCupos()-trayectoSolicitado.getPasajeros().size()!=0)
-        {
-            emisor.getNotificacionRecibida().add(rechazo);
-            receptor.getNotificacionRecibida().add(rechazo);
-
-        }
-        else
-        {
-            emisor.getNotificacionRecibida().add(acepto);
-            receptor.getNotificacionRecibida().add(acepto);   
-        }    */ 
-    }
+  
     
-    /**public void alquilarVehiculoDueño(String username, String placa)
-    {
-        
-    }*/
-    
-    /**public void alquilarVehiculoArrendatario(String username, String placa)
-    {
-        
-    }*/
-    
-    
-    /**public void eliminarNotifiacionRecibida(String username, NotificacionEntity notificacion)
-    {
-        
-    }*/
-    /**public void eliminarNotifiacionEnviada(String username, NotificacionEntity notificacion)
-    {
-        
-    }*/
-    
-    /**public void eliminarTrayectoPasajero(String username, TrayectoEntity trayecto)
-    {
-        
-    }*/
-    
-     /**public void eliminarTrayectoConductor(String usernam, TrayectoEntity trayecto)
-    {
-        
-    }*/
-    
-    /**public void eliminarAlquilerVehiculoDueño(String username, AlquilerEntity alquiler)
-    {
-        
-    }*/
-    
-    /**public void eliminarAlquilerVehiculoArrendatario(String username, AlquilerEntity alquiler)
-    {
-        
-    }*/
+   
     
     /**
      * Verifica que el username no sea invalido.

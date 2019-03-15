@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "2aeb76b1-381c-44c2-8d36-707a64d30ef1",
+		"name": "UsuarioResource-collection",
+		"description": "Usuario Resource test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener todos los usuarios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85ebfccc-d22a-4bb7-afde-f2f4d8a140bd",
+						"exec": [
+							"tests[\"No genera error en el Get\"] = responseCode.code == 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un usuario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "85ebfccc-d22a-4bb7-afde-f2f4d8a140bd",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.username);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"type\": \"usuarioDetailDTO\",\n        \"apellido\": \"bebe\",\n        \"celular\": 211211111,\n        \"correo\": \"1223@gmail.com\",\n        \"documento\": 11224111111,\n        \"id\": 130,\n        \"nombre\": \"Iso\",\n        \"password\": \"APP\",\n        \"username\": \"pepita\",\n        \"calificaciones\": [],\n        \"notificacionesEnviadas\": [],\n        \"notificacionesRecibidas\": [],\n        \"trayectoActualConductor\": [],\n        \"trayectoActualPasajero\": [],\n        \"vehiculos\": []\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un usuario 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "349f7e2c-6c3c-488d-ae85-260bb2b17dea",
+						"exec": [
+							"var data = JSON.parse(responseBody);",
+							"postman.setGlobalVariable(\"new_id_e\",data.id);",
+							"tests[\"no genera error en el Post\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"type\": \"usuarioDetailDTO\",\n        \"apellido\": \"beb4e\",\n        \"celular\": 2112141111,\n        \"correo\": \"1223@4gmail.com\",\n        \"documento\": 112244111111,\n        \"id\": 160,\n        \"nombre\": \"Iso\",\n        \"password\": \"APP\",\n        \"username\": \"pepitaReloaded\",\n        \"calificaciones\": [],\n        \"notificacionesEnviadas\": [],\n        \"notificacionesRecibidas\": [],\n        \"trayectoActualConductor\": [],\n        \"trayectoActualPasajero\": [],\n        \"vehiculos\": []\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear un usuario con nombre repetido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10c162d5-1c0d-4835-84f1-c896a9f834d3",
+						"exec": [
+							"tests[\"No crea con el mismo nombre\"] = responseCode.code === 412;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"type\": \"usuarioDetailDTO\",\n        \"apellido\": \"beb4e\",\n        \"celular\": 2112141111,\n        \"correo\": \"1223@4gmail.com\",\n        \"documento\": 112244111111,\n        \"id\": 160,\n        \"nombre\": \"Iso\",\n        \"password\": \"APP\",\n        \"username\": \"pepitaReloaded\",\n        \"calificaciones\": [],\n        \"notificacionesEnviadas\": [],\n        \"notificacionesRecibidas\": [],\n        \"trayectoActualConductor\": [],\n        \"trayectoActualPasajero\": [],\n        \"vehiculos\": []\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar el nombre de un usuario existente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "60b76e53-7e6f-4cd1-a38b-aece8c4bc358",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Put\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"type\": \"usuarioDetailDTO\",\n        \"apellido\": \"bebe\",\n        \"celular\": 211211111,\n        \"correo\": \"1223@gmail.com\",\n        \"documento\": 11224111111,\n        \"id\": 130,\n        \"nombre\": \"IsoRELOADED\",\n        \"password\": \"APP\",\n        \"username\": \"pepita\",\n        \"calificaciones\": [],\n        \"notificacionesEnviadas\": [],\n        \"notificacionesRecibidas\": [],\n        \"trayectoActualConductor\": [],\n        \"trayectoActualPasajero\": [],\n        \"vehiculos\": []\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios",
+						"{{new_id_e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modificar un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2e4572cb-1bf4-4e10-b306-bcacefdb65ae",
+						"exec": [
+							"tests[\"No actualiza con username que no existe\"] = responseCode.code === 404;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"type\": \"usuarioDetailDTO\",\n        \"apellido\": \"bebe\",\n        \"celular\": 211211111,\n        \"correo\": \"1223@gmail.com\",\n        \"documento\": 11224111111,\n        \"id\": 130,\n        \"nombre\": \"IsoRELOADED\",\n        \"password\": \"APP\",\n        \"username\": \"pepita\",\n        \"calificaciones\": [],\n        \"notificacionesEnviadas\": [],\n        \"notificacionesRecibidas\": [],\n        \"trayectoActualConductor\": [],\n        \"trayectoActualPasajero\": [],\n        \"vehiculos\": []\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios/900",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios",
+						"900"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un usuario especifico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd0d1ff1-6fb9-4793-9f4d-37d7863c15cd",
+						"exec": [
+							"console.log(responseBody);",
+							"var data = JSON.parse(responseBody);",
+							"tests[\"No genera error en el Get\"] = responseCode.code === 200;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios/{{new_id_e}}",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios",
+						"{{new_id_e}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un usuario que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a1aa02bc-ea5d-4121-8a5a-171088bd8779",
+						"exec": [
+							"tests[\"No consulta con usario que no existe\"] = responseCode.code === 404;",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_rcarpooling-api/api/usuarios/ramona",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_rcarpooling-api",
+						"api",
+						"usuarios",
+						"ramona"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borra el usuario pepitaReloaded",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a1917d96-cffd-4a63-9c42-8f56697da4b8",
+						"exec": [
+							"tests[\"No genera error en el Delete\"] = responseCode.code === 204;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/usuarios/pepitaReloaded",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios",
+						"pepitaReloaded"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

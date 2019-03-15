@@ -14,6 +14,8 @@ import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  *
@@ -30,7 +32,8 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     private List<TrayectoDTO> trayectoActualPasajero;
     private List<TrayectoDTO> trayectoActualConductor;
     
-    public UsuarioDetailDTO(){}
+    public UsuarioDetailDTO(){
+        super();}
     /**
      * Constructor para transformar un Entity a un DTO
      *
@@ -273,6 +276,6 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     public List<TrayectoDTO> getTrayectoActualConductor() {
         return trayectoActualConductor;
     }
-
+  
    
 }

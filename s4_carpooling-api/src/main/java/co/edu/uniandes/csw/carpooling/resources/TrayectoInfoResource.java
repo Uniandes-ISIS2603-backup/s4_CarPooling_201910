@@ -83,7 +83,7 @@ public class TrayectoInfoResource {
     @Path("{infoId: \\d+}")
     public TrayectoInfoDTO updateBook(@PathParam("infoId") Long infoId, TrayectoInfoDTO info) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BookResource updateBook: input: id: {0} , book: {1}", new Object[]{infoId, info});
-        info.setIdDetalle(infoId);
+        info.setId(infoId);
         if (infoLogic.getTrayectoInfo(infoId) == null) {
             throw new WebApplicationException("El recurso /books/" + infoId + " no existe.", 404);
         }

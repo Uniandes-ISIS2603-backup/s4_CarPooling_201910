@@ -17,7 +17,10 @@ public class NotificacionDTO implements Serializable{
     private String mensaje;
     private UsuarioDTO receptor;
     private UsuarioDTO emisor;
-
+    public NotificacionDTO()
+    {
+        
+    }
     /**
      * Constructor NotificacionDTO
      */
