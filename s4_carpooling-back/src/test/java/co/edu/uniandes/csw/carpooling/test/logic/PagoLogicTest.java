@@ -9,7 +9,6 @@ import co.edu.uniandes.csw.carpooling.ejb.InfoTCLogic;
 import co.edu.uniandes.csw.carpooling.ejb.PagoLogic;
 import co.edu.uniandes.csw.carpooling.entities.InfoTCEntity;
 import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
-import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.PagoPersistence;
 import java.util.ArrayList;

@@ -30,28 +30,30 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class CalificacionPersistenceTest {
-    
+
     @Inject
     private CalificacionPersistence cp;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     List<CalificacionEntity> data = new ArrayList<CalificacionEntity>();
-    
+
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
-        try{
+        try {
             utx.begin();
             em.joinTransaction();
             clearData();
             insertData();
             utx.commit();
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -60,39 +62,48 @@ public class CalificacionPersistenceTest {
             }
         }
     }
-    
-    private void clearData(){
+
+    /**
+     * Limpia las tablas relacionadas con las pruebas.
+     */
+    private void clearData() {
         em.createQuery("delete from CalificacionEntity").executeUpdate();
     }
-    
-    private void insertData(){
+
+    /**
+     * Inserta los datos de prueba.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for(int i=0; i<3;i++){
+        for (int i = 0; i < 3; i++) {
             CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
-            
+
             em.persist(entity);
             data.add(entity);
         }
-        
-        
+
     }
-    
-    
-    
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
-    public static JavaArchive deployment () {
+    public static JavaArchive deployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CalificacionEntity.class.getPackage())
                 .addPackage(CalificacionPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    } 
-    
-    
-    
+    }
+
+    /**
+     * Prueba crear una calificación.
+     */
     @Test
-    public void createCalificacionTest(){
-        
+    public void createCalificacionTest() {
+
         PodamFactory factory = new PodamFactoryImpl();
         CalificacionEntity newCalificacionEntity = factory.manufacturePojo(CalificacionEntity.class);
         CalificacionEntity ee = cp.create(newCalificacionEntity);
@@ -100,16 +111,16 @@ public class CalificacionPersistenceTest {
         CalificacionEntity entity = em.find(CalificacionEntity.class, ee.getId());
         Assert.assertEquals(newCalificacionEntity.getPuntaje(), entity.getPuntaje());
     }
-    
- 
+
+    /**
+     * Prueba obtener una calificación.
+     */
     @Test
-    public void getCalificacionTest(){
+    public void getCalificacionTest() {
         CalificacionEntity entity = data.get(0);
         CalificacionEntity newEntity = cp.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getPuntaje(), newEntity.getPuntaje());
     }
-    
-    
-    
+//Faltan algunos tests, borrar esta linea al completarlos.
 }

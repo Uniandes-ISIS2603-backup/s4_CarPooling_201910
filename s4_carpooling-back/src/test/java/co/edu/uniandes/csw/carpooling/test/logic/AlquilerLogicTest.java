@@ -89,8 +89,13 @@ public class AlquilerLogicTest {
         
         
     }
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
-   
     public static  JavaArchive createDeployment()
     {
          return ShrinkWrap.create(JavaArchive.class)
@@ -100,6 +105,10 @@ public class AlquilerLogicTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+    
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Test
     public void createAlquilerTest() throws BusinessLogicException
     {
@@ -113,6 +122,11 @@ public class AlquilerLogicTest {
         AlquilerEntity entity = em.find(AlquilerEntity.class, result.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre()); 
     }
+    
+    /**
+     * Prueba para añadir una relación.
+     * @throws BusinessLogicException 
+     */
     @Test
     public void addRelacionAlquilerTest() throws BusinessLogicException
     {
@@ -121,12 +135,17 @@ public class AlquilerLogicTest {
         AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId());
         Assert.assertNotNull(resp);
         Assert.assertEquals(resp.getArrendatario(),arrendatario);
-        Assert.assertEquals(resp.getDueño(),dueno);
+        Assert.assertEquals(resp.getDuenio(),dueno);
         Assert.assertEquals(resp.getSeguro(),seguro);
         
         
         
     }
+    
+    /**
+     * Prueba crear un alquiler sin dueño.
+     * @throws BusinessLogicException 
+     */
     @Test(expected = BusinessLogicException.class)
     public void addSinDueno() throws BusinessLogicException
     {
@@ -136,6 +155,11 @@ public class AlquilerLogicTest {
         
      
     }
+    
+    /**
+     * Prueba crear un alquiler sin seguro.
+     * @throws BusinessLogicException 
+     */
     @Test(expected = BusinessLogicException.class)
     public void addSinSeguro() throws BusinessLogicException
     {
@@ -146,6 +170,11 @@ public class AlquilerLogicTest {
         
        
     }
+    
+    /**
+     * Prueba añadir el mismo arrendatario.
+     * @throws BusinessLogicException 
+     */
     @Test(expected = BusinessLogicException.class)
     public void addMismoArrendatario() throws BusinessLogicException
     {
@@ -157,6 +186,10 @@ public class AlquilerLogicTest {
       
          
     }
+    
+    /**
+     * Prueba consultar la lista de alquileres.
+     */
     @Test
     public void getAlquilerTest() {
         
@@ -172,6 +205,10 @@ public class AlquilerLogicTest {
             Assert.assertTrue(found);
         }
     }
+    
+    /**
+     * Prueba encontrar un alquiler.
+     */
     @Test
     public void findAlquilerTest() {
         
@@ -180,6 +217,10 @@ public class AlquilerLogicTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
+    
+    /**
+     * Prueba borrar un alquiler.
+     */
     @Test
     public void deleteAlquilerTest() {
         AlquilerEntity entity = data.get(5);
@@ -187,6 +228,11 @@ public class AlquilerLogicTest {
         AlquilerEntity deleted = em.find(AlquilerEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
+    
+    /**
+     * Prueba actualizar un alquiler.
+     * @throws BusinessLogicException 
+     */
     @Test
     public void updateAlquilerTest() throws BusinessLogicException{
         AlquilerEntity entity = data.get(0);
@@ -200,12 +246,21 @@ public class AlquilerLogicTest {
         AlquilerEntity resp = em.find(AlquilerEntity.class, entity.getId());
         Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
     }
-
+    
+    /**
+     * Prueba alquiler sin arrendatario.
+     * @throws BusinessLogicException 
+     */
     @Test(expected = BusinessLogicException.class)
     public void replaceAlquilerSinArrendatario() throws BusinessLogicException{
         AlquilerEntity entity = data.get(0);
         alquilerLogic.replaceRelacionArrendatario(entity.getId(), Long.MIN_VALUE);
     }
+    
+    /**
+     * Prueba alquiler con arrendatario igual.
+     * @throws BusinessLogicException 
+     */
     @Test(expected = BusinessLogicException.class)
     public void replaceAlquilerMismoArrendatario() throws BusinessLogicException
     {
@@ -215,6 +270,11 @@ public class AlquilerLogicTest {
        alquilerLogic.replaceRelacionArrendatario(entity.getId(), dueno.getId());
        
     }
+    
+    /**
+     * Prueba hacer un alquiler sin seguro.
+     * @throws BusinessLogicException 
+     */
     @Test(expected = BusinessLogicException.class)
     public void replaceAlquilerSinSeguro() throws BusinessLogicException{
         

@@ -30,13 +30,15 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class AlquilerPersistenceTest {
-    List<AlquilerEntity> data = new ArrayList<AlquilerEntity>();
+
+    List<AlquilerEntity> data = new ArrayList<>();
     @Inject
     private AlquilerPersistence ap;
     @PersistenceContext
     private EntityManager em;
     @Inject
     UserTransaction utx;
+
     @Before
     public void setUp() {
         try {
@@ -54,12 +56,19 @@ public class AlquilerPersistenceTest {
             }
         }
     }
+
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
     private void clearData() {
         em.createQuery("delete from AlquilerEntity").executeUpdate();
     }
 
-
- private void insertData() {
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             AlquilerEntity entity = factory.manufacturePojo(AlquilerEntity.class);
@@ -68,27 +77,37 @@ public class AlquilerPersistenceTest {
             data.add(entity);
         }
     }
+
     @Deployment
-   
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+
+    /**
+     * Configuración inicial de la prueba.
+     */
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(AlquilerEntity.class.getPackage())
                 .addPackage(AlquilerPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+
+    /**
+     * Prueba para crear un alquiler.
+     */
     @Test
-    public void createAlquilerTest()
-    {
+    public void createAlquilerTest() {
         PodamFactory factory = new PodamFactoryImpl();
         AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
         AlquilerEntity ae = ap.create(newEntity);
         Assert.assertNotNull(ap);
         AlquilerEntity entity = em.find(AlquilerEntity.class, ae.getId());
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-        
+
     }
+
+    /**
+     * Prueba para encontrar todos los alquileres.
+     */
     @Test
     public void finAllAlquilerTEst() {
         List<AlquilerEntity> list = ap.findAll();
@@ -103,6 +122,10 @@ public class AlquilerPersistenceTest {
             Assert.assertTrue(found);
         }
     }
+
+    /**
+     * Prueba para encontrar un alquiler.
+     */
     @Test
     public void findAlquilerTest() {
         AlquilerEntity entity = data.get(0);
@@ -110,25 +133,33 @@ public class AlquilerPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
+
+    /**
+     * Prueba para actualizar un alquiler.
+     */
     @Test
-public void updateAlquilerTest() {
-    AlquilerEntity entity = data.get(0);
-    PodamFactory factory = new PodamFactoryImpl();
-    AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
+    public void updateAlquilerTest() {
+        AlquilerEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        AlquilerEntity newEntity = factory.manufacturePojo(AlquilerEntity.class);
 
-    newEntity.setId(entity.getId());
+        newEntity.setId(entity.getId());
 
-    ap.update(newEntity);
+        ap.update(newEntity);
 
-    AlquilerEntity resp = em.find(AlquilerEntity.class, entity.getId());
+        AlquilerEntity resp = em.find(AlquilerEntity.class, entity.getId());
 
-    Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
-}
-@Test
-public void deleteAlquilerTest() {
-    AlquilerEntity entity = data.get(0);
-    ap.delete(entity.getId());
-    AlquilerEntity deleted = em.find(AlquilerEntity.class, entity.getId());
-    Assert.assertNull(deleted);
-}
+        Assert.assertEquals(newEntity.getNombre(), resp.getNombre());
+    }
+
+    /**
+     * Prueba borrar un alquiler.
+     */
+    @Test
+    public void deleteAlquilerTest() {
+        AlquilerEntity entity = data.get(0);
+        ap.delete(entity.getId());
+        AlquilerEntity deleted = em.find(AlquilerEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
 }

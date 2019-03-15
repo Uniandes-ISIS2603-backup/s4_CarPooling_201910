@@ -18,35 +18,61 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class CalificacionPersistence {
-    
+
     @PersistenceContext(unitName = "carpoolingPU")
     protected EntityManager em;
-    
-    
+
+    /**
+     * Persiste (guarda) un nuevo registro en la base de datos.
+     *
+     * @param calificacionEntity Es la nueva entidad a persistir.
+     * @return CalificacionEntity la entidad guardada.
+     */
     public CalificacionEntity create(CalificacionEntity calificacionEntity) {
         em.persist(calificacionEntity);
         return calificacionEntity;
     }
-    
-    public CalificacionEntity find(Long calificacionEntityId){
+
+    /**
+     * Busca un registro de la base de datos
+     *
+     * @param calificacionEntityId El id del registro que se está buscando.
+     * @return CalificacionEntity Si encuentra el registro, devuelve la entidad
+     * correspondiente.
+     */
+    public CalificacionEntity find(Long calificacionEntityId) {
         return em.find(CalificacionEntity.class, calificacionEntityId);
     }
-    
+
+    /**
+     * Devuelve todos los registros que se encuentran en la tabla
+     * CalificacionEntity.
+     *
+     * @return Una lista de entidades.
+     */
     public List<CalificacionEntity> findAll() {
         TypedQuery query = em.createQuery("select u from CalificacionEntity u", CalificacionEntity.class);
         return query.getResultList();
     }
-    
-    public CalificacionEntity update(CalificacionEntity entity)
-    {
+
+    /**
+     * Actualiza el registro que entra por parámetro.
+     *
+     * @param entity Es la entidad que se desea actualizar.
+     * @return La entidad con los nuevos datos.
+     */
+    public CalificacionEntity update(CalificacionEntity entity) {
         return em.merge(entity);
     }
-    
-    
-    public void delete(Long calificacionEntityId){
+
+    /**
+     * Borra la entidad con el id que se pasa por parámetro.
+     *
+     * @param calificacionEntityId Id del registro a eliminar.
+     */
+    public void delete(Long calificacionEntityId) {
         CalificacionEntity entity = em.find(CalificacionEntity.class, calificacionEntityId);
         em.remove(entity);
     }
-   
-    
+
 }

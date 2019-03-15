@@ -51,7 +51,7 @@ public class PagoLogic {
     /**
      * Consulta todos los pagos.
      *
-     * @return
+     * @return Lista de todos los pagos.
      */
     public List<PagoEntity> getPagos() {
         LOGGER.log(Level.INFO, "Inicia proceso de consultar todos los pagos");

@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * @author ja.morales11
  */
-public class CalificacionDTO implements Serializable{
-    
+public class CalificacionDTO implements Serializable {
+
     private int puntaje;
     private String comentario;
     private int idTrayectoCalificacion;
@@ -22,17 +22,18 @@ public class CalificacionDTO implements Serializable{
     private TrayectoDTO trayecto;
 
     /**
-     * Constructor CalificacionDTO
+     * Constructor CalificacionDTO que recibe una entidad por parámetro.
+     *
+     * @param entity
      */
     public CalificacionDTO(CalificacionEntity entity) {
-        if(entity!=null)
-        {
+        if (entity != null) {
             puntaje = entity.getPuntaje();
             comentario = entity.getComentario();
             idTrayectoCalificacion = entity.getIdTrayectoCalificacion();
         }
     }
-    
+
     /**
      * @return the puntaje
      */
@@ -74,8 +75,6 @@ public class CalificacionDTO implements Serializable{
     public void setIdTrayectoCalificacion(int idTrayectoCalificacion) {
         this.idTrayectoCalificacion = idTrayectoCalificacion;
     }
-    
- 
 
     /**
      * @return the calificado
@@ -119,12 +118,11 @@ public class CalificacionDTO implements Serializable{
         this.trayecto = trayecto;
     }
     
-    
-    
-       
-    
-    
-    public CalificacionEntity toEntity(){
+    /**
+     * Convertir DTO a entity.
+     * @return 
+     */
+    public CalificacionEntity toEntity() {
         CalificacionEntity entity = new CalificacionEntity();
         entity.setPuntaje(puntaje);
         entity.setComentario(comentario);

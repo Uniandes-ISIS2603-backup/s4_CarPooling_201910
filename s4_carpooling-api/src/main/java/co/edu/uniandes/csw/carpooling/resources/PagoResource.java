@@ -43,7 +43,7 @@ public class PagoResource {
      * Busca el pago con el id asociado recibido en la URL y lo devuelve.
      *
      * @param id Identificador del pago que se esta buscando.
-     * @return JSON {@link PagoDTO} - El pago buscado
+     * @return JSON {@link PagoDTO} - El pago buscado.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el pago.
      */
@@ -72,7 +72,7 @@ public class PagoResource {
     /**
      * Crea un nuevo pago.
      *
-     * @param pago {@link PagoDTO} - EL pago que se desea guardar.
+     * @param pago {@link PagoDTO} - El pago que se desea guardar.
      * @return JSON {@link PagoDTO} - El pago guardado con el atributo id
      * autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
@@ -91,7 +91,7 @@ public class PagoResource {
      *
      * @param id Identificador del pago que se desea actualizar.
      * @param pago {@link PagoDTO} El pago que se desea guardar.
-     * @return JSON {@link PagoDTO} - El pago guardada.
+     * @return JSON {@link PagoDTO} - El pago guardado.
      * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
      * Error de lógica que se genera cuando no se encuentra el pago a
      * actualizar.

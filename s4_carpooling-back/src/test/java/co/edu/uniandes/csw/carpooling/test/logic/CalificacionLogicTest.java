@@ -34,22 +34,25 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class CalificacionLogicTest {
+
     List<CalificacionEntity> data = new ArrayList<>();
-    
+
     @Inject
     private CalificacionLogic calificacionLogic;
-    
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private UsuarioEntity calificado;
     private UsuarioEntity calificador;
     private TrayectoEntity trayecto;
-    
+
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -67,20 +70,27 @@ public class CalificacionLogicTest {
             }
         }
     }
+
+    /**
+     * Limpia las tablas implicadas en la prueba.
+     */
     private void clearData() {
         em.createQuery("delete from TrayectoEntity").executeUpdate();
         em.createQuery("delete from CalificacionEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
-        
+
     }
 
-
- private void insertData() {
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 6; i++) {
             CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
-            
-            em.persist(entity); 
+
+            em.persist(entity);
             data.add(entity);
         }
         calificado = factory.manufacturePojo(UsuarioEntity.class);
@@ -89,15 +99,17 @@ public class CalificacionLogicTest {
         em.persist(calificador);
         trayecto = factory.manufacturePojo(TrayectoEntity.class);
         em.persist(trayecto);
-        
-        
+
     }
-    
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
-   
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CalificacionEntity.class.getPackage())
                 .addPackage(CalificacionPersistence.class.getPackage())
                 .addPackage(CalificacionLogic.class.getPackage())
@@ -105,57 +117,57 @@ public class CalificacionLogicTest {
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
 
-
-
-
-
-    
-    
-    
-    
-    
-    
-
-
-    
+    /**
+     * Prueba añadir una calificación sin trayecto.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void addSinTrayecto() throws BusinessLogicException
-    {
+    public void addSinTrayecto() throws BusinessLogicException {
         CalificacionEntity entity = data.get(0);
         CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), Long.MIN_VALUE, calificado.getId(), calificador.getId());
     }
-    
-    
+
+    /**
+     * Prueba sin usuario calificado.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void addSinCalificado() throws BusinessLogicException
-    {
+    public void addSinCalificado() throws BusinessLogicException {
         CalificacionEntity entity = data.get(0);
-        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), Long.MIN_VALUE,  calificador.getId());
+        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), Long.MIN_VALUE, calificador.getId());
     }
 
+    /**
+     * Prueba sin usuario calificador.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void addSinCalificador() throws BusinessLogicException
-    {
+    public void addSinCalificador() throws BusinessLogicException {
         CalificacionEntity entity = data.get(0);
-        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), calificado.getId(),   Long.MIN_VALUE);
+        CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), calificado.getId(), Long.MIN_VALUE);
     }
-    
-    
-    
+
+    /**
+     * Prueba añadir el mismo calificador.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void addMismoCalificador() throws BusinessLogicException
-    {
+    public void addMismoCalificador() throws BusinessLogicException {
         CalificacionEntity entity = data.get(0);
         CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), calificado.getId(), calificado.getId());
-       
+
     }
-    
-    
-    
-    
+
+    /**
+     * Prueba obtener todas las calificaciones.
+     */
     @Test
     public void getCalificacionTest() {
-        
+
         List<CalificacionEntity> list = calificacionLogic.getCalificacion();
         Assert.assertEquals(data.size(), list.size());
         for (CalificacionEntity ent : list) {
@@ -168,14 +180,22 @@ public class CalificacionLogicTest {
             Assert.assertTrue(found);
         }
     }
+
+    /**
+     * Prueba buscar una calificación.
+     */
     @Test
     public void findCalificacionTest() {
-        
+
         CalificacionEntity entity = data.get(0);
         CalificacionEntity newEntity = calificacionLogic.getCalificacion(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getPuntaje(), newEntity.getPuntaje());
     }
+
+    /**
+     * Prueba borrar una califiación
+     */
     @Test
     public void deleteCalificacionTest() {
         CalificacionEntity entity = data.get(5);
@@ -183,8 +203,5 @@ public class CalificacionLogicTest {
         CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
-    
-    
-    
+
 }

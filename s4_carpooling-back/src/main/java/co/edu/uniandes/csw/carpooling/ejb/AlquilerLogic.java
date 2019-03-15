@@ -22,96 +22,145 @@ import javax.inject.Inject;
  */
 @Stateless
 public class AlquilerLogic {
+
     @Inject
     private AlquilerPersistence persistence;
-    @Inject 
+    @Inject
     private UsuarioPersistence usuarioPersistence;
-    @Inject 
+    @Inject
     private SeguroPersistence seguroPersistence;
+
     /*
     @Inject 
     private VehiculoPersistence vehiculoPersistence;
-    */
-    
-    public AlquilerEntity createAlquiler(AlquilerEntity alquiler) 
-    {       
+     */
+
+    /**
+     * Crea un alquiler.
+     *
+     * @param alquiler
+     * @return alquiler creado
+     */
+    public AlquilerEntity createAlquiler(AlquilerEntity alquiler) {
         alquiler = persistence.create(alquiler);
         return alquiler;
     }
-    public List<AlquilerEntity> getAlquiler()
-    {
+
+    /**
+     * Consulta todos los alquileres.
+     *
+     * @return lista de alquileres.
+     */
+    public List<AlquilerEntity> getAlquiler() {
         List<AlquilerEntity> alquiler = persistence.findAll();
         return alquiler;
     }
-    public AlquilerEntity getAlquiler(Long idAlquiler)
-    {
+
+    /**
+     * Consultar un alquiler.
+     *
+     * @param idAlquiler
+     * @return El alquiler, si existe.
+     */
+    public AlquilerEntity getAlquiler(Long idAlquiler) {
         AlquilerEntity alquiler = persistence.find(idAlquiler);
         return alquiler;
     }
-    public AlquilerEntity update(Long idAlquiler, AlquilerEntity newAlquiler) 
-    {
+
+    /**
+     * Actualiza el alquiler.
+     *
+     * @param idAlquiler
+     * @param newAlquiler
+     * @return El nuevo alquiler.
+     */
+    public AlquilerEntity update(Long idAlquiler, AlquilerEntity newAlquiler) {
         AlquilerEntity alquiler = getAlquiler(idAlquiler);
-        
+
         alquiler.setNombre(newAlquiler.getNombre());
-        
+
         persistence.update(alquiler);
-        
+
         return alquiler;
     }
-    public void deleteAlquiler(Long idAlquiler)
-    {
+
+    /**
+     * Borra el alquiler con el id pasado por parámetro.
+     *
+     * @param idAlquiler
+     */
+    public void deleteAlquiler(Long idAlquiler) {
         persistence.delete(idAlquiler);
     }
-    public AlquilerEntity addRelacionAlquiler(Long idAlquiler,Long idDueno, Long idArrendatario, Long idSeguro) throws BusinessLogicException
-    {
+
+    /**
+     * Agrega las relaciones correspondientes.
+     *
+     * @param idAlquiler
+     * @param idDueno
+     * @param idArrendatario
+     * @param idSeguro
+     * @return La entidad con las relaciones.
+     * @throws BusinessLogicException
+     */
+    public AlquilerEntity addRelacionAlquiler(Long idAlquiler, Long idDueno, Long idArrendatario, Long idSeguro) throws BusinessLogicException {
         UsuarioEntity dueno = usuarioPersistence.find(idDueno);
         UsuarioEntity arrendatario = usuarioPersistence.find(idArrendatario);
         SeguroEntity seguro = seguroPersistence.find(idSeguro);
         AlquilerEntity alquiler = persistence.find(idAlquiler);
-        if(dueno==null)
-        {
-            throw new BusinessLogicException("Usuario dueño: "+ idDueno +" no existe");
+        if (dueno == null) {
+            throw new BusinessLogicException("Usuario dueño: " + idDueno + " no existe");
         }
-        if(dueno.equals(arrendatario)){
+        if (dueno.equals(arrendatario)) {
             throw new BusinessLogicException("Usuario dueño y arrendatario son iguales");
         }
-        if(seguro==null)
-        {
-            throw new BusinessLogicException("Seguro: "+ idSeguro +" no existe");
+        if (seguro == null) {
+            throw new BusinessLogicException("Seguro: " + idSeguro + " no existe");
         }
-        if(alquiler==null)
-        {
-            throw new BusinessLogicException("Alquiler: "+ idAlquiler +" no existe");
+        if (alquiler == null) {
+            throw new BusinessLogicException("Alquiler: " + idAlquiler + " no existe");
         }
         alquiler.setArrendatario(arrendatario);
-        alquiler.setDueño(dueno);
+        alquiler.setDuenio(dueno);
         alquiler.setSeguro(seguro);
         return persistence.update(alquiler);
-            
+
     }
-    public AlquilerEntity replaceRelacionArrendatario(Long idAlquiler, Long idArrendatario) throws BusinessLogicException
-    {
+
+    /**
+     * Reemplaza la realción con el arrendatario.
+     *
+     * @param idAlquiler
+     * @param idArrendatario
+     * @return Un alquiler con un nuevo arrendatario.
+     * @throws BusinessLogicException
+     */
+    public AlquilerEntity replaceRelacionArrendatario(Long idAlquiler, Long idArrendatario) throws BusinessLogicException {
         AlquilerEntity alquiler = persistence.find(idAlquiler);
         UsuarioEntity arrendatario = usuarioPersistence.find(idArrendatario);
-        if(arrendatario==null||alquiler==null||arrendatario.equals(alquiler.getDueño()))
-        {
+        if (arrendatario == null || alquiler == null || arrendatario.equals(alquiler.getDuenio())) {
             throw new BusinessLogicException("Relacion de alquiler no valida");
         }
         alquiler.setArrendatario(arrendatario);
         return persistence.update(alquiler);
     }
-    public AlquilerEntity replaceRelacionSeguro(Long idAlquiler, Long idSeguro) throws BusinessLogicException
-    {
+
+    /**
+     * Reemplaza la relación con el seguro del alquiler.
+     *
+     * @param idAlquiler
+     * @param idSeguro
+     * @return Nueva entidad con nuevo seguro.
+     * @throws BusinessLogicException
+     */
+    public AlquilerEntity replaceRelacionSeguro(Long idAlquiler, Long idSeguro) throws BusinessLogicException {
         AlquilerEntity alquiler = persistence.find(idAlquiler);
         SeguroEntity seguro = seguroPersistence.find(idSeguro);
-        if(seguro==null||alquiler==null)
-        {
+        if (seguro == null || alquiler == null) {
             throw new BusinessLogicException("Relacion de alquiler no valida");
         }
         alquiler.setSeguro(seguro);
         return persistence.update(alquiler);
     }
-    
 
-    
 }

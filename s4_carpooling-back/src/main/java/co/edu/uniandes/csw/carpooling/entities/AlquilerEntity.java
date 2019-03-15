@@ -22,7 +22,7 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
     
    @PodamExclude
    @ManyToOne()
-   private UsuarioEntity dueño;
+   private UsuarioEntity duenio;
    @PodamExclude
    @OneToOne(mappedBy="alquilerArrendatario")
    private UsuarioEntity arrendatario;
@@ -69,17 +69,17 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
     }
 
     /**
-     * @return the dueño
+     * @return the duenio
      */
-    public UsuarioEntity getDueño() {
-        return dueño;
+    public UsuarioEntity getDuenio() {
+        return duenio;
     }
 
     /**
-     * @param dueño the dueño to set
+     * @param duenio the duenio to set
      */
-    public void setDueño(UsuarioEntity dueño) {
-        this.dueño = dueño;
+    public void setDuenio(UsuarioEntity duenio) {
+        this.duenio = duenio;
     }
 
     /**

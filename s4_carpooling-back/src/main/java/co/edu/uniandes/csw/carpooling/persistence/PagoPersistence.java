@@ -37,7 +37,7 @@ public class PagoPersistence {
      * Busca un registro de la base de datos
      *
      * @param pagoId El id del registro que se está buscando.
-     * @return pagoId Si encuentra el registro, devuelve la entidad
+     * @return PagoEntity Si encuentra el registro, devuelve la entidad
      * correspondiente.
      */
     public PagoEntity find(Long pagoId) {

@@ -14,31 +14,30 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  *
  * @author df.penap
  */
-public class AlquilerDTO implements Serializable{
+public class AlquilerDTO implements Serializable {
+
     private Long id;
     private String nombre;
     private UsuarioDTO arrendatario;
-    private UsuarioDTO dueño;
+    private UsuarioDTO duenio;
     private VehiculoDTO vehiculoAlquilado;
     private SeguroDTO seguro;
-    public AlquilerDTO()
-    {
-        
+
+    public AlquilerDTO() {
+
     }
-    public AlquilerDTO(AlquilerEntity entity)
-    {
-        if(entity!=null)
-        {
-            nombre=entity.getNombre();
+
+    public AlquilerDTO(AlquilerEntity entity) {
+        if (entity != null) {
+            nombre = entity.getNombre();
             arrendatario = new UsuarioDTO(entity.getArrendatario());
-            dueño = new UsuarioDTO(entity.getDueño());
+            duenio = new UsuarioDTO(entity.getDuenio());
             seguro = new SeguroDTO(entity.getSeguro());
-            id= entity.getId();
+            id = entity.getId();
             /*
             vehiculoAlquilado = new VehiculoDTO(entity.getVehiculoAlquilado());
-            */
-            
-          
+             */
+
         }
     }
 
@@ -85,17 +84,17 @@ public class AlquilerDTO implements Serializable{
     }
 
     /**
-     * @return the dueño
+     * @return the duenio
      */
-    public UsuarioDTO getDueño() {
-        return dueño;
+    public UsuarioDTO getDuenio() {
+        return duenio;
     }
 
     /**
-     * @param dueño the dueño to set
+     * @param duenio the duenio to set
      */
-    public void setDueño(UsuarioDTO dueño) {
-        this.dueño = dueño;
+    public void setDuenio(UsuarioDTO duenio) {
+        this.duenio = duenio;
     }
 
     /**
@@ -111,21 +110,25 @@ public class AlquilerDTO implements Serializable{
     public void setVehiculoAlquilado(VehiculoDTO vehiculoAlquilado) {
         this.vehiculoAlquilado = vehiculoAlquilado;
     }
-    public AlquilerEntity toEntity(){
+
+    public AlquilerEntity toEntity() {
         AlquilerEntity entity = new AlquilerEntity();
         entity.setNombre(nombre);
         entity.setId(id);
-        if(arrendatario!=null){
-        entity.setArrendatario(arrendatario.toEntity());}
-        if(dueño!=null){
-        entity.setDueño(dueño.toEntity());}
+        if (arrendatario != null) {
+            entity.setArrendatario(arrendatario.toEntity());
+        }
+        if (duenio != null) {
+            entity.setDuenio(duenio.toEntity());
+        }
         /*
         entity.setArrendatario(arrendatario.toEntity);
-        entity.setDueño(dueño);
-        */
-        if(seguro!=null){
-        entity.setSeguro(seguro.toEntity());}
-         
+        entity.setduenio(duenio);
+         */
+        if (seguro != null) {
+            entity.setSeguro(seguro.toEntity());
+        }
+
         return entity;
     }
 
@@ -142,6 +145,7 @@ public class AlquilerDTO implements Serializable{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
