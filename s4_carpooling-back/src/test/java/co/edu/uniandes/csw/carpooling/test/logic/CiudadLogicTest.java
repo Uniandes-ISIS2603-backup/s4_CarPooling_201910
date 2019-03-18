@@ -30,27 +30,29 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  *
  * @author estudiante
  */
+@RunWith(Arquillian.class)
+public class CiudadLogicTest {
 
-@RunWith (Arquillian.class)
-public class CiudadLogicTest 
-{
-    
-      private PodamFactory factory = new PodamFactoryImpl();
-    
+    private PodamFactory factory = new PodamFactoryImpl();
+
     @Inject
     private CiudadLogic cl;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
-    @Inject 
+
+    @Inject
     private UserTransaction utx;
     private List<CiudadEntity> data = new ArrayList<CiudadEntity>();
-    
+
     private List<CiudadEntity> ciudadesData = new ArrayList();
-    
-    
-     @Deployment
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
+    @Deployment
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(CiudadEntity.class.getPackage())
@@ -59,7 +61,11 @@ public class CiudadLogicTest
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-      @Before
+
+    /**
+     * Configuración inicial de la prueba.
+     */
+    @Before
     public void configTest() {
         try {
             utx.begin();
@@ -75,29 +81,39 @@ public class CiudadLogicTest
             }
         }
     }
-private void clearData() {
+
+    /**
+     * Limpia las tablas que están implicadas en la prueba.
+     */
+    private void clearData() {
         em.createQuery("delete from VehiculoEntity").executeUpdate();
     }
 
-private void insertData()
-{
-     for (int i = 0; i < 3; i++) {
+    /**
+     * Inserta los datos iniciales para el correcto funcionamiento de las
+     * pruebas.
+     */
+    private void insertData() {
+        for (int i = 0; i < 3; i++) {
             CiudadEntity ciudad = factory.manufacturePojo(CiudadEntity.class);
             em.persist(ciudad);
             data.add(ciudad);
         }
-}
-    @Test
-    public void createTest() throws BusinessLogicException
-    {
-    CiudadEntity newEntity = factory.manufacturePojo(CiudadEntity.class);
-    CiudadEntity result = cl.create(newEntity);
-    Assert.assertNotNull(result);
-    CiudadEntity entity = em.find(CiudadEntity.class, result.getId());
-    Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
-    Assert.assertEquals(newEntity.getCoordenadas(), entity.getCoordenadas());
-    
-}
-}
-            
+    }
 
+    /**
+     * Prueba para crear una ciudad.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test
+    public void createTest() throws BusinessLogicException {
+        CiudadEntity newEntity = factory.manufacturePojo(CiudadEntity.class);
+        CiudadEntity result = cl.create(newEntity);
+        Assert.assertNotNull(result);
+        CiudadEntity entity = em.find(CiudadEntity.class, result.getId());
+        Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
+        Assert.assertEquals(newEntity.getCoordenadas(), entity.getCoordenadas());
+
+    }
+}

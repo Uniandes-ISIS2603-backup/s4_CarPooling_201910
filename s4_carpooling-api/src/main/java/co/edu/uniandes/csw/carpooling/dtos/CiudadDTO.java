@@ -12,8 +12,8 @@ import java.io.Serializable;
  *
  * @author estudiante
  */
-public class CiudadDTO implements Serializable
-{
+public class CiudadDTO implements Serializable {
+
     private String nombre;
     private String[] coordenadas;
 
@@ -44,28 +44,35 @@ public class CiudadDTO implements Serializable
     public void setCoordenadas(String[] coordenadas) {
         this.coordenadas = coordenadas;
     }
-    
-    
-    public CiudadDTO()
-    {
-        
+
+    /**
+     * Constructor vacío.
+     */
+    public CiudadDTO() {
+
     }
-    
-    public CiudadDTO(CiudadEntity entity)
-    {
-        if (entity != null)
-        {
+
+    /**
+     * Constructor desde una entidad.
+     *
+     * @param entity
+     */
+    public CiudadDTO(CiudadEntity entity) {
+        if (entity != null) {
             this.nombre = entity.getNombre();
             this.coordenadas = entity.getCoordenadas();
         }
     }
-    
-    public CiudadEntity toEntity()
-    {
+
+    /**
+     * Método para convertir el DTO a una entidad.
+     *
+     * @return CiudadEntity con los atributos del DTO.
+     */
+    public CiudadEntity toEntity() {
         CiudadEntity ce = new CiudadEntity();
         ce.setCoordenadas(coordenadas);
         ce.setNombre(nombre);
         return ce;
     }
 }
-

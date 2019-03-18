@@ -17,35 +17,45 @@ import javax.inject.Inject;
  * @author nc.hernandezm
  */
 @Stateless
-public class CiudadLogic 
-{
+public class CiudadLogic {
+
     @Inject
     private CiudadPersistence persistence;
-    
-   
-    public CiudadEntity create(CiudadEntity ciudad) throws BusinessLogicException
-    {
-        if (persistence.findByName(ciudad.getNombre()) != null)
-        {
-            throw new BusinessLogicException ("Ya existe la ciudad de nombre: " + ciudad.getNombre()+ " ya existe");
+
+    /**
+     * Crea una ciudad.
+     *
+     * @param ciudad
+     * @return CiudadEntity creada.
+     * @throws BusinessLogicException Si existe una ciudad con el mismo id.
+     */
+    public CiudadEntity create(CiudadEntity ciudad) throws BusinessLogicException {
+        if (persistence.findByName(ciudad.getNombre()) != null) {
+            throw new BusinessLogicException("Ya existe la ciudad de nombre: " + ciudad.getNombre() + " ya existe");
         }
         ciudad = persistence.create(ciudad);
-       
+
         return ciudad;
     }
-    
-     public CiudadEntity get (Long id)
-    {
+
+    /**
+     * Consultar una ciudad.
+     *
+     * @param id
+     * @return La ciudad, si existe.
+     */
+    public CiudadEntity get(Long id) {
         CiudadEntity cEntity = persistence.find(id);
         return cEntity;
     }
-     
-     public List<CiudadEntity> get ()   
-     {
-         List<CiudadEntity> ciudad = persistence.findAll();
-        return ciudad;
-     }
-     
-     
-}
 
+    /**
+     * Consulta todas la ciudades.
+     *
+     * @return Una lista con todas las ciudades.
+     */
+    public List<CiudadEntity> get() {
+        List<CiudadEntity> ciudad = persistence.findAll();
+        return ciudad;
+    }
+}
