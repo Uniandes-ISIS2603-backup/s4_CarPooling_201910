@@ -16,21 +16,21 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class NotificacionEntity extends BaseEntity implements Serializable {
+
     private String mensaje;
 
     @PodamExclude
     @ManyToOne
     private UsuarioEntity emisor;
-    
+
     @PodamExclude
     @ManyToOne
     private UsuarioEntity receptor;
-    
- 
-    
-    public NotificacionEntity () {
-        
+
+    public NotificacionEntity() {
+
     }
+
     /**
      * @return the mensaje
      */
@@ -72,6 +72,5 @@ public class NotificacionEntity extends BaseEntity implements Serializable {
     public void setReceptor(UsuarioEntity receptor) {
         this.receptor = receptor;
     }
-    
-    
+
 }

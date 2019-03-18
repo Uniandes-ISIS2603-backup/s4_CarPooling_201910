@@ -12,26 +12,30 @@ import java.io.Serializable;
  *
  * @author ja.morales11
  */
-public class NotificacionDTO implements Serializable{
-    
+public class NotificacionDTO implements Serializable {
+
     private String mensaje;
     private UsuarioDTO receptor;
     private UsuarioDTO emisor;
-    public NotificacionDTO()
-    {
-        
-    }
+
     /**
-     * Constructor NotificacionDTO
+     * Constructor vacío.
+     */
+    public NotificacionDTO() {
+
+    }
+
+    /**
+     * Constructor desde una entidad.
+     *
+     * @param entity La entidad de donde sale la información para el DTO.
      */
     public NotificacionDTO(NotificacionEntity entity) {
-        if(entity!=null)
-        {
+        if (entity != null) {
             mensaje = entity.getMensaje();
         }
     }
-    
-    
+
     /**
      * @return the mensaje
      */
@@ -45,8 +49,6 @@ public class NotificacionDTO implements Serializable{
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
-    
 
     /**
      * @return the receptor
@@ -75,13 +77,13 @@ public class NotificacionDTO implements Serializable{
     public void setEmisor(UsuarioDTO emisor) {
         this.emisor = emisor;
     }
-    
-    
-    
-    
-    
-    
-    public NotificacionEntity toEntity(){
+
+    /**
+     * Crear una entidad a partir del DTO.
+     *
+     * @return La entidad.
+     */
+    public NotificacionEntity toEntity() {
         NotificacionEntity entity = new NotificacionEntity();
         entity.setMensaje(mensaje);
         return entity;
