@@ -40,34 +40,33 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class UsuarioLogicTest {
-    
+
     @Inject
     private UsuarioLogic usuarioLogic;
-    
+
     private PodamFactory factory = new PodamFactoryImpl();
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
 
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
-    
+
     private static final Logger LOGGER = Logger.getLogger(UsuarioLogicTest.class.getName());
 
-    
     @Deployment
-    public static JavaArchive createDeployment (){
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(UsuarioEntity.class.getPackage())
                 .addPackage(UsuarioLogic.class.getPackage())
                 .addPackage(UsuarioPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-        /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -105,10 +104,10 @@ public class UsuarioLogicTest {
             data.add(users);
         }
     }
-    
+
     @Test
     public void createUsuarioTest() throws BusinessLogicException {
-        
+
         UsuarioEntity newEntity = factory.manufacturePojo(UsuarioEntity.class);
         UsuarioEntity result = usuarioLogic.create(newEntity);
         Assert.assertNotNull(result);
@@ -116,7 +115,7 @@ public class UsuarioLogicTest {
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         Assert.assertEquals(newEntity.getUsername(), entity.getUsername());
     }
-    
+
     /**
      * Prueba para crear un Editorial con el mismo nombre de un Editorial que ya
      * existe.
@@ -129,8 +128,8 @@ public class UsuarioLogicTest {
         newEntity.setUsername(data.get(0).getUsername());
         usuarioLogic.create(newEntity);
     }
-    
-     /**
+
+    /**
      * Prueba para crear un Book con ISBN inválido
      *
      * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
@@ -153,13 +152,13 @@ public class UsuarioLogicTest {
         newEntity.setUsername(null);
         usuarioLogic.create(newEntity);
     }
-    
+
     /**
      * Prueba para consultar la lista de Books.
      */
     @Test
     public void getUsuariosTest() {
-        List<UsuarioEntity> list =usuarioLogic.getUsuarios();
+        List<UsuarioEntity> list = usuarioLogic.getUsuarios();
         Assert.assertEquals(data.size(), list.size());
         for (UsuarioEntity entity : list) {
             boolean found = false;
@@ -202,7 +201,6 @@ public class UsuarioLogicTest {
         Assert.assertEquals(entity.getUsername(), resp.getUsername());
     }
 
-
     /**
      * Prueba para eliminar un Book.
      *
@@ -213,17 +211,17 @@ public class UsuarioLogicTest {
         UsuarioEntity entity = data.get(0);
         UsuarioEntity mod = null;
         try {
-            utx.begin(); 
+            utx.begin();
             entity.setAlquilerArrendatario(null);
-            entity.setAlquilerDueño(new ArrayList<AlquilerEntity>());
+            entity.setAlquilerDuenio(new ArrayList<AlquilerEntity>());
             entity.setTrayectoActualPasajero(new ArrayList<TrayectoEntity>());
             entity.setTrayectoActualConductor(new ArrayList<TrayectoEntity>());
             entity.setPagoAHacer(null);
             entity.setPagoARecibir(null);
             mod = em.merge(entity);
-            LOGGER.log(Level.INFO, "El  dueño de mod null = {0}", entity.getAlquilerDueño()==null);
+            LOGGER.log(Level.INFO, "El  dueño de mod null = {0}", entity.getAlquilerDuenio() == null);
 
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -247,12 +245,12 @@ public class UsuarioLogicTest {
         AlquilerEntity pojoEntity = factory.manufacturePojo(AlquilerEntity.class);
         UsuarioEntity mod = null;
         try {
-            utx.begin(); 
-            
+            utx.begin();
+
             entity.setAlquilerArrendatario(pojoEntity);
             mod = em.merge(entity);
-            LOGGER.log(Level.INFO, "El  dueño de mod null = {0}", entity.getAlquilerArrendatario()==null);
-            } catch (Exception e) {
+            LOGGER.log(Level.INFO, "El  dueño de mod null = {0}", entity.getAlquilerArrendatario() == null);
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -262,13 +260,14 @@ public class UsuarioLogicTest {
         }
         usuarioLogic.deleteUsuario(mod.getUsername());
     }
+
     /**
      * crear un trayecto sin problemas
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test
-    public void createTrayectoConductorTest() throws BusinessLogicException
-    {
+    public void createTrayectoConductorTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         VehiculoEntity vehiculoEj = factory.manufacturePojo(VehiculoEntity.class);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
@@ -277,14 +276,14 @@ public class UsuarioLogicTest {
         trayectoDeseado.setFechaFinal(new Date(2000, 3, 2));
         trayectoActual.setFechaInicial(new Date(2000, 4, 1));
         trayectoActual.setFechaFinal(new Date(2000, 4, 2));
-        
+
         UsuarioEntity mod = null;
         try {
             utx.begin();
             entity.getVehiculos().add(vehiculoEj);
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -295,14 +294,14 @@ public class UsuarioLogicTest {
         usuarioLogic.createTrayectoConductor(mod.getUsername(), trayectoDeseado);
         configTest();
     }
-    
+
     /**
      * crear un trayecto sin vehiculo
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void createTrayectoConductorSinVehiculo() throws BusinessLogicException
-    {
+    public void createTrayectoConductorSinVehiculo() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
@@ -310,14 +309,14 @@ public class UsuarioLogicTest {
         trayectoDeseado.setFechaFinal(new Date(2000, 3, 2));
         trayectoActual.setFechaInicial(new Date(2000, 4, 1));
         trayectoActual.setFechaFinal(new Date(2000, 4, 2));
-        
+
         UsuarioEntity mod = null;
         try {
             utx.begin();
             entity.setVehiculos(new ArrayList<VehiculoEntity>());
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -329,14 +328,14 @@ public class UsuarioLogicTest {
         configTest();
 
     }
-    
+
     /**
      * crear un trayecto que ya tiene un viaje programado en la misma fecha
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void createTrayectoConductorConViajesIguales() throws BusinessLogicException
-    {
+    public void createTrayectoConductorConViajesIguales() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         VehiculoEntity vehiculoEj = factory.manufacturePojo(VehiculoEntity.class);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
@@ -351,7 +350,7 @@ public class UsuarioLogicTest {
             entity.getVehiculos().add(vehiculoEj);
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -364,13 +363,13 @@ public class UsuarioLogicTest {
 
     }
 
-   /**
+    /**
      * crear un trayecto sin problemas para un pasajero.
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test
-    public void createTrayectoPasajeroTest() throws BusinessLogicException
-    {
+    public void createTrayectoPasajeroTest() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
@@ -383,7 +382,7 @@ public class UsuarioLogicTest {
             utx.begin();
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -395,14 +394,14 @@ public class UsuarioLogicTest {
         configTest();
 
     }
-    
+
     /**
      * crear un trayecto que ya tiene un viaje programado en la misma fecha
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void createTrayectoPasajeroTest2() throws BusinessLogicException
-    {
+    public void createTrayectoPasajeroTest2() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
@@ -415,7 +414,7 @@ public class UsuarioLogicTest {
             utx.begin();
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -426,14 +425,14 @@ public class UsuarioLogicTest {
         usuarioLogic.createTrayectoPasajero(mod.getUsername(), trayectoDeseado);
         configTest();
     }
-    
-     /**
+
+    /**
      * revisar los pagos
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test
-    public void hacerPagoTest() throws BusinessLogicException
-    {
+    public void hacerPagoTest() throws BusinessLogicException {
         UsuarioEntity paga = data.get(1);
         UsuarioEntity recibe = data.get(0);
         PagoEntity pago = factory.manufacturePojo(PagoEntity.class);
@@ -443,14 +442,14 @@ public class UsuarioLogicTest {
         usuarioLogic.hacerPago(pago, recibe.getUsername(), paga.getUsername());
         configTest();
     }
-    
+
     /**
      * revisar los pagos
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void hacerPagoTest2() throws BusinessLogicException
-    {
+    public void hacerPagoTest2() throws BusinessLogicException {
         UsuarioEntity paga = data.get(1);
         UsuarioEntity recibe = data.get(0);
         UsuarioEntity usuarioX = data.get(2);
@@ -462,14 +461,14 @@ public class UsuarioLogicTest {
         usuarioLogic.hacerPago(pago, usuarioX.getUsername(), paga.getUsername());
         configTest();
     }
-    
+
     /**
      * solicitar trayecto
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void solicitarViajeTes() throws BusinessLogicException
-    {
+    public void solicitarViajeTes() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
@@ -477,14 +476,14 @@ public class UsuarioLogicTest {
         trayectoDeseado.setFechaFinal(new Date(2000, 3, 2));
         trayectoActual.setFechaInicial(new Date(2000, 4, 1));
         trayectoActual.setFechaFinal(new Date(2000, 4, 2));
-        
+
         UsuarioEntity mod = null;
         try {
             utx.begin();
             entity.setVehiculos(new ArrayList<VehiculoEntity>());
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -496,14 +495,14 @@ public class UsuarioLogicTest {
         configTest();
 
     }
-    
+
     /**
      * pedir un trayecto que ya tiene un viaje programado en la misma fecha
-     * @throws BusinessLogicException 
+     *
+     * @throws BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
-    public void solicitarViajeTest2() throws BusinessLogicException
-    {
+    public void solicitarViajeTest2() throws BusinessLogicException {
         UsuarioEntity entity = data.get(1);
         TrayectoEntity trayectoDeseado = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity trayectoActual = factory.manufacturePojo(TrayectoEntity.class);
@@ -516,7 +515,7 @@ public class UsuarioLogicTest {
             utx.begin();
             entity.getTrayectoActualPasajero().add(trayectoActual);
             mod = em.merge(entity);
-            } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             try {
                 utx.rollback();
@@ -528,6 +527,5 @@ public class UsuarioLogicTest {
         configTest();
 
     }
-
 
 }

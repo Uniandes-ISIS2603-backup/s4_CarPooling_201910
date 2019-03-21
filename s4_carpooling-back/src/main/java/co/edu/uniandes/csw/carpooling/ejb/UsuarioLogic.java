@@ -73,6 +73,10 @@ public class UsuarioLogic {
     /**
      * Actualizar un usuario por usurname
      *
+     * @param username
+     * @param usuarioEntity
+     * @return UsuarioEntity
+     * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
     public UsuarioEntity updateUsuario(String username, UsuarioEntity usuarioEntity) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el usuario con username = {0}", username);
@@ -87,7 +91,7 @@ public class UsuarioLogic {
     /**
      * Eliminar un usuario por ID
      *
-     * @param usuername El username del usuario libro a eliminar
+     * @param username El username del usuario libro a eliminar
      * @throws BusinessLogicException si el libro tiene autores asociados
      */
     public void deleteUsuario(String username) throws BusinessLogicException {
@@ -95,7 +99,7 @@ public class UsuarioLogic {
         UsuarioEntity usuario = getUsuario(username);
         if(!usuario.getTrayectoActualConductor().isEmpty()|| !usuario.getTrayectoActualPasajero().isEmpty() )
             throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene trayectos asociados");
-        if(usuario.getAlquilerArrendatario()!=null || !usuario.getAlquilerDueño().isEmpty() )
+        if(usuario.getAlquilerArrendatario()!=null || !usuario.getAlquilerDuenio().isEmpty() )
             throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene alquileres asociados");
         if(usuario.getPagoAHacer()!=null || usuario.getPagoARecibir()!=null )
             throw new BusinessLogicException("No se puede borrar el usuario con usuario = " + username + " porque tiene pagos asociados");

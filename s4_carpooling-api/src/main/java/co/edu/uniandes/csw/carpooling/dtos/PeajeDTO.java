@@ -36,7 +36,7 @@ public class PeajeDTO implements Serializable{
     /**
      * Método para transformar del DTO a una entidada.
      *
-     * @return La entidad de esta reseña.
+     * @return La entidad con los atributos correspondientes.
      */
     public PeajeEntity toEntity() {
         PeajeEntity peajeEntity = new PeajeEntity();

@@ -22,26 +22,28 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author estudiante
  */
 public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
-    
+
     private List<NotificacionDTO> notificacionesEnviadas;
     private List<NotificacionDTO> notificacionesRecibidas;
-    private List<AlquilerDTO> alquilerDueño;
+    private List<AlquilerDTO> alquilerDuenio;
     private AlquilerDTO alquilerArrendatario;
     private List<VehiculoDTO> vehiculos;
     private List<CalificacionDTO> calificaciones;
     private List<TrayectoDTO> trayectoActualPasajero;
     private List<TrayectoDTO> trayectoActualConductor;
-    
-    public UsuarioDetailDTO(){
-        super();}
+
+    public UsuarioDetailDTO() {
+        super();
+    }
+
     /**
      * Constructor para transformar un Entity a un DTO
      *
-     * @param bookEntity La entidad de la cual se construye el DTO
+     * @param usuarioEntity La entidad de la cual se construye el DTO
      */
     public UsuarioDetailDTO(UsuarioEntity usuarioEntity) {
         super(usuarioEntity);
-        
+
         if (usuarioEntity.getNotificacionesEnviadas() != null) {
             notificacionesEnviadas = new ArrayList<>();
             for (NotificacionEntity entityNotificaion : usuarioEntity.getNotificacionesEnviadas()) {
@@ -66,13 +68,13 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
                 notificacionesRecibidas.add(new NotificacionDTO(entityNotificaion));
             }
         }
-        if (usuarioEntity.getTrayectoActualPasajero()!= null) {
+        if (usuarioEntity.getTrayectoActualPasajero() != null) {
             trayectoActualPasajero = new ArrayList<>();
             for (TrayectoEntity entityTrayecto : usuarioEntity.getTrayectoActualPasajero()) {
                 trayectoActualPasajero.add(new TrayectoDTO(entityTrayecto));
             }
         }
-        if (usuarioEntity.getTrayectoActualConductor()!= null) {
+        if (usuarioEntity.getTrayectoActualConductor() != null) {
             trayectoActualConductor = new ArrayList<>();
             for (TrayectoEntity entityTrayecto : usuarioEntity.getTrayectoActualConductor()) {
                 trayectoActualConductor.add(new TrayectoDTO(entityTrayecto));
@@ -81,14 +83,14 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         if (usuarioEntity.getAlquilerArrendatario() != null) {
             alquilerArrendatario = new AlquilerDTO(usuarioEntity.getAlquilerArrendatario());
         }
-        
+
         if (usuarioEntity.getVehiculos() != null) {
             vehiculos = new ArrayList<>();
             for (VehiculoEntity entityVehiculo : usuarioEntity.getVehiculos()) {
                 vehiculos.add(new VehiculoDTO(entityVehiculo));
             }
         }
-        if (usuarioEntity.getCalificaciones()!= null) {
+        if (usuarioEntity.getCalificaciones() != null) {
             calificaciones = new ArrayList<>();
             for (CalificacionEntity entityCalificacion : usuarioEntity.getCalificaciones()) {
                 calificaciones.add(new CalificacionDTO(entityCalificacion));
@@ -105,7 +107,7 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     public UsuarioEntity toEntity() {
         UsuarioEntity usuarioEntity = super.toEntity();
         if (notificacionesEnviadas != null) {
-            
+
             List<NotificacionEntity> notificacionEntity = new ArrayList<>();
             for (NotificacionDTO dtoNot : getNotificacionesEnviadas()) {
                 notificacionEntity.add(dtoNot.toEntity());
@@ -119,17 +121,17 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
             usuarioEntity.setNotificacionesRecibidas(notificacionEntity);
         }
-        if (alquilerDueño != null) {
-            List<AlquilerEntity> alquilerDueñoEntity = new ArrayList<>();
-            for (AlquilerDTO dtoNot : getAlquilerDueño()) {
-                alquilerDueñoEntity.add(dtoNot.toEntity());
+        if (alquilerDuenio != null) {
+            List<AlquilerEntity> alquilerDuenioEntity = new ArrayList<>();
+            for (AlquilerDTO dtoNot : getAlquilerDuenio()) {
+                alquilerDuenioEntity.add(dtoNot.toEntity());
             }
-            usuarioEntity.setAlquilerDueño(alquilerDueñoEntity);
+            usuarioEntity.setAlquilerDuenio(alquilerDuenioEntity);
         }
         if (alquilerArrendatario != null) {
             usuarioEntity.setAlquilerArrendatario(alquilerArrendatario.toEntity());
         }
-        
+
         if (vehiculos != null) {
             List<VehiculoEntity> vehiculosEntity = new ArrayList<>();
             for (VehiculoDTO dto : getVehiculos()) {
@@ -151,29 +153,26 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
             }
             usuarioEntity.setTrayectoActualConductor(trayectoEntity);
         }
-        if (getTrayectoActualPasajero()!= null) {
+        if (getTrayectoActualPasajero() != null) {
             List<TrayectoEntity> trayectoEntity = new ArrayList<>();
             for (TrayectoDTO dto : getTrayectoActualPasajero()) {
                 trayectoEntity.add(dto.toEntity());
             }
             usuarioEntity.setTrayectoActualPasajero(trayectoEntity);
         }
-        
+
         return usuarioEntity;
     }
-        
-    
-        
-    public List<AlquilerDTO> getAlquilerDueño()
-    {
-       return alquilerDueño;
+
+    public List<AlquilerDTO> getAlquilerDuenio() {
+        return alquilerDuenio;
     }
 
     /**
-     * @param alquilerDueño the alquilerDueño to set
+     * @param alquilerDuenio the alquilerDueño to set
      */
-    public void setAlquilerDueño(List<AlquilerDTO> alquilerDueño) {
-        this.alquilerDueño = alquilerDueño;
+    public void setAlquilerDuenio(List<AlquilerDTO> alquilerDuenio) {
+        this.alquilerDuenio = alquilerDuenio;
     }
 
     /**
@@ -246,15 +245,12 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
         this.calificaciones = calificaciones;
     }
 
-  
     /**
      * @param trayectoActualPasajero the trayectoActualPasajero to set
      */
     public void setTrayectoActualPasajero(List<TrayectoDTO> trayectoActualPasajero) {
         this.trayectoActualPasajero = trayectoActualPasajero;
     }
-
-    
 
     /**
      * @param trayectoActualConductor the trayectoActualConductor to set
@@ -276,6 +272,5 @@ public class UsuarioDetailDTO extends UsuarioDTO implements Serializable {
     public List<TrayectoDTO> getTrayectoActualConductor() {
         return trayectoActualConductor;
     }
-  
-   
+
 }
