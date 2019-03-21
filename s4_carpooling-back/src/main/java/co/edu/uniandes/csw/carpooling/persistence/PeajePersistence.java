@@ -20,12 +20,12 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class PeajePersistence {
-    
+
     private static final Logger LOGGER = Logger.getLogger(PeajePersistence.class.getName());
-    
+
     @PersistenceContext(unitName = "carpoolingPU")
     protected EntityManager em;
-    
+
     /**
      * Método para persisitir la entidad en la base de datos.
      *
@@ -41,13 +41,13 @@ public class PeajePersistence {
         LOGGER.log(Level.INFO, "Saliendo de crear un peaje nuevo");
         return peajeEntity;
     }
-	
-	/**
+
+    /**
      * Devuelve todas los peajes de la base de datos.
      *
-     * @return una lista con todos los peajes que encuentre en la base de
-     * datos, "select u from PeajeEntity u" es como un "select * from
-     * EditorialEntity;" - "SELECT * FROM table_name" en SQL.
+     * @return una lista con todos los peajes que encuentre en la base de datos,
+     * "select u from PeajeEntity u" es como un "select * from EditorialEntity;"
+     * - "SELECT * FROM table_name" en SQL.
      */
     public List<PeajeEntity> findAll() {
         LOGGER.log(Level.INFO, "Consultando todas los peajes");
@@ -56,7 +56,7 @@ public class PeajePersistence {
         // Note que en el query se hace uso del método getResultList() que obtiene una lista de peakes.
         return query.getResultList();
     }
-	
+
     /**
      * Busca si hay algun peaje con el id que se envía de argumento
      *
@@ -72,12 +72,11 @@ public class PeajePersistence {
         return em.find(PeajeEntity.class, peajesId);
     }
 
-	 /**
+    /**
      * Actualiza un peaje.
      *
-     * @param peajeEntity: el peaje con los nuevos cambios.
-     * Por ejemplo el nombre pudo cambiar. En ese caso, se haria uso del método
-     * update.
+     * @param peajeEntity: el peaje con los nuevos cambios. Por ejemplo el
+     * nombre pudo cambiar. En ese caso, se haria uso del método update.
      * @return un peaje con los cambios aplicados.
      */
     public PeajeEntity update(PeajeEntity peajeEntity) {
@@ -89,11 +88,11 @@ public class PeajePersistence {
         LOGGER.log(Level.INFO, "Saliendo de actualizar el peaje con id = {0}", peajeEntity.getId());
         return em.merge(peajeEntity);
     }
-	
+
     /**
      *
-     * Borra un peaje de la base de datos recibiendo como argumento el id
-     * del peaje
+     * Borra un peaje de la base de datos recibiendo como argumento el id del
+     * peaje
      *
      * @param peajesId: id correspondiente al peaje a borrar.
      */
@@ -107,13 +106,13 @@ public class PeajePersistence {
         em.remove(entity);
         LOGGER.log(Level.INFO, "Saliendo de borrar el peaje con id = {0}", peajesId);
     }
-	
+
     /**
      * Busca si hay alguna peaje con el nombre que se envía de argumento
      *
      * @param name: Nombre del peaje que se está buscando
-     * @return null si no existe ningun peaje con el nombre del argumento.
-     * Si existe alguno devuelve el primero.
+     * @return null si no existe ningun peaje con el nombre del argumento. Si
+     * existe alguno devuelve el primero.
      */
     public PeajeEntity findByName(String name) {
         LOGGER.log(Level.INFO, "Consultando peaje por nombre ", name);
@@ -134,5 +133,5 @@ public class PeajePersistence {
         LOGGER.log(Level.INFO, "Saliendo de consultar peaje por nombre ", name);
         return result;
     }
-    
+
 }

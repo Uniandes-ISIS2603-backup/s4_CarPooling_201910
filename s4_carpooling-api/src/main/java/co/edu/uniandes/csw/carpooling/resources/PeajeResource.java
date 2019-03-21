@@ -33,64 +33,109 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class PeajeResource {
+
     private static final Logger LOGGER = Logger.getLogger(PeajeResource.class.getName());
+    
     @Inject
-     PeajeLogic logic;
-     
+    PeajeLogic logic;
+
+    /**
+     * Busca el peaje con el id asociado recibido en la URL y lo devuelve.
+     *
+     * @param id Identificador del peaje que se esta buscando.
+     * @return JSON {@link PeajeDTO} - El peaje buscado.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el peaje.
+     */
     @GET
     @Path("{id: \\d+}")
-    public PeajeDTO getPeaje(@PathParam("id")Long id)
-    {
-        if(logic.get(id) == null)
-       { 
-        throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
-       } 
+    public PeajeDTO getPeaje(@PathParam("id") Long id) {
+        if (logic.get(id) == null) {
+            throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
+        }
         PeajeEntity entity = logic.get(id);
-         return new PeajeDTO(entity);
+        return new PeajeDTO(entity);
     }
+
+    /**
+     * Busca y devuelve todos los peajes que existen en la aplicacion.
+     *
+     * @return JSONArray {@link ¨PeajeDTO} - Los peajes encontrados en la
+     * aplicación. Si no hay ninguno retorna una lista vacía.
+     */
     @GET
-    public List<PeajeDTO> getAlquileres()
-    {
+    public List<PeajeDTO> getPeajes() {
         List<PeajeDTO> alquileres = listEntityToDTO(logic.get());
         return alquileres;
     }
-    
-     @POST
-    public PeajeDTO createAlquiler(PeajeDTO Peaje) throws BusinessLogicException
-    {
-        
-        PeajeEntity entity = Peaje.toEntity();
+
+    /**
+     * Crea un nuevo peaje.
+     *
+     * @param peaje {@link PeajeDTO} - El peaje que se desea guardar.
+     * @return JSON {@link PagoDTO} - El peaje guardado con el atributo id
+     * autogenerado.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando ya existe el peaje.
+     */
+    @POST
+    public PeajeDTO createPeaje(PeajeDTO peaje) throws BusinessLogicException {
+
+        PeajeEntity entity = peaje.toEntity();
         entity = logic.createPeaje(entity);
         return new PeajeDTO(entity);
     }
+
+    /**
+     * Actualiza el peaje con el id recibido.
+     *
+     * @param id Identificador del peaje que se desea actualizar.
+     * @param peaje {@link PeajeDTO} El peaje que se desea guardar.
+     * @return JSON {@link PeajeDTO} - El peaje guardado.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el peaje a
+     * actualizar.
+     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
+     * Error de lógica que se genera cuando no se puede actualizar el peaje.
+     */
     @PUT
     @Path("{id: \\d+}")
-    public PeajeDTO updatePeaje(@PathParam("id")Long id, PeajeDTO Peaje) throws BusinessLogicException
-    {
-       if(logic.get(id) == null)
-       { 
-        throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
-       }
-       PeajeEntity entity = Peaje.toEntity();
-       entity = logic.update(id, entity);
-       return new PeajeDTO(entity);
+    public PeajeDTO updatePeaje(@PathParam("id") Long id, PeajeDTO peaje) throws BusinessLogicException {
+        if (logic.get(id) == null) {
+            throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
+        }
+        PeajeEntity entity = peaje.toEntity();
+        entity = logic.update(id, entity);
+        return new PeajeDTO(entity);
     }
+
+    /**
+     * Borra el peaje con el id asociado recibido en la URL.
+     *
+     * @param id Identificador del peaje que se desea borrar.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra el peaje.
+     */
     @DELETE
     @Path("{id: \\d+}")
-    public void deletePeaje(@PathParam("id")Long id)
-    {
-        if(logic.get(id) == null)
-       { 
-        throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
-       }
+    public void deletePeaje(@PathParam("id") Long id) {
+        if (logic.get(id) == null) {
+            throw new WebApplicationException("El recurso /peaje/" + id + " no existe.", 404);
+        }
         logic.delete(id);
     }
-    
-     private List<PeajeDTO> listEntityToDTO(List<PeajeEntity> Peaje) {
+
+    /**
+     * Se utiliza un método para convertir una lista de Entidades a DTOs.
+     *
+     * @param pago
+     * @return una lista de DTOs.
+     */
+    private List<PeajeDTO> listEntityToDTO(List<PeajeEntity> Peaje) {
         List<PeajeDTO> list = new ArrayList<>();
         for (PeajeEntity entity : Peaje) {
             list.add(new PeajeDTO(entity));
         }
         return list;
-     }
+    }
 }

@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AlquilerIT {
+
     private static final String COLLECTION = "AlquilerResourceTest.postman_collection";
 
     @Deployment(testable = true)

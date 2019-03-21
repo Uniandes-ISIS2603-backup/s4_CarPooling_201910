@@ -30,18 +30,18 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class PeajePersistenceTest {
+
     @Inject
     private PeajePersistence peajePersistence;
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
-    private List<PeajeEntity> data = new ArrayList<PeajeEntity>();
 
-    
+    private List<PeajeEntity> data = new ArrayList<>();
+
     /**
      * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
      * El jar contiene las clases, el descriptor de la base de datos y el
@@ -55,7 +55,8 @@ public class PeajePersistenceTest {
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-     /**
+
+    /**
      * Configuración inicial de la prueba.
      */
     @Before
@@ -75,14 +76,14 @@ public class PeajePersistenceTest {
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from PeajeEntity").executeUpdate();
     }
-    
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
@@ -98,8 +99,7 @@ public class PeajePersistenceTest {
             data.add(entity);
         }
     }
-    
-    
+
     /**
      * Prueba para crear un peaje.
      */
@@ -115,7 +115,7 @@ public class PeajePersistenceTest {
 
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
     }
-    
+
     /**
      * Prueba para consultar la lista de Peajes.
      */
@@ -135,7 +135,7 @@ public class PeajePersistenceTest {
     }
 
     /**
-     * Prueba para consultar una Peaje.
+     * Prueba para consultar un peaje.
      */
     @Test
     public void getPeajeTest() {
@@ -146,7 +146,7 @@ public class PeajePersistenceTest {
     }
 
     /**
-     * Prueba para eliminar una Editorial.
+     * Prueba para eliminar un peaje.
      */
     @Test
     public void deletePeajeTest() {
@@ -157,7 +157,7 @@ public class PeajePersistenceTest {
     }
 
     /**
-     * Prueba para actualizar una Editorial.
+     * Prueba para actualizar un peaje.
      */
     @Test
     public void updateEditorialTest() {
@@ -175,7 +175,7 @@ public class PeajePersistenceTest {
     }
 
     /**
-     * Prueba para consultar una Editorial por nombre.
+     * Prueba para consultar un peaje por nombre.
      */
     @Test
     public void findEditorialByNameTest() {
