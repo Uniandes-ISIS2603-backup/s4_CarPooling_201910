@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class PeajeIT {
+
     private static final String COLLECTION = "PeajeResourceTest.postman_collection";
 
     @Deployment(testable = true)

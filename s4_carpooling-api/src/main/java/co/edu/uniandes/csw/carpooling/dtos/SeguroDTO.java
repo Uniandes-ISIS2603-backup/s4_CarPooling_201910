@@ -14,28 +14,39 @@ import java.io.Serializable;
  * @author df.penap
  */
 public class SeguroDTO extends BaseEntity implements Serializable {
-    
+
     private String tipo;
-    
-    public SeguroDTO(){
-        
+
+    /**
+     * Constructor vacío.
+     */
+    public SeguroDTO() {
+
     }
-    public SeguroDTO(SeguroEntity entity){
-        if(entity!=null)
-        {
+
+    /**
+     * Constructor desde una entidad.
+     *
+     * @param entity
+     */
+    public SeguroDTO(SeguroEntity entity) {
+        if (entity != null) {
             this.setId(entity.getId());
-            tipo = entity.getTipo();    
+            tipo = entity.getTipo();
         }
 
     }
 
+    /**
+     * Crea una entidad con los atributos del DTO.
+     *
+     * @return La entidad creada.
+     */
+    public SeguroEntity toEntity() {
 
-
-    public SeguroEntity toEntity(){
-        
         SeguroEntity entity = new SeguroEntity();
         entity.setTipo(getTipo());
-       
+
         return entity;
     }
 

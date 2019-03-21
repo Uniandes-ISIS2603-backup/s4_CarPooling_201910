@@ -27,6 +27,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class SeguroIT {
+
     private static final String COLLECTION = "SeguroResourceTest.postman_collection";
 
     @Deployment(testable = true)

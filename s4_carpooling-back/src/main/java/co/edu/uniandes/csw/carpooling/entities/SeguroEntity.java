@@ -27,7 +27,7 @@ public class SeguroEntity extends BaseEntity implements Serializable{
     }
 
     /**
-     * @param nombre the nombre to set
+     * @param tipo the nombre to set
      */
     public void setTipo(String tipo) {
         this.tipo = tipo;

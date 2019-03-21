@@ -78,11 +78,8 @@ public class AlquilerPersistenceTest {
         }
     }
 
+    
     @Deployment
-
-    /**
-     * Configuración inicial de la prueba.
-     */
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(AlquilerEntity.class.getPackage())
