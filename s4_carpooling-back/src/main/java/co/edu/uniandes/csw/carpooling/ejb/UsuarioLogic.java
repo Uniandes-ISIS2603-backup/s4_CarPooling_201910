@@ -82,7 +82,7 @@ public class UsuarioLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de actualizar el usuario con username = {0}", username);
         if (!validateUsername(usuarioEntity.getUsername())) {
             throw new BusinessLogicException("El username es inválido");
-        }
+        } //revisar que exista
         UsuarioEntity newEntity = persistence.update(usuarioEntity);
         LOGGER.log(Level.INFO, "Termina proceso de actualizar el usuerio con id = {0}", usuarioEntity.getId());
         return newEntity;
