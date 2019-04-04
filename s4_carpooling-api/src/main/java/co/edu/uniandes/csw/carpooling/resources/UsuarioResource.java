@@ -86,7 +86,7 @@ public class UsuarioResource {
     @Path("{username: [a-zA-Z][a-zA-Z]*}")
     public UsuarioDetailDTO updateUsuario(@PathParam("username")String username, UsuarioDetailDTO usuario) throws BusinessLogicException
     {
-        usuario.setUsername(username);
+        //usuario.setUsername(username);
         if (logic.getUsuario(username) == null) {
             throw new WebApplicationException("El recurso /usuario/" + username + " no existe.", 404);
         }
