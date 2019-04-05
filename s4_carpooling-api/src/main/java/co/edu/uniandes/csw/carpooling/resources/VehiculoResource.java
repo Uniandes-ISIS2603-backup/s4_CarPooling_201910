@@ -66,14 +66,14 @@ public class VehiculoResource
             return new VehiculoDTO(entity);
         }
         @DELETE
-        @PathParam("{id: \\d+}")
+        @Path("{id: \\d+}")
         public void deleteVehiculo(@PathParam("id")Long id) throws BusinessLogicException
         {
             logic.delete(id);
         }
         
         @PUT
-        @PathParam ("{id: \\d+}")
+        @Path ("{id: \\d+}")
         public VehiculoDTO updateVehiculo(@PathParam("id")Long id, VehiculoDTO vehiculo)
         {
             VehiculoEntity entity = vehiculo.toEntity();
