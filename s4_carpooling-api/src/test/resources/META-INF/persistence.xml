@@ -5,11 +5,11 @@
     <!--Toca entity por entity, exclude-unlisted-clases = false no funciona-->
     
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
-     <class>co.edu.uniandes.csw.carpooling.entities.AlquilerEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.AlquilerEntity</class>
 <class>co.edu.uniandes.csw.carpooling.entities.CalificacionEntity</class>
 <class>co.edu.uniandes.csw.carpooling.entities.CiudadEntity</class>
 <class>co.edu.uniandes.csw.carpooling.entities.InfoTCEntity</class>
-<class>co.edu.uniandes.csw.carpooling.entities.NotifiacionEntity</class>
+<class>co.edu.uniandes.csw.carpooling.entities.NotificacionEntity</class>
 <class>co.edu.uniandes.csw.carpooling.entities.PagoEntity</class>
 <class>co.edu.uniandes.csw.carpooling.entities.PeajeEntity</class>
 <class>co.edu.uniandes.csw.carpooling.entities.SeguroEntity</class>
