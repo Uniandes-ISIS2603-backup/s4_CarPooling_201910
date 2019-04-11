@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.carpooling.resources;
 
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoDTO;
+import co.edu.uniandes.csw.carpooling.dtos.TrayectoDetail;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
@@ -39,14 +40,30 @@ public class TrayectoResource {
     @Inject
     private TrayectoLogic trayectoLogic;
     
+        /**
+     * 
+     * @param username el nombre de usuario deseado
+     * @return el usuario especificado
+     */
+    @GET
+    @Path("{trayectoId: \\d+}")
+    public TrayectoDetail getTrayecto (@PathParam("trayectoId") Long trayectoId)
+    {
+        TrayectoEntity trayecto = trayectoLogic.getTrayeto(trayectoId);
+        if (trayecto == null) {
+            throw new WebApplicationException("El usuario con nombre: " + trayectoId + "no existe", 404);
+        }
+        return new TrayectoDetail(trayecto);
+    }
+    
     
     @GET
     public List<TrayectoDTO> darTrayectos(){
         
         LOGGER.info("BookResource getBooks: input: void");
-        List<TrayectoDTO> listaBooks = listEntity2DetailDTO(trayectoLogic.getTrayectos());
-        LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaBooks);
-        return listaBooks;
+        List<TrayectoDTO> listaTrayecto = listEntity2DetailDTO(trayectoLogic.getTrayectos());
+        LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaTrayecto);
+        return listaTrayecto;
     }
     
     private List<TrayectoDTO> listEntity2DetailDTO(List<TrayectoEntity> entityList) {

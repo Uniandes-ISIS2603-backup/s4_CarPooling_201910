@@ -5,7 +5,11 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,23 +18,43 @@ import java.util.List;
  */
 public class TrayectoDetail extends TrayectoDTO implements Serializable{
     
-    private List<UsuarioDTO> usuarios;
+    private List<UsuarioDTO> pasajeros;
+    private List<PagoDTO> pagos;
+    
     
     public TrayectoDetail(){
+        super();
+    }
+    
+    public TrayectoDetail(TrayectoEntity trayectoEntity )
+    {
+        super(trayectoEntity);
+        if (trayectoEntity.getPagos()!=null){
+            pagos = new ArrayList<PagoDTO>();
+            for (PagoEntity pagoEntity: trayectoEntity.getPagos()){
+                pagos.add(new PagoDTO(pagoEntity));
+            }
+        }
+        if (trayectoEntity.getPasajeros()!=null){
+            pasajeros= new ArrayList<UsuarioDTO> ();
+            for (UsuarioEntity usuarioEntity: trayectoEntity.getPasajeros()){
+                pasajeros.add(new UsuarioDTO(usuarioEntity));
+            }
+        }
         
     }
 
     /**
      * @return the usuarios
      */
-    public List<UsuarioDTO> getUsuarios() {
-        return usuarios;
+    public List<UsuarioDTO> getPasajeros() {
+        return pasajeros;
     }
 
     /**
      * @param usuarios the usuarios to set
      */
-    public void setUsuarios(List<UsuarioDTO> usuarios) {
-        this.usuarios = usuarios;
+    public void setPasajeros(List<UsuarioDTO> pasajeros) {
+        this.pasajeros = pasajeros;
     }
 }

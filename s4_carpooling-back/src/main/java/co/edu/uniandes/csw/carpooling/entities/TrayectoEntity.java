@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -28,7 +29,6 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     private Date fechaInicial;
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
-    
     private Integer estado;
     
     @PodamExclude
@@ -44,8 +44,9 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     private TrayectoInfoEntity infoTrayecto;
     
     @PodamExclude
-    @OneToMany
-    private List<PagoEntity> pago;
+    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PagoEntity> pago= new ArrayList<PagoEntity>();
+    
     
     
     public TrayectoEntity(){
@@ -127,7 +128,7 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     /**
      * @return the pago
      */
-    public List<PagoEntity> getPago() {
+    public List<PagoEntity> getPagos() {
         return pago;
     }
 
