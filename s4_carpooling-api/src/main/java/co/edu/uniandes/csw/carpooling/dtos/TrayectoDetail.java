@@ -29,12 +29,12 @@ public class TrayectoDetail extends TrayectoDTO implements Serializable{
     public TrayectoDetail(TrayectoEntity trayectoEntity )
     {
         super(trayectoEntity);
-        if (trayectoEntity.getPagos()!=null){
+        /*if (trayectoEntity.getPagos()!=null){
             pagos = new ArrayList<PagoDTO>();
             for (PagoEntity pagoEntity: trayectoEntity.getPagos()){
                 pagos.add(new PagoDTO(pagoEntity));
             }
-        }
+        }*/
         if (trayectoEntity.getPasajeros()!=null){
             pasajeros= new ArrayList<UsuarioDTO> ();
             for (UsuarioEntity usuarioEntity: trayectoEntity.getPasajeros()){
