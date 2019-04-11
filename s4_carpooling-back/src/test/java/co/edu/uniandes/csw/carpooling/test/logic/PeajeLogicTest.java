@@ -33,12 +33,10 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 @RunWith(Arquillian.class)
 public class PeajeLogicTest {
 
-
     private PodamFactory factory = new PodamFactoryImpl();
 
     @Inject
     private PeajeLogic peajeLogic;
-
 
     @PersistenceContext
     private EntityManager em;
@@ -103,9 +101,9 @@ public class PeajeLogicTest {
     }
 
     /**
-     * Prueba para crear un Prize.
+     * Prueba para crear un peaje.
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
     @Test
     public void createPeajeTest() throws BusinessLogicException {
@@ -120,9 +118,9 @@ public class PeajeLogicTest {
     }
 
     /**
-     * Prueba para crear un Prize con organizacion nula.
+     * Prueba para crear un peaje con nombre repetido.
      *
-     * @throws co.edu.uniandes.csw.bookstore.exceptions.BusinessLogicException
+     * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
     @Test(expected = BusinessLogicException.class)
     public void createPeajeConNombreRepetido() throws BusinessLogicException {
@@ -130,32 +128,58 @@ public class PeajeLogicTest {
         newEntity.setNombre(data.get(0).getNombre());
         peajeLogic.createPeaje(newEntity);
     }
-    
+
+    /**
+     * Prueba para crear peaje sin costo.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
     public void createPeajeSinCosto() throws BusinessLogicException {
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setCosto(null);
         peajeLogic.createPeaje(newEntity);
     }
-     @Test(expected = BusinessLogicException.class)
+
+    /**
+     * Prueba para crear peaje sin latitud.
+     *
+     * @throws BusinessLogicException
+     */
+    @Test(expected = BusinessLogicException.class)
     public void createPeajeSinLatitud() throws BusinessLogicException {
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setLatitud(null);
         peajeLogic.createPeaje(newEntity);
     }
+
+    /**
+     * Prueba para crear peaje sin longitud.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
     public void createPeajeSinLongitud() throws BusinessLogicException {
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setLongitud(null);
         peajeLogic.createPeaje(newEntity);
-    } 
+    }
+
+    /**
+     * Prueba para crear peaje sin nombre.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
     public void createPeajeSinNombre() throws BusinessLogicException {
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setNombre(null);
         peajeLogic.createPeaje(newEntity);
     }
-    
+
+    /**
+     * Prueba para obtener una lista de peajes..
+     */
     @Test
     public void getPeajeTest() {
         List<PeajeEntity> list = peajeLogic.get();
@@ -170,6 +194,10 @@ public class PeajeLogicTest {
             Assert.assertTrue(found);
         }
     }
+
+    /**
+     * Prueba para obtener un peaje.
+     */
     @Test
     public void findPeajeTest() {
         PeajeEntity entity = data.get(0);
@@ -177,6 +205,10 @@ public class PeajeLogicTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getNombre(), newEntity.getNombre());
     }
+
+    /**
+     * Prueba para borrar un peaje.
+     */
     @Test
     public void deletePeajeTest() {
         PeajeEntity entity = data.get(0);
@@ -184,64 +216,94 @@ public class PeajeLogicTest {
         PeajeEntity deleted = em.find(PeajeEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
+
+    /**
+     * Prueba actualizar un peaje.
+     *
+     * @throws BusinessLogicException
+     */
     @Test
-    public void updatePeajetest() throws BusinessLogicException
-    {
+    public void updatePeajetest() throws BusinessLogicException {
         PeajeEntity peaje = data.get(0);
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         PeajeEntity result = peajeLogic.update(peaje.getId(), newEntity);
         Assert.assertNotNull(result);
         PeajeEntity entity = em.find(PeajeEntity.class, result.getId());
-       
+
         Assert.assertEquals(newEntity.getNombre(), entity.getNombre());
         Assert.assertEquals(newEntity.getLatitud(), entity.getLatitud());
         Assert.assertEquals(newEntity.getLongitud(), entity.getLongitud());
     }
+
+    /**
+     * Prueba para actualizar un peaje con el mismo nombre.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void updatePeajeMismoNombre() throws BusinessLogicException
-    {
+    public void updatePeajeMismoNombre() throws BusinessLogicException {
         PeajeEntity peaje = data.get(0);
         PeajeEntity peaje2 = data.get(1);
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setNombre(peaje2.getNombre());
         PeajeEntity result = peajeLogic.update(peaje.getId(), newEntity);
-        
+
     }
+
+    /**
+     * Prueba actualizar peaje sin nombre.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void updatePeajeSinNombre() throws BusinessLogicException
-    {
+    public void updatePeajeSinNombre() throws BusinessLogicException {
         PeajeEntity peaje = data.get(0);
 
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setNombre(null);
         PeajeEntity result = peajeLogic.update(peaje.getId(), newEntity);
     }
+
+    /**
+     * Prueba actualizar peaje sin latitud.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void updatePeajeSinLatitud() throws BusinessLogicException
-    {
+    public void updatePeajeSinLatitud() throws BusinessLogicException {
         PeajeEntity peaje = data.get(0);
 
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setLatitud(null);
         PeajeEntity result = peajeLogic.update(peaje.getId(), newEntity);
     }
+
+    /**
+     * Prueba actualizar peaje sin longitud.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void updatePeajeSinLongitud() throws BusinessLogicException
-    {
+    public void updatePeajeSinLongitud() throws BusinessLogicException {
         PeajeEntity peaje = data.get(0);
 
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setLongitud(null);
         PeajeEntity result = peajeLogic.update(peaje.getId(), newEntity);
     }
+
+    /**
+     * Prueba actualizar peaje sin costo.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void updatePeajeSinCosto() throws BusinessLogicException
-    {
+    public void updatePeajeSinCosto() throws BusinessLogicException {
         PeajeEntity peaje = data.get(0);
 
         PeajeEntity newEntity = factory.manufacturePojo(PeajeEntity.class);
         newEntity.setCosto(null);
         PeajeEntity result = peajeLogic.update(peaje.getId(), newEntity);
     }
-    
+
 }

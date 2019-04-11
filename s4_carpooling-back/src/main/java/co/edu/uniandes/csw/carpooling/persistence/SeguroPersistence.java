@@ -18,47 +18,79 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class SeguroPersistence {
+
     @PersistenceContext(unitName = "carpoolingPU")
     protected EntityManager em;
-    public SeguroEntity create(SeguroEntity seguroEntity)
-    {
-      em.persist(seguroEntity);
-      return seguroEntity;
+
+    /**
+     * Persiste (guarda) un nuevo registro en la base de datos.
+     *
+     * @param seguroEntity Es la nueva entidad a persistir.
+     * @return SeguroEntity la entidad guardada.
+     */
+    public SeguroEntity create(SeguroEntity seguroEntity) {
+        em.persist(seguroEntity);
+        return seguroEntity;
     }
-    
-    public SeguroEntity find(Long seguroId)
-    {
+
+    /**
+     * Busca un registro de la base de datos
+     *
+     * @param seguroId El id del registro que se está buscando.
+     * @return SeguroEntity Si encuentra el registro, devuelve la entidad
+     * correspondiente.
+     */
+    public SeguroEntity find(Long seguroId) {
         return em.find(SeguroEntity.class, seguroId);
     }
-    public List<SeguroEntity> findAll()
-    {
+
+    /**
+     * Devuelve todos los registros que se encuentran en la tabla SeguroEntity.
+     *
+     * @return Una lista de entidades.
+     */
+    public List<SeguroEntity> findAll() {
         TypedQuery<SeguroEntity> query = em.createQuery("select u from SeguroEntity u", SeguroEntity.class);
         return query.getResultList();
     }
-    public SeguroEntity update(SeguroEntity alquilerEntity) {
-        return em.merge(alquilerEntity);
+
+    /**
+     * Actualiza el registro que entra por parámetro.
+     *
+     * @param seguroEntity Es la entidad que se desea actualizar.
+     * @return La entidad con los nuevos datos.
+     */
+    public SeguroEntity update(SeguroEntity seguroEntity) {
+        return em.merge(seguroEntity);
     }
-    public void delete(Long alquilerId) {
-        SeguroEntity entity = em.find(SeguroEntity.class, alquilerId);
+
+    /**
+     * Borra la entidad con el id que se pasa por parámetro.
+     *
+     * @param seguroId Id del registro a eliminar.
+     */
+    public void delete(Long seguroId) {
+        SeguroEntity entity = em.find(SeguroEntity.class, seguroId);
         em.remove(entity);
-        
+
     }
-    public SeguroEntity findByTipo(String tipo)
-    {
+
+    /**
+     * Busca la entidad pasando el tipo por parámetro.
+     *
+     * @param tipo
+     * @return Una lista de entidades con el mismo tipo.
+     */
+    public SeguroEntity findByTipo(String tipo) {
         TypedQuery<SeguroEntity> query = em.createQuery("select e from SeguroEntity e where e.tipo = :t", SeguroEntity.class);
         query = query.setParameter("t", tipo);
         List<SeguroEntity> sameTipo = query.getResultList();
         SeguroEntity result;
-        if(sameTipo == null)
-        {
-            result=null;
-        }
-        else if(sameTipo.isEmpty())
-        {
-            result=null;
-        }
-        else 
-        {
+        if (sameTipo == null) {
+            result = null;
+        } else if (sameTipo.isEmpty()) {
+            result = null;
+        } else {
             result = sameTipo.get(0);
         }
         return result;

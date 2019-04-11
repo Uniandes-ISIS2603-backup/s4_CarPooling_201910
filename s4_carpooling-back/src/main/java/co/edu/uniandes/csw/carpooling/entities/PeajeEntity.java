@@ -14,7 +14,7 @@ import javax.persistence.Entity;
  */
 @Entity
 public class PeajeEntity extends BaseEntity implements Serializable {
-    
+
     private String nombre;
     private Double costo;
     private Double latitud;
@@ -75,6 +75,5 @@ public class PeajeEntity extends BaseEntity implements Serializable {
     public void setLongitud(Double longitud) {
         this.longitud = longitud;
     }
-    
-    
+
 }

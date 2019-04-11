@@ -25,14 +25,13 @@ import org.junit.runner.RunWith;
 import uk.co.jemos.podam.api.PodamFactory;
 import uk.co.jemos.podam.api.PodamFactoryImpl;
 
-
-
 /**
  *
  * @author df.penap
  */
 @RunWith(Arquillian.class)
 public class SeguroPersistenceTest {
+
     List<SeguroEntity> data = new ArrayList<SeguroEntity>();
     @Inject
     private SeguroPersistence sp;
@@ -40,6 +39,10 @@ public class SeguroPersistenceTest {
     private EntityManager em;
     @Inject
     UserTransaction utx;
+
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -57,12 +60,18 @@ public class SeguroPersistenceTest {
             }
         }
     }
+
+    /**
+     * Limpiar las tablas implicadas.
+     */
     private void clearData() {
         em.createQuery("delete from SeguroEntity").executeUpdate();
     }
 
-
- private void insertData() {
+    /**
+     * Generar datos de prueba.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             SeguroEntity entity = factory.manufacturePojo(SeguroEntity.class);
@@ -71,26 +80,32 @@ public class SeguroPersistenceTest {
             data.add(entity);
         }
     }
+
     @Deployment
-   
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(SeguroEntity.class.getPackage())
                 .addPackage(SeguroPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+
+    /**
+     * Prueba crear seguro.
+     */
     @Test
-    public void createSeguroTest()
-    {
+    public void createSeguroTest() {
         PodamFactory factory = new PodamFactoryImpl();
         SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
         SeguroEntity ae = sp.create(newEntity);
         Assert.assertNotNull(sp);
         SeguroEntity entity = em.find(SeguroEntity.class, ae.getId());
-        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());  
+        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());
     }
+
+    /**
+     * Prueba encontrar todos los seguros.
+     */
     @Test
     public void finAllSeguroTEst() {
         List<SeguroEntity> list = sp.findAll();
@@ -105,6 +120,10 @@ public class SeguroPersistenceTest {
             Assert.assertTrue(found);
         }
     }
+
+    /**
+     * Prueba encontrar seguro.
+     */
     @Test
     public void findSeguroTest() {
         SeguroEntity entity = data.get(0);
@@ -112,25 +131,33 @@ public class SeguroPersistenceTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getTipo(), newEntity.getTipo());
     }
+
+    /**
+     * Prueba actualizar seguro.
+     */
     @Test
     public void updateSeguroTest() {
-    SeguroEntity entity = data.get(0);
-    PodamFactory factory = new PodamFactoryImpl();
-    SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
+        SeguroEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
 
-    newEntity.setId(entity.getId());
+        newEntity.setId(entity.getId());
 
-    sp.update(newEntity);
+        sp.update(newEntity);
 
-    SeguroEntity resp = em.find(SeguroEntity.class, entity.getId());
+        SeguroEntity resp = em.find(SeguroEntity.class, entity.getId());
 
-    Assert.assertEquals(newEntity.getTipo(), resp.getTipo());
-}
-@Test
-public void deleteSeguroTest() {
-    SeguroEntity entity = data.get(0);
-    sp.delete(entity.getId());
-    SeguroEntity deleted = em.find(SeguroEntity.class, entity.getId());
-    Assert.assertNull(deleted);
-}
+        Assert.assertEquals(newEntity.getTipo(), resp.getTipo());
+    }
+
+    /**
+     * Prueba borrar seguro.
+     */
+    @Test
+    public void deleteSeguroTest() {
+        SeguroEntity entity = data.get(0);
+        sp.delete(entity.getId());
+        SeguroEntity deleted = em.find(SeguroEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
 }

@@ -12,17 +12,26 @@ import java.io.Serializable;
  *
  * @author df.penap
  */
-public class PeajeDTO implements Serializable{
+public class PeajeDTO implements Serializable {
+
     private String nombre;
     private Double costo;
     private Double lat;
     private Double lon;
     private Long id;
-    
+
+    /**
+     * Constructor vacío.
+     */
     public PeajeDTO() {
-        
+
     }
-    
+
+    /**
+     * Constructor desde una entidad.
+     *
+     * @param peajeEntity
+     */
     public PeajeDTO(PeajeEntity peajeEntity) {
         if (peajeEntity != null) {
             this.id = peajeEntity.getId();
@@ -32,11 +41,11 @@ public class PeajeDTO implements Serializable{
             this.lon = peajeEntity.getLongitud();
         }
     }
-    
+
     /**
      * Método para transformar del DTO a una entidada.
      *
-     * @return La entidad de esta reseña.
+     * @return La entidad con los atributos correspondientes.
      */
     public PeajeEntity toEntity() {
         PeajeEntity peajeEntity = new PeajeEntity();
@@ -47,7 +56,7 @@ public class PeajeDTO implements Serializable{
         peajeEntity.setLongitud(this.lon);
         return peajeEntity;
     }
-    
+
     /**
      * @return the nombre
      */
@@ -117,5 +126,5 @@ public class PeajeDTO implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }
-    
+
 }

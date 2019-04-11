@@ -26,7 +26,7 @@ public class PagoPersistence {
      * Persiste (guarda) un nuevo registro en la base de datos.
      *
      * @param pagoEntity Es la nueva entidad a persistir.
-     * @return pagoEntity la entidad guardada.
+     * @return PagoEntity la entidad guardada.
      */
     public PagoEntity create(PagoEntity pagoEntity) {
         em.persist(pagoEntity);

@@ -32,8 +32,9 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class SeguroLogicTest {
+
     List<SeguroEntity> data = new ArrayList<SeguroEntity>();
-    @Inject 
+    @Inject
     SeguroLogic seguroLogic;
     @Inject
     private SeguroPersistence sp;
@@ -41,6 +42,10 @@ public class SeguroLogicTest {
     private EntityManager em;
     @Inject
     UserTransaction utx;
+
+    /**
+     * Configuraciòn inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -58,12 +63,18 @@ public class SeguroLogicTest {
             }
         }
     }
+
+    /**
+     * Limpiar las tablas implicadas.
+     */
     private void clearData() {
         em.createQuery("delete from SeguroEntity").executeUpdate();
     }
 
-
- private void insertData() {
+    /**
+     * Generar datos de prueba.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             SeguroEntity entity = factory.manufacturePojo(SeguroEntity.class);
@@ -71,38 +82,51 @@ public class SeguroLogicTest {
             em.persist(entity);
             data.add(entity);
         }
- }
+    }
+
     @Deployment
-   
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(SeguroEntity.class.getPackage())
                 .addPackage(SeguroPersistence.class.getPackage())
                 .addPackage(SeguroLogic.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
+
+    /**
+     * Prueba crear seguro.
+     *
+     * @throws BusinessLogicException
+     */
     @Test
-    public void createSeguroTest() throws BusinessLogicException
-    {
+    public void createSeguroTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
         SeguroEntity result = seguroLogic.create(newEntity);
-        
+
         Assert.assertNotNull(result);
         SeguroEntity entity = em.find(SeguroEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getTipo(), entity.getTipo()); 
+        Assert.assertEquals(newEntity.getTipo(), entity.getTipo());
     }
+
+    /**
+     * Prueba crear seguro con mismo tipo.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void createSeguroConMismoTipo() throws BusinessLogicException
-    {
+    public void createSeguroConMismoTipo() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
         newEntity.setTipo(data.get(0).getTipo());
         seguroLogic.create(newEntity);
-        
+
     }
+
+    /**
+     * Prueba obtener todos los seguros.
+     */
     @Test
     public void getSeguroTest() {
         List<SeguroEntity> list = seguroLogic.get();
@@ -117,6 +141,10 @@ public class SeguroLogicTest {
             Assert.assertTrue(found);
         }
     }
+
+    /**
+     * Prueba obtener un seguro.
+     */
     @Test
     public void findSeguroTest() {
         SeguroEntity entity = data.get(0);
@@ -124,6 +152,10 @@ public class SeguroLogicTest {
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getTipo(), newEntity.getTipo());
     }
+
+    /**
+     * Prueba borrar un seguro.
+     */
     @Test
     public void deleteSeguroTest() {
         SeguroEntity entity = data.get(0);
@@ -131,27 +163,37 @@ public class SeguroLogicTest {
         SeguroEntity deleted = em.find(SeguroEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
+
+    /**
+     * Prueba actualizar un seguro.
+     *
+     * @throws BusinessLogicException
+     */
     @Test
-    public void updateSeguroTest() throws BusinessLogicException
-    {
+    public void updateSeguroTest() throws BusinessLogicException {
         SeguroEntity entity = data.get(0);
         PodamFactory factory = new PodamFactoryImpl();
         SeguroEntity newEntity = factory.manufacturePojo(SeguroEntity.class);
 
         newEntity.setId(entity.getId());
 
-        seguroLogic.update(entity.getId(),newEntity);
+        seguroLogic.update(entity.getId(), newEntity);
 
         SeguroEntity resp = em.find(SeguroEntity.class, entity.getId());
 
         Assert.assertEquals(newEntity.getTipo(), resp.getTipo());
     }
+
+    /**
+     * Prueba actualizar un seguro sin tipo.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
-    public void updateSeguroSinTipoTest() throws BusinessLogicException
-    {
+    public void updateSeguroSinTipoTest() throws BusinessLogicException {
         SeguroEntity entity = data.get(0);
         entity.setTipo(null);
-        
-        seguroLogic.update(entity.getId(),entity);
+
+        seguroLogic.update(entity.getId(), entity);
     }
 }

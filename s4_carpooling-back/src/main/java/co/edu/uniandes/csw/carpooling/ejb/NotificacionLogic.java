@@ -18,76 +18,97 @@ import javax.inject.Inject;
  *
  * @author ja.morales11
  */
-
 @Stateless
 public class NotificacionLogic {
-   
+
     @Inject
     private NotificacionPersistence persistence;
-    
+
     @Inject
     private UsuarioPersistence usuarioPersistence;
-    
-    public NotificacionEntity createNotificacion (NotificacionEntity notificacion)
-    {
+
+    /**
+     * Crea una notificación.
+     *
+     * @param notificacion
+     * @return NotificacionEntity creada.
+     */
+    public NotificacionEntity createNotificacion(NotificacionEntity notificacion) {
         notificacion = persistence.create(notificacion);
         return notificacion;
     }
-    
-    
-    public List<NotificacionEntity> getNotificacion()
-    {
+
+    /**
+     * Consulta todas las notificaciones.
+     *
+     * @return Una lista con todas las entidades NotificacionEntity.
+     */
+    public List<NotificacionEntity> getNotificacion() {
         List<NotificacionEntity> notificacion = persistence.findAll();
         return notificacion;
     }
-    
-    
-    public NotificacionEntity getNotificacion(Long NotificacionId)
-    {
+
+    /**
+     * Consultar una notificación.
+     *
+     * @param NotificacionId El id que se desea buscar.
+     * @return NotificacionEntity si la encuentra.
+     */
+    public NotificacionEntity getNotificacion(Long NotificacionId) {
         NotificacionEntity notificacion = persistence.find(NotificacionId);
         return notificacion;
     }
-    
-    
-    public NotificacionEntity update(Long idNotificacion, NotificacionEntity newNotificacion)
-    {
+
+    /**
+     * Actualizar una notificación.
+     *
+     * @param idNotificacion El id de la notificación.
+     * @param newNotificacion La notificación nueva.
+     * @return La entidad con los nuevos datos.
+     */
+    public NotificacionEntity update(Long idNotificacion, NotificacionEntity newNotificacion) {
         NotificacionEntity notificacion = getNotificacion(idNotificacion);
         notificacion.setMensaje(newNotificacion.getMensaje());
         persistence.update(notificacion);
         return notificacion;
     }
-    
-    
-    public void deleteNotificacion (Long idNotificacion)
-    {
+
+    /**
+     * Borrar una notificación.
+     *
+     * @param idNotificacion El id de la entidad a borrar.
+     */
+    public void deleteNotificacion(Long idNotificacion) {
         persistence.delete(idNotificacion);
     }
-    
-    
-    public NotificacionEntity addRelacionNotificacion (Long idNotificacion, Long idReceptor, Long idEmisor) throws BusinessLogicException
-    {
+
+    /**
+     * Añadir las relaciones.
+     *
+     * @param idNotificacion
+     * @param idReceptor
+     * @param idEmisor
+     * @return La notificación con sus relaciones correspondientes.
+     * @throws BusinessLogicException Si alguna de las entidades relacionadas no
+     * existe o son iguales el receptor y el emisor.
+     */
+    public NotificacionEntity addRelacionNotificacion(Long idNotificacion, Long idReceptor, Long idEmisor) throws BusinessLogicException {
         NotificacionEntity notificacion = persistence.find(idNotificacion);
         UsuarioEntity emisor = usuarioPersistence.find(idEmisor);
         UsuarioEntity receptor = usuarioPersistence.find(idReceptor);
-        if(emisor == null)
-        {
-            throw new BusinessLogicException("Usuario emisor: "+ idEmisor + " no existe");
+        if (emisor == null) {
+            throw new BusinessLogicException("Usuario emisor: " + idEmisor + " no existe");
         }
-        if(receptor == null)
-        {
-            throw new BusinessLogicException("Usuario receptor: "+ idReceptor + " no existe");
+        if (receptor == null) {
+            throw new BusinessLogicException("Usuario receptor: " + idReceptor + " no existe");
         }
-        if(emisor.equals(receptor))
-        {
-             throw new BusinessLogicException("Usuario emisor y receptor son iguales");
+        if (emisor.equals(receptor)) {
+            throw new BusinessLogicException("Usuario emisor y receptor son iguales");
         }
-    
+
         notificacion.setEmisor(emisor);
         notificacion.setReceptor(receptor);
-        return persistence.update(notificacion);    
+        return persistence.update(notificacion);
     }
-    
-    
-    
-    
+
 }

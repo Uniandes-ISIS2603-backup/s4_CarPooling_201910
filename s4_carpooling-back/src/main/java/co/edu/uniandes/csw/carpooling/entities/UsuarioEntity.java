@@ -32,51 +32,51 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String username;
     private String password;
     private String correo;
- 
-   @PodamExclude
-   @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-   private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
-    
-   @PodamExclude
-   @CascadeOnDelete
-   @OneToMany(mappedBy="dueño", cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<AlquilerEntity> alquilerDueño = new ArrayList<AlquilerEntity>();
-   
-   @PodamExclude
-   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-   private AlquilerEntity alquilerArrendatario;
-    
-   @PodamExclude
-   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
-    
-   @PodamExclude
-   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
-    
-   @PodamExclude
-   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<CalificacionEntity> calificaciones =  new ArrayList<CalificacionEntity>();
-    
-   @PodamExclude
-   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-   private PagoEntity pagoARecibir;
-    
-   @PodamExclude
-   @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-   private PagoEntity pagoAHacer;
-  
-   @PodamExclude
-   @OneToMany(mappedBy="conductor",cascade = CascadeType.ALL, orphanRemoval = true)
-   private List<TrayectoEntity> trayectoActualConductor;
-   
-   @PodamExclude
-   @ManyToMany(cascade = CascadeType.ALL)
-   private  List<TrayectoEntity> trayectoActualPasajero;
 
-    
-    public UsuarioEntity(){
+    @PodamExclude
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
+
+    @PodamExclude
+    @CascadeOnDelete
+    @OneToMany(mappedBy = "duenio", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AlquilerEntity> alquilerDuenio = new ArrayList<AlquilerEntity>();
+
+    @PodamExclude
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private AlquilerEntity alquilerArrendatario;
+
+    @PodamExclude
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
+
+    @PodamExclude
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
+
+    @PodamExclude
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
+
+    @PodamExclude
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private PagoEntity pagoARecibir;
+
+    @PodamExclude
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    private PagoEntity pagoAHacer;
+
+    @PodamExclude
+    @OneToMany(mappedBy = "conductor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TrayectoEntity> trayectoActualConductor;
+
+    @PodamExclude
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<TrayectoEntity> trayectoActualPasajero;
+
+    public UsuarioEntity() {
     }
+
     /**
      * @return the nombre
      */
@@ -118,7 +118,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setDocumento(Integer documento) {
         this.documento = documento;
     }
-    
+
     /**
      * @return the celular
      */
@@ -174,19 +174,19 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-    
+
     /**
      * @return the alquilerDueño
      */
-    public List<AlquilerEntity> getAlquilerDueño() {
-        return alquilerDueño;
+    public List<AlquilerEntity> getAlquilerDuenio() {
+        return alquilerDuenio;
     }
 
     /**
-     * @param alquilerDueño the alquilerDueño to set
+     * @param alquilerDuenio the alquilerDueño to set
      */
-    public void setAlquilerDueño(List<AlquilerEntity> alquilerDueño) {
-        this.alquilerDueño = alquilerDueño;
+    public void setAlquilerDuenio(List<AlquilerEntity> alquilerDuenio) {
+        this.alquilerDuenio = alquilerDuenio;
     }
 
     /**
@@ -202,7 +202,6 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void setAlquilerArrendatario(AlquilerEntity alquilerArrendatario) {
         this.alquilerArrendatario = alquilerArrendatario;
     }
-
 
     /**
      * @return the calificaciones
@@ -274,19 +273,17 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.setNotificacionRecibida(notificacionesRecibidas);
     }
 
-   
-    
     /**
      * @return the trayectoActualPasajero
      */
-    public List<TrayectoEntity>  getTrayectoActualPasajero() {
+    public List<TrayectoEntity> getTrayectoActualPasajero() {
         return trayectoActualPasajero;
     }
 
     /**
      * @param trayectoActualPasajero the trayectoActualPasajero to set
      */
-    public void setTrayectoActualPasajero(List<TrayectoEntity>  trayectoActualPasajero) {
+    public void setTrayectoActualPasajero(List<TrayectoEntity> trayectoActualPasajero) {
         this.trayectoActualPasajero = trayectoActualPasajero;
     }
 
@@ -346,9 +343,4 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
         this.trayectoActualConductor = trayectoActualConductor;
     }
 
-
-
-
-   
-    
 }

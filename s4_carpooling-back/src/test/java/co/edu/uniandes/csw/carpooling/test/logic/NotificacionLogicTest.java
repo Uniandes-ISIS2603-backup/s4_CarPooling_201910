@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.carpooling.test.logic;
 
-
 import co.edu.uniandes.csw.carpooling.ejb.NotificacionLogic;
 import co.edu.uniandes.csw.carpooling.entities.NotificacionEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
@@ -34,22 +33,24 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class NotificacionLogicTest {
-    
+
     List<NotificacionEntity> data = new ArrayList<>();
-    
+
     @Inject
     private NotificacionLogic notificacionLogic;
-    
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private UsuarioEntity emisor;
     private UsuarioEntity receptor;
-    
+
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -67,19 +68,25 @@ public class NotificacionLogicTest {
             }
         }
     }
+
+    /**
+     * Se limpian las tablas relacionadas con el test.
+     */
     private void clearData() {
         em.createQuery("delete from CalificacionEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
-        
+
     }
 
-
- private void insertData() {
+    /**
+     * Se crean los datos de ´prueba.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 6; i++) {
             NotificacionEntity entity = factory.manufacturePojo(NotificacionEntity.class);
-            
-            em.persist(entity); 
+
+            em.persist(entity);
             data.add(entity);
         }
         emisor = factory.manufacturePojo(UsuarioEntity.class);
@@ -87,61 +94,59 @@ public class NotificacionLogicTest {
         receptor = factory.manufacturePojo(UsuarioEntity.class);
         em.persist(receptor);
     }
-    
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
     @Deployment
-   
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(NotificacionEntity.class.getPackage())
                 .addPackage(NotificacionPersistence.class.getPackage())
                 .addPackage(NotificacionLogic.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
+
+    /**
+     * Test para crear la notificación.
+     *
+     * @throws BusinessLogicException
+     */
     @Test
-    public void createNotificacionTest() throws BusinessLogicException
-    {
+    public void createNotificacionTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         NotificacionEntity newEntity = factory.manufacturePojo(NotificacionEntity.class);
         NotificacionEntity result = notificacionLogic.createNotificacion(newEntity);
         Assert.assertNotNull(result);
         NotificacionEntity entity = em.find(NotificacionEntity.class, result.getId());
-        Assert.assertEquals(newEntity.getMensaje(), entity.getMensaje()); 
+        Assert.assertEquals(newEntity.getMensaje(), entity.getMensaje());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-   
+
     }
-    
-    
+
+    /**
+     * Test para añadir las relaciones que tiene una notificación.
+     *
+     * @throws BusinessLogicException Si alguna de las relaciones no se puede
+     * crear o el emisor es igual al receptor.
+     */
     @Test
-    public void addRelacionNotificacionTest() throws BusinessLogicException
-    {
-       
+    public void addRelacionNotificacionTest() throws BusinessLogicException {
+
         NotificacionEntity entity = data.get(0);
         NotificacionEntity resp = notificacionLogic.addRelacionNotificacion(entity.getId(), receptor.getId(), emisor.getId());
         Assert.assertNotNull(resp);
-        Assert.assertEquals(resp.getEmisor(),emisor);
-        Assert.assertEquals(resp.getReceptor(),receptor);
-        
+        Assert.assertEquals(resp.getEmisor(), emisor);
+        Assert.assertEquals(resp.getReceptor(), receptor);
+
     }
-    
-    
-    
-    
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    /**
+     * Test para borrar una notificación.
+     */
     @Test
     public void deleteNotificacionTest() {
         NotificacionEntity entity = data.get(5);
@@ -149,11 +154,5 @@ public class NotificacionLogicTest {
         NotificacionEntity deleted = em.find(NotificacionEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
-    
-    
-    
-    
-    
-    
+
 }

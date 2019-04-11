@@ -30,14 +30,32 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class NotificacionPersistenceTest {
-    List<NotificacionEntity> data = new ArrayList<NotificacionEntity>();
+
+    List<NotificacionEntity> data = new ArrayList<>();
     @Inject
     private NotificacionPersistence np;
     @PersistenceContext
     private EntityManager em;
     @Inject
     UserTransaction utx;
-    
+
+    /**
+     * @return Devuelve el jar que Arquillian va a desplegar en Payara embebido.
+     * El jar contiene las clases, el descriptor de la base de datos y el
+     * archivo beans.xml para resolver la inyección de dependencias.
+     */
+    @Deployment
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
+                .addPackage(NotificacionEntity.class.getPackage())
+                .addPackage(NotificacionPersistence.class.getPackage())
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
+    }
+
+    /**
+     * Configuración inicial de la prueba.
+     */
     @Before
     public void setUp() {
         try {
@@ -55,36 +73,32 @@ public class NotificacionPersistenceTest {
             }
         }
     }
-    
-    private void clearData(){
+
+    /**
+     * Limpiar las tablas implicadas en la prueba.
+     */
+    private void clearData() {
         em.createQuery("delete from NotificacionEntity").executeUpdate();
     }
-    
-    private  void insertData(){
+
+    /**
+     * Crear los datos de prueba.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             NotificacionEntity entity = factory.manufacturePojo(NotificacionEntity.class);
-            
+
             em.persist(entity);
             data.add(entity);
         }
     }
-    
-    
-    @Deployment
-    public static JavaArchive createDeployment()
-    {
-        return ShrinkWrap.create(JavaArchive.class)
-                .addPackage(NotificacionEntity.class.getPackage())
-                .addPackage(NotificacionPersistence.class.getPackage())
-                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
-                .addAsManifestResource("META-INF/beans.xml", "beans.xml");
-    }
-    
-    
+
+    /**
+     * Test para crear una notificación.
+     */
     @Test
-    public void createNotificacionTest()
-    {
+    public void createNotificacionTest() {
         PodamFactory factory = new PodamFactoryImpl();
         NotificacionEntity newEntity = factory.manufacturePojo(NotificacionEntity.class);
         NotificacionEntity ee = np.create(newEntity);
@@ -92,8 +106,10 @@ public class NotificacionPersistenceTest {
         NotificacionEntity entity = em.find(NotificacionEntity.class, ee.getId());
         Assert.assertEquals(newEntity.getMensaje(), entity.getMensaje());
     }
-    
-    
+
+    /**
+     * Test para actualizar una notificación.
+     */
     @Test
     public void updateNotificacionTest() {
         NotificacionEntity entity = data.get(0);

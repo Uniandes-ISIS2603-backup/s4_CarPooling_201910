@@ -18,45 +18,60 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class CiudadPersistence {
+
     @PersistenceContext(unitName = "carpoolingPU")
     protected EntityManager em;
-    
-    public CiudadEntity create(CiudadEntity ciudadEntity)
-    {
-      em.persist(ciudadEntity);
-      return ciudadEntity;
+
+    /**
+     * Persiste (guarda) un nuevo registro en la base de datos.
+     *
+     * @param ciudadEntity Es la nueva entidad a persistir.
+     * @return ciudadEntity la entidad guardada.
+     */
+    public CiudadEntity create(CiudadEntity ciudadEntity) {
+        em.persist(ciudadEntity);
+        return ciudadEntity;
     }
-    
-    public CiudadEntity find(Long ciudadId)
-    {
+
+    /**
+     * Busca un registro de la base de datos
+     *
+     * @param ciudadId El id del registro que se está buscando.
+     * @return CiudadEntity Si encuentra el registro, devuelve la entidad
+     * correspondiente.
+     */
+    public CiudadEntity find(Long ciudadId) {
         return em.find(CiudadEntity.class, ciudadId);
     }
-    public List<CiudadEntity> findAll()
-    {
+
+    /**
+     * Devuelve todos los registros que se encuentran en la tabla CiudadEntity.
+     *
+     * @return Una lista de entidades.
+     */
+    public List<CiudadEntity> findAll() {
         TypedQuery<CiudadEntity> query = em.createQuery("select u from CiudadEntity u", CiudadEntity.class);
         return query.getResultList();
     }
-    
-    public CiudadEntity findByName (String nombre)
-    {
-         TypedQuery<CiudadEntity> query = em.createQuery("select e from CiudadEntity e where e.nombre = :n", CiudadEntity.class);
+
+    /**
+     * Busca el registro utilizando el atributo nombre.
+     *
+     * @param nombre Por el que se busca el registro en la base de datos.
+     * @return CiudadEntity si se encuentra una ciudad con ese nombre.
+     */
+    public CiudadEntity findByName(String nombre) {
+        TypedQuery<CiudadEntity> query = em.createQuery("select e from CiudadEntity e where e.nombre = :n", CiudadEntity.class);
         query = query.setParameter("n", nombre);
         List<CiudadEntity> sameNombre = query.getResultList();
         CiudadEntity result;
-        if(sameNombre == null)
-        {
-            result=null;
-        }
-        else if(sameNombre.isEmpty())
-        {
-            result=null;
-        }
-        else 
-        {
+        if (sameNombre == null) {
+            result = null;
+        } else if (sameNombre.isEmpty()) {
+            result = null;
+        } else {
             result = sameNombre.get(0);
         }
         return result;
     }
-
-   
-    }
+}

@@ -13,16 +13,15 @@ import javax.persistence.Entity;
  * @author estudiante
  */
 @Entity
-public class CiudadEntity  extends BaseEntity implements Serializable
-{
+public class CiudadEntity extends BaseEntity implements Serializable {
+
     private String nombre;
     private String[] coordenadas;
 
-    public CiudadEntity()
-    {
-        
+    public CiudadEntity() {
+
     }
-    
+
     /**
      * @return the nombre
      */
@@ -50,6 +49,5 @@ public class CiudadEntity  extends BaseEntity implements Serializable
     public void setCoordenadas(String[] coordenadas) {
         this.coordenadas = coordenadas;
     }
-    
-    
+
 }
