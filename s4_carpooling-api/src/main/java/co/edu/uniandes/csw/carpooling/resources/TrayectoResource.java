@@ -7,8 +7,11 @@ package co.edu.uniandes.csw.carpooling.resources;
 
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoDTO;
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoDetail;
+import co.edu.uniandes.csw.carpooling.dtos.UsuarioDTO;
+import co.edu.uniandes.csw.carpooling.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +23,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,7 +33,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author estudiante
  */
-@Path("trayectos")
+@Path("/trayectos")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped
@@ -62,10 +66,10 @@ public class TrayectoResource {
      * @return Una lista con los trayectos.
      */
     @GET
-    public List<TrayectoDTO> darTrayectos() {
+    public List<TrayectoDetail> darTrayectos() {
 
-        LOGGER.info("BookResource getBooks: input: void");
-        List<TrayectoDTO> listaTrayecto = listEntity2DetailDTO(trayectoLogic.getTrayectos());
+
+        List<TrayectoDetail> listaTrayecto = listEntity2DetailDTO(trayectoLogic.getTrayectos());
         LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaTrayecto);
         return listaTrayecto;
     }
@@ -76,10 +80,10 @@ public class TrayectoResource {
      * @param entityList
      * @return Lista con DTOs.
      */
-    private List<TrayectoDTO> listEntity2DetailDTO(List<TrayectoEntity> entityList) {
-        List<TrayectoDTO> list = new ArrayList<>();
+    private List<TrayectoDetail> listEntity2DetailDTO(List<TrayectoEntity> entityList) {
+        List<TrayectoDetail> list = new ArrayList<>();
         for (TrayectoEntity entity : entityList) {
-            list.add(new TrayectoDTO(entity));
+            list.add(new TrayectoDetail(entity));
         }
         return list;
     }
@@ -91,11 +95,10 @@ public class TrayectoResource {
      * @throws BusinessLogicException
      */
     @POST
-    public TrayectoDTO createTrayecto(TrayectoDTO trayecto) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "BookResource createBook: input: {0}", trayecto);
-        TrayectoDTO nuevoBookDTO = new TrayectoDTO(trayectoLogic.createEntity(trayecto.toEntity()));
-        LOGGER.log(Level.INFO, "BookResource createBook: output: {0}", nuevoBookDTO);
-        return nuevoBookDTO;
+    public TrayectoDTO createUsuario(TrayectoDTO usuario) throws BusinessLogicException{
+        TrayectoEntity entity = usuario.toEntity();
+        TrayectoEntity entity2 = trayectoLogic.createEntity(entity);
+        return new TrayectoDetail(entity2);
     }
 
     /**
@@ -110,5 +113,24 @@ public class TrayectoResource {
         LOGGER.log(Level.INFO, "BookResource deleteBook: input: {0}", trayectosId);
         trayectoLogic.deletetTrayecto(trayectosId);
         LOGGER.info("TrayectoResource deleteTrayecto: output: void");
+    }
+    
+    /**
+     * 
+     * @param username usuario anterior que se queria aplicar 
+     * @param usuario nuevo con la nueva informacion
+     * @return el usuario modificado 
+     * @throws BusinessLogicException si no se cumplean las reglas de la lògica
+     */
+    @PUT
+    @Path("{trayectoId: \\d+}")
+    public TrayectoDetail updateUsuario(@PathParam("trayectoId") Long trayectoId, TrayectoDetail usuario) throws BusinessLogicException
+    {
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /trayecto/" + trayectoId + " no existe.", 404);
+        }
+        TrayectoEntity entity = usuario.toEntity();
+        entity = trayectoLogic.updateBook(trayectoId, entity);
+        return new TrayectoDetail(entity);
     }
 }

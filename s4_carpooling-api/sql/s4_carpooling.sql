@@ -6,6 +6,8 @@ delete from PagoEntity;
 delete from InfoTCEntity;
 delete from VehiculoEntity;
 delete from CalificacionEntity
+delete from TrayectoEntity;
+
 
 insert into AlquilerEntity (id, nombre) values (100,'alquiler1');
 insert into AlquilerEntity (id, nombre) values (200,'alquiler2');
@@ -76,3 +78,7 @@ values (200, 'mensaje escrito2')
 
 insert into NotificacionEntity (id, mensaje)
 values (300, 'mensaje escrito3')
+
+
+insert into TrayectoEntity( fechafinal, fechainicial ) values
+('05/02/2019','09/20/1948');

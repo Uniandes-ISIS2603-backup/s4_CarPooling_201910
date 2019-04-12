@@ -16,10 +16,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  * @author estudiante
  */
-public class TrayectoDTO extends BaseEntity implements Serializable {
-
+public class TrayectoDTO implements Serializable {
+  
+    private Long id;
+    
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaInicial;
+    
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaFinal;
 
@@ -44,8 +47,7 @@ public class TrayectoDTO extends BaseEntity implements Serializable {
             this.setId(entity.getId());
 
             this.fechaInicial = entity.getFechaInicial();
-
-            this.fechaInicial = entity.getFechaFinal();
+            this.fechaFinal = entity.getFechaFinal();
 
             if (entity.getConductor() != null) {
                 this.conductor = new UsuarioDTO(entity.getConductor());
@@ -54,6 +56,8 @@ public class TrayectoDTO extends BaseEntity implements Serializable {
             }
             if (entity.getInfoTrayecto() != null) {
                 this.info = new TrayectoInfoDTO(entity.getInfoTrayecto());
+            } else {
+                this.info = null;
             }
         }
     }
@@ -65,6 +69,7 @@ public class TrayectoDTO extends BaseEntity implements Serializable {
      */
     public TrayectoEntity toEntity() {
         TrayectoEntity retorno = new TrayectoEntity();
+        retorno.setId(this.getId());
         retorno.setFechaFinal(this.getFechaFinal());
         retorno.setFechaInicial(this.getFechaInicial());
         if (getInfo() != null) {
@@ -73,9 +78,23 @@ public class TrayectoDTO extends BaseEntity implements Serializable {
         if (getConductor() != null) {
             retorno.setConductor(this.getConductor().toEntity());
         }
-
         return retorno;
     }
+    
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 
     /**
      * @return the fechaInicial
