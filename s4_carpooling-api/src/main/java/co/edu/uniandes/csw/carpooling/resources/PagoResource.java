@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.carpooling.resources;
 
+import co.edu.uniandes.csw.carpooling.dtos.InfoTCDTO;
 import co.edu.uniandes.csw.carpooling.dtos.PagoDTO;
 import co.edu.uniandes.csw.carpooling.ejb.PagoLogic;
 import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
@@ -70,6 +71,19 @@ public class PagoResource {
     }
 
     /**
+     * Busca y devuelve toda la información de los pagos que existen en la
+     * aplicacion.
+     *
+     * @return JSONArray {@link PagoDTO} - Los pagos encontrados en la
+     * aplicación. Si no hay ninguno retorna una lista vacía.
+     */
+    @GET
+    public List getAllInfo() {
+        List<InfoTCDTO> info = InfoTCResource.listEntityToDTO(logic.getAllInfo());
+        return info;
+    }
+
+    /**
      * Crea un nuevo pago.
      *
      * @param pago {@link PagoDTO} - El pago que se desea guardar.
@@ -100,8 +114,11 @@ public class PagoResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public PagoDTO updatePago(@PathParam("id") Long id, PagoDTO pago) throws BusinessLogicException {
+    public PagoDTO updatePago(@PathParam("id") Long id, PagoDTO pago) throws BusinessLogicException, WebApplicationException {
         PagoEntity entity = pago.toEntity();
+        if (entity == null) {
+            throw new WebApplicationException("El recurso que se intenta actualizar no existe.");
+        }
         entity = logic.updatePago(id, entity);
         return new PagoDTO(entity);
     }

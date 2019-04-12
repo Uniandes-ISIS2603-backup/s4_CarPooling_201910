@@ -77,12 +77,12 @@ public class PagoDTO implements Serializable {
     /**
      * @return La información de la tarjeta de crédito.
      */
-    public InfoTCDTO getInfo() {return infoTC;}
+    public InfoTCDTO getInfoTC() {return infoTC;}
     
     /**
      * @param infoTC Nueva información de tarjeta.
      */
-    public void setInfo(InfoTCDTO infoTC) {this.infoTC = infoTC;}
+    public void setInfoTC(InfoTCDTO infoTC) {this.infoTC = infoTC;}
     
     
     public PagoDTO (PagoEntity pagoEntity)
