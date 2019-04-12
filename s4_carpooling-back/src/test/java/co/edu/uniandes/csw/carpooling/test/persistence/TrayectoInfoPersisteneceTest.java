@@ -5,7 +5,6 @@
  */
 package co.edu.uniandes.csw.carpooling.test.persistence;
 
-import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
 import co.edu.uniandes.csw.carpooling.persistence.TrayectoInfoPersistence;
 import java.util.ArrayList;
@@ -31,29 +30,27 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class TrayectoInfoPersisteneceTest {
-    
+
     @Inject
     private TrayectoInfoPersistence tip;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private List<TrayectoInfoEntity> data = new ArrayList<TrayectoInfoEntity>();
-    
+
     @Deployment
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(TrayectoInfoEntity.class.getPackage())
                 .addPackage(TrayectoInfoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -74,14 +71,14 @@ public class TrayectoInfoPersisteneceTest {
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from TrayectoInfoEntity").executeUpdate();
     }
-    
+
     /**
      * Inserta los datos iniciales para el correcto funcionamiento de las
      * pruebas.
@@ -95,7 +92,10 @@ public class TrayectoInfoPersisteneceTest {
             data.add(entity);
         }
     }
-    
+
+    /**
+     * Prueba obtener la información del trayecto.
+     */
     @Test
     public void getTrayectoInfoTest() {
         List<TrayectoInfoEntity> list = tip.findAll();
@@ -110,9 +110,12 @@ public class TrayectoInfoPersisteneceTest {
             Assert.assertTrue(found);
         }
     }
-    
+
+    /**
+     * Prueba crear un trayecto.
+     */
     @Test
-    public void createTest(){
+    public void createTest() {
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
         TrayectoInfoEntity ae = tip.create(newEntity);
@@ -122,7 +125,10 @@ public class TrayectoInfoPersisteneceTest {
         //Assert.assertEquals(newEntity.getHoraFinal(), entity.getHoraFinal());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
-    
+
+    /**
+     * Prueba obtener un trayecto.
+     */
     @Test
     public void getTrayectoInfTest() {
         TrayectoInfoEntity entity = data.get(0);
@@ -132,7 +138,10 @@ public class TrayectoInfoPersisteneceTest {
         Assert.assertEquals(newEntity.getHoraFinal().getHours(), entity.getHoraFinal().getHours());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
-    
+
+    /**
+     * Prueba borrar un trayecto.
+     */
     @Test
     public void deleteTrayectoInfoTest() {
         TrayectoInfoEntity entity = data.get(0);
@@ -140,7 +149,10 @@ public class TrayectoInfoPersisteneceTest {
         TrayectoInfoEntity deleted = em.find(TrayectoInfoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
+
+    /**
+     * Prueba actualizar un trayecto.
+     */
     @Test
     public void updateTrayectoInfoTest() {
         TrayectoInfoEntity entity = data.get(0);
@@ -159,6 +171,5 @@ public class TrayectoInfoPersisteneceTest {
         Assert.assertEquals(newEntity.getHoraFinal().getHours(), resp.getHoraFinal().getHours());
         Assert.assertEquals(newEntity.getCosto(), resp.getCosto());
     }
-    
-    
+
 }

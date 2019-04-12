@@ -27,8 +27,10 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     
     @Temporal(TemporalType.DATE)
     private Date fechaInicial;
+    
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
+    
     private Integer estado;
     
     @PodamExclude
@@ -45,10 +47,12 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     
     @PodamExclude
     @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<PagoEntity> pago= new ArrayList<PagoEntity>();
+    private PagoEntity pago= new PagoEntity();
     
     
-    
+    /**
+     * Constructor vacío.
+     */
     public TrayectoEntity(){
         
     }
@@ -128,14 +132,14 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     /**
      * @return the pago
      */
-    public List<PagoEntity> getPagos() {
+    public PagoEntity getPago() {
         return pago;
     }
 
     /**
      * @param pago the pago to set
      */
-    public void setPago(List<PagoEntity> pago) {
+    public void setPago(PagoEntity pago) {
         this.pago = pago;
     }
 

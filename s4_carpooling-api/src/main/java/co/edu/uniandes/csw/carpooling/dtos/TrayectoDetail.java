@@ -16,18 +16,24 @@ import java.util.List;
  *
  * @author estudiante
  */
-public class TrayectoDetail extends TrayectoDTO implements Serializable{
-    
+public class TrayectoDetail extends TrayectoDTO implements Serializable {
+
     private List<UsuarioDTO> pasajeros;
     private List<PagoDTO> pagos;
-    
-    
-    public TrayectoDetail(){
+
+    /**
+     * Constructor.
+     */
+    public TrayectoDetail() {
         super();
     }
-    
-    public TrayectoDetail(TrayectoEntity trayectoEntity )
-    {
+
+    /**
+     * Constructor desde entidad.
+     *
+     * @param trayectoEntity
+     */
+    public TrayectoDetail(TrayectoEntity trayectoEntity) {
         super(trayectoEntity);
         /*if (trayectoEntity.getPagos()!=null){
             pagos = new ArrayList<PagoDTO>();
@@ -35,13 +41,13 @@ public class TrayectoDetail extends TrayectoDTO implements Serializable{
                 pagos.add(new PagoDTO(pagoEntity));
             }
         }*/
-        if (trayectoEntity.getPasajeros()!=null){
-            pasajeros= new ArrayList<UsuarioDTO> ();
-            for (UsuarioEntity usuarioEntity: trayectoEntity.getPasajeros()){
+        if (trayectoEntity.getPasajeros() != null) {
+            pasajeros = new ArrayList<>();
+            for (UsuarioEntity usuarioEntity : trayectoEntity.getPasajeros()) {
                 pasajeros.add(new UsuarioDTO(usuarioEntity));
             }
         }
-        
+
     }
 
     /**
@@ -52,7 +58,7 @@ public class TrayectoDetail extends TrayectoDTO implements Serializable{
     }
 
     /**
-     * @param usuarios the usuarios to set
+     * @param pasajeros the usuarios to set
      */
     public void setPasajeros(List<UsuarioDTO> pasajeros) {
         this.pasajeros = pasajeros;

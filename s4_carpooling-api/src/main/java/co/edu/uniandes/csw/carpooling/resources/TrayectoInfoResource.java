@@ -40,6 +40,12 @@ public class TrayectoInfoResource {
     @Inject
     private TrayectoInfoLogic infoLogic;
     
+    /**
+     * Crea un trayecto.
+     * @param info
+     * @return DTO.
+     * @throws BusinessLogicException 
+     */
     @POST
     public TrayectoInfoDTO createInfoTrayeecto(TrayectoInfoDTO info)throws BusinessLogicException{
         
@@ -49,6 +55,10 @@ public class TrayectoInfoResource {
         return nuevoBookDTO;
     }
     
+    /**
+     * Obtiene todos los trayectos.
+     * @return Lista de DTOs.
+     */
     @GET
     public List<TrayectoInfoDTO> getTrayectosInfo() {
         LOGGER.info("BookResource getBooks: input: void");
@@ -56,7 +66,11 @@ public class TrayectoInfoResource {
         LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaBooks);
         return listaBooks;
     }
-    
+    /**
+     * Convierte una lista de entidades a DTOs.
+     * @param entityList
+     * @return Lista de DTOs.
+     */
     private List<TrayectoInfoDTO> listEntity2DetailDTO(List<TrayectoInfoEntity> entityList) {
         List<TrayectoInfoDTO> list = new ArrayList<>();
         for (TrayectoInfoEntity entity : entityList) {
@@ -65,9 +79,14 @@ public class TrayectoInfoResource {
         return list;
     }
     
+    /**
+     * Obtiene el trayecto con el id pasado por parámetro.
+     * @param infoId
+     * @return DTO.
+     */
     @GET
     @Path("{infoId: \\d+}")
-    public TrayectoInfoDTO getBook(@PathParam("infoId") Long infoId) {
+    public TrayectoInfoDTO getTrayecto(@PathParam("infoId") Long infoId) {
         LOGGER.log(Level.INFO, "BookResource getTrayectoInfo: input: {0}", infoId);
         TrayectoInfoEntity TrayectoInfoEntity = infoLogic.getTrayectoInfo(infoId);
         if (TrayectoInfoEntity == null) {
@@ -81,7 +100,7 @@ public class TrayectoInfoResource {
     
     @PUT
     @Path("{infoId: \\d+}")
-    public TrayectoInfoDTO updateBook(@PathParam("infoId") Long infoId, TrayectoInfoDTO info) throws BusinessLogicException {
+    public TrayectoInfoDTO updateTrayecto(@PathParam("infoId") Long infoId, TrayectoInfoDTO info) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BookResource updateBook: input: id: {0} , book: {1}", new Object[]{infoId, info});
         info.setId(infoId);
         if (infoLogic.getTrayectoInfo(infoId) == null) {
@@ -94,7 +113,7 @@ public class TrayectoInfoResource {
     
      @DELETE
     @Path("{infoId: \\d+}")
-    public void deleteBook(@PathParam("infoId") Long infoId) throws BusinessLogicException {
+    public void deleteTrayecto(@PathParam("infoId") Long infoId) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BookResource deleteBook: input: {0}", infoId);
         TrayectoInfoEntity entity = infoLogic.getTrayectoInfo(infoId);
         if (entity == null) {

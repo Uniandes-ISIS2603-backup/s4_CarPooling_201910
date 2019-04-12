@@ -34,38 +34,48 @@ import javax.ws.rs.WebApplicationException;
 @Consumes("application/json")
 @RequestScoped
 public class TrayectoResource {
-    
+
     private static final Logger LOGGER = Logger.getLogger(TrayectoResource.class.getName());
-    
+
     @Inject
     private TrayectoLogic trayectoLogic;
-    
-        /**
-     * 
-     * @param username el nombre de usuario deseado
-     * @return el usuario especificado
+
+    /**
+     * Obtiene el trayecto.
+     *
+     * @param trayectoId el id de trayecto deseado
+     * @return el trayecto especificado
      */
     @GET
     @Path("{trayectoId: \\d+}")
-    public TrayectoDetail getTrayecto (@PathParam("trayectoId") Long trayectoId)
-    {
+    public TrayectoDetail getTrayecto(@PathParam("trayectoId") Long trayectoId) {
         TrayectoEntity trayecto = trayectoLogic.getTrayeto(trayectoId);
         if (trayecto == null) {
             throw new WebApplicationException("El usuario con nombre: " + trayectoId + "no existe", 404);
         }
         return new TrayectoDetail(trayecto);
     }
-    
-    
+
+    /**
+     * Obtiene todos los trayectos.
+     *
+     * @return Una lista con los trayectos.
+     */
     @GET
-    public List<TrayectoDTO> darTrayectos(){
-        
+    public List<TrayectoDTO> darTrayectos() {
+
         LOGGER.info("BookResource getBooks: input: void");
         List<TrayectoDTO> listaTrayecto = listEntity2DetailDTO(trayectoLogic.getTrayectos());
         LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaTrayecto);
         return listaTrayecto;
     }
-    
+
+    /**
+     * Convierte una lista de entidades a DTOs.
+     *
+     * @param entityList
+     * @return Lista con DTOs.
+     */
     private List<TrayectoDTO> listEntity2DetailDTO(List<TrayectoEntity> entityList) {
         List<TrayectoDTO> list = new ArrayList<>();
         for (TrayectoEntity entity : entityList) {
@@ -73,21 +83,32 @@ public class TrayectoResource {
         }
         return list;
     }
-    
-    
+
+    /**
+     * Crea un trayecto.
+     * @param trayecto
+     * @return Trayecto creado en DTO.
+     * @throws BusinessLogicException
+     */
     @POST
-    public TrayectoDTO createTrayecto(TrayectoDTO trayecto) throws BusinessLogicException{
+    public TrayectoDTO createTrayecto(TrayectoDTO trayecto) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "BookResource createBook: input: {0}", trayecto);
         TrayectoDTO nuevoBookDTO = new TrayectoDTO(trayectoLogic.createEntity(trayecto.toEntity()));
         LOGGER.log(Level.INFO, "BookResource createBook: output: {0}", nuevoBookDTO);
         return nuevoBookDTO;
     }
-    
+
+    /**
+     * Borra el trayecto con el id pasado por parámetro.
+     *
+     * @param trayectosId
+     * @throws BusinessLogicException
+     */
     @DELETE
     @Path("{trayectosId: \\d+}")
     public void deleteBook(@PathParam("trayectosId") Long trayectosId) throws BusinessLogicException {
-       LOGGER.log(Level.INFO, "BookResource deleteBook: input: {0}", trayectosId);
-       trayectoLogic.deletetTrayecto(trayectosId);
-       LOGGER.info("TrayectoResource deleteTrayecto: output: void");
+        LOGGER.log(Level.INFO, "BookResource deleteBook: input: {0}", trayectosId);
+        trayectoLogic.deletetTrayecto(trayectosId);
+        LOGGER.info("TrayectoResource deleteTrayecto: output: void");
     }
 }

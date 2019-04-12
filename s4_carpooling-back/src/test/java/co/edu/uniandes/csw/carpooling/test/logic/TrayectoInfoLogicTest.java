@@ -32,29 +32,28 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
  */
 @RunWith(Arquillian.class)
 public class TrayectoInfoLogicTest {
-    
+
     @Inject
     private TrayectoInfoLogic info;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     UserTransaction utx;
-    
+
     private List<TrayectoInfoEntity> data = new ArrayList<TrayectoInfoEntity>();
-    
+
     @Deployment
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(TrayectoInfoEntity.class.getPackage())
                 .addPackage(TrayectoInfoLogic.class.getPackage())
                 .addPackage(TrayectoInfoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
+
     /**
      * Configuración inicial de la prueba.
      */
@@ -75,16 +74,18 @@ public class TrayectoInfoLogicTest {
             }
         }
     }
-    
+
     /**
      * Limpia las tablas que están implicadas en la prueba.
      */
     private void clearData() {
         em.createQuery("delete from TrayectoInfoEntity").executeUpdate();
     }
-    
-    
-     private void insertData() {
+
+    /**
+     * Inserta los datos de prueba.
+     */
+    private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
             TrayectoInfoEntity entity = factory.manufacturePojo(TrayectoInfoEntity.class);
@@ -93,9 +94,14 @@ public class TrayectoInfoLogicTest {
             data.add(entity);
         }
     }
-    
+
+    /**
+     * Prueba crear la información del trayecto.
+     *
+     * @throws BusinessLogicException
+     */
     @Test
-    public void createTrayectoInfoTest() throws BusinessLogicException{
+    public void createTrayectoInfoTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoInfoEntity newEntity = factory.manufacturePojo(TrayectoInfoEntity.class);
         newEntity.setCosto(Math.abs(newEntity.getCosto()));
@@ -107,7 +113,12 @@ public class TrayectoInfoLogicTest {
         Assert.assertEquals(newEntity.getHoraFinal().getHours(), entity.getHoraFinal().getHours());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
-    
+
+    /**
+     * Prueba crear con costo inválido.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
     public void createTrayectoInfoTestConCostoInvalido() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
@@ -115,8 +126,12 @@ public class TrayectoInfoLogicTest {
         newEntity.setCosto(new Integer(-1));
         info.createEntity(newEntity);
     }
-    
-    
+
+    /**
+     * Prueba crear con duración inválida.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
     public void createTrayectoInfoTestConDuracionInvalido() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
@@ -124,7 +139,12 @@ public class TrayectoInfoLogicTest {
         newEntity.setDuracion(new Integer(-1));
         info.createEntity(newEntity);
     }
-    
+
+    /**
+     * Prueba crear con hora inválida.
+     *
+     * @throws BusinessLogicException
+     */
     @Test(expected = BusinessLogicException.class)
     public void createTrayectoInfoTestConHoraInicialIgualANull() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
@@ -132,7 +152,10 @@ public class TrayectoInfoLogicTest {
         newEntity.setHoraInicial(null);
         info.createEntity(newEntity);
     }
-    
+
+    /**
+     * Prueba obtener la información del trayecto.
+     */
     @Test
     public void getTrayectoInfTest() {
         TrayectoInfoEntity entity = data.get(0);
@@ -142,8 +165,10 @@ public class TrayectoInfoLogicTest {
         Assert.assertEquals(newEntity.getHoraFinal().getHours(), entity.getHoraFinal().getHours());
         Assert.assertEquals(newEntity.getCosto(), entity.getCosto());
     }
-    
-    
+
+    /**
+     * Prueba borrar la información del trayecto.
+     */
     @Test
     public void deleteTrayectoInfoTest() {
         TrayectoInfoEntity entity = data.get(0);
@@ -151,7 +176,5 @@ public class TrayectoInfoLogicTest {
         TrayectoInfoEntity deleted = em.find(TrayectoInfoEntity.class, entity.getId());
         Assert.assertNull(deleted);
     }
-    
-    
-    
+
 }

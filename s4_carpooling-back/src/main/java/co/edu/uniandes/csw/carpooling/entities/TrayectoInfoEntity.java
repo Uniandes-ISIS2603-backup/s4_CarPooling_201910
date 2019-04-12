@@ -21,8 +21,8 @@ import uk.co.jemos.podam.common.PodamExclude;
  * @author estudiante
  */
 @Entity
-public class TrayectoInfoEntity extends BaseEntity implements Serializable{
-    
+public class TrayectoInfoEntity extends BaseEntity implements Serializable {
+
     private Integer costo;
     private Integer duracion;
     private Integer combustible;
@@ -30,29 +30,30 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     private Date horaFinal;
     @Temporal(TemporalType.TIME)
     private Date horaInicial;
-    
+
     private Integer cupos;
-    
+
     @PodamExclude
     @OneToOne
     private TrayectoEntity infoTrayecto;
-    
+
     @PodamExclude
     @OneToMany
     private List<CiudadEntity> paradas = new ArrayList<CiudadEntity>();
-    
+
     @PodamExclude
     @OneToMany
     private List<PeajeEntity> peajes = new ArrayList<PeajeEntity>();
-    
+
     @PodamExclude
     @OneToOne
     private VehiculoEntity vehiculo;
-    
-    
-    
-    public TrayectoInfoEntity(){
-        
+
+    /**
+     * Constructor vacío.
+     */
+    public TrayectoInfoEntity() {
+
     }
 
     /**
@@ -138,6 +139,4 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable{
     public void setCupos(Integer cupos) {
         this.cupos = cupos;
     }
-
-
 }
