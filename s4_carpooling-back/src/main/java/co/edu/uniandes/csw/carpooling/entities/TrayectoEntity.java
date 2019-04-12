@@ -18,43 +18,43 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
+
 /**
  *
  * @author estudiante
  */
 @Entity
-public class TrayectoEntity extends BaseEntity implements Serializable{
-    
+public class TrayectoEntity extends BaseEntity implements Serializable {
+
     @Temporal(TemporalType.DATE)
     private Date fechaInicial;
-    
+
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
-    
+
     private Integer estado;
-    
+
     @PodamExclude
     @ManyToOne
     private UsuarioEntity conductor;
-    
+
     @PodamExclude
     @ManyToMany(mappedBy = "trayectoActualPasajero")
     private List<UsuarioEntity> pasajeros;
-    
+
     @PodamExclude
     @OneToOne(orphanRemoval = true)
     private TrayectoInfoEntity infoTrayecto;
-    
+
     @PodamExclude
-    @OneToMany (cascade = CascadeType.ALL, orphanRemoval = true)
-    private PagoEntity pago= new PagoEntity();
-    
-    
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PagoEntity> pago = new ArrayList<PagoEntity>();
+
     /**
      * Constructor vacío.
      */
-    public TrayectoEntity(){
-        
+    public TrayectoEntity() {
+
     }
 
     /**
@@ -114,8 +114,10 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     }
 
     /**
-   
-    /**
+     *
+     * /
+     *
+     **
      * @return the infoTrayecto
      */
     public TrayectoInfoEntity getInfoTrayecto() {
@@ -132,14 +134,14 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     /**
      * @return the pago
      */
-    public PagoEntity getPago() {
+    public List<PagoEntity> getPago() {
         return pago;
     }
 
     /**
      * @param pago the pago to set
      */
-    public void setPago(PagoEntity pago) {
+    public void setPago(List<PagoEntity> pago) {
         this.pago = pago;
     }
 
@@ -156,5 +158,5 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
-        
+
 }

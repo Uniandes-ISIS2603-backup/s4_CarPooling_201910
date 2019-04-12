@@ -78,6 +78,7 @@ public class PagoResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
+    @Path("info")
     public List getAllInfo() {
         List<InfoTCDTO> info = InfoTCResource.listEntityToDTO(logic.getAllInfo());
         return info;
