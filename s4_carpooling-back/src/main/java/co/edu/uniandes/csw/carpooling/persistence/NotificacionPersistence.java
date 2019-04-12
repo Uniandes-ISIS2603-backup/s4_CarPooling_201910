@@ -74,5 +74,18 @@ public class NotificacionPersistence {
         NotificacionEntity entity = em.find(NotificacionEntity.class, notificacionId);
         em.remove(entity);
     }
+    
+    
+    
+    
+    
+    public List<NotificacionEntity> findByReceptor(Long idUsuario)
+    {
+        TypedQuery query = em.createQuery("Select u From NotificacionEntity u where u.receptor = :receptor", NotificacionEntity.class);
+        query = query.setParameter("receptor", idUsuario);
+        List<NotificacionEntity> lista = query.getResultList();
+        
+        return lista;
+    }
 
 }

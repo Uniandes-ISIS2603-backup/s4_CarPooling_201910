@@ -74,5 +74,28 @@ public class CalificacionPersistence {
         CalificacionEntity entity = em.find(CalificacionEntity.class, calificacionEntityId);
         em.remove(entity);
     }
-
+    
+    /**
+     * Busca si hay calificaciones con el id del trayecto asociado que se envía de argumento
+     *
+     * @param idTrayecto: id del trayecto asociado a la calificación que se está buscando
+     * @return null si no existe ninguna calificación asociada con el id del trayecto del argumento.
+     * Si existe devuelve una lista de entidades
+    */
+    public List<CalificacionEntity> findByTrayecto(Long idTrayecto){
+        TypedQuery query = em.createQuery("Select e From CalificacionEntity e where e.trayecto = :idTrayecto", CalificacionEntity.class);
+        query = query.setParameter("idTrayecto", idTrayecto);
+        return query.getResultList();
+    }
+     
+    
+    
+    public List<CalificacionEntity> findByCalificado(Long idUsuario)
+    {
+        TypedQuery query = em.createQuery("Select u From CalificacionEntity u where u.calificado = :calificado", CalificacionEntity.class);
+        query = query.setParameter("calificado", idUsuario);
+        List<CalificacionEntity> lista = query.getResultList();
+        
+        return lista;
+    }
 }

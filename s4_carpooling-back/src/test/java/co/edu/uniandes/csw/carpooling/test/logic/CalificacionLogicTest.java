@@ -39,6 +39,9 @@ public class CalificacionLogicTest {
 
     @Inject
     private CalificacionLogic calificacionLogic;
+    
+    @Inject
+    private CalificacionPersistence cp;
 
     @PersistenceContext
     private EntityManager em;
@@ -161,7 +164,36 @@ public class CalificacionLogicTest {
         CalificacionEntity resp = calificacionLogic.addRelacionCalificacion(entity.getId(), trayecto.getId(), calificado.getId(), calificado.getId());
 
     }
+    
+    
+    
+    
+    @Test
+    public void createCalificacionTest() throws BusinessLogicException
+    {
+        PodamFactory factory = new PodamFactoryImpl();
+        CalificacionEntity newC = factory.manufacturePojo(CalificacionEntity.class);
+        newC.setPuntaje(2);
+        CalificacionEntity creada = calificacionLogic.createCalificacion(newC);
+        Assert.assertNotNull(creada);
+        CalificacionEntity entity = em.find(CalificacionEntity.class, creada.getId());
+        Assert.assertEquals(newC.getPuntaje(), entity.getPuntaje());
+        Assert.assertEquals(newC.getComentario(), entity.getComentario());
+    }
+    
+    
+    
+    @Test(expected = BusinessLogicException.class)
+    public void createCalificacionConPuntajeInvalido() throws BusinessLogicException
+    {
+        PodamFactory factory = new PodamFactoryImpl();
+        CalificacionEntity newC = factory.manufacturePojo(CalificacionEntity.class);
+        newC.setPuntaje(data.get(0).getPuntaje());
+        calificacionLogic.createCalificacion(newC);
+    }
 
+    
+    
     /**
      * Prueba obtener todas las calificaciones.
      */

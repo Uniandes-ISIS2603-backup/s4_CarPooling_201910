@@ -23,14 +23,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author estudiante
  */
 @Path("calificaciones")
-@Produces("application/json")
-@Consumes("application/json")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class CalificacionResource {
 
@@ -89,26 +90,7 @@ public class CalificacionResource {
         return new CalificacionDTO(entity);
     }
 
-    /**
-     * Actualiza la calificación con el id recibido.
-     *
-     * @param id Identificador de la calificación que se desea actualizar.
-     * @param calificacion {@link CalificacionDTO} La calificación que se desea
-     * guardar.
-     * @return JSON {@link CalificacionDTO} - La calificación guardada.
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra la calificación a
-     * actualizar.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se puede actualizar la
-     * calificación.
-     */
-    @PUT
-    @Path("{id: \\d+}")
-    public CalificacionDTO updateCalificacion(@PathParam("id") Long id, CalificacionDTO calificacion) throws BusinessLogicException {
-        //Método incompleto.
-        return null;
-    }
+    
 
     /**
      * Borra la calificación con el id asociado recibido en la URL.
@@ -127,6 +109,22 @@ public class CalificacionResource {
         }
         logic.deleteCalificacion(id);
     }
+    
+    
+    
+    
+    
+    @POST
+    @Path("{idC: \\d+}/{idca1: \\d+}/{idca2: \\d+}/{idT: \\d+}")
+    public CalificacionDTO addRelacion(@PathParam("idC") Long idCalificacion, @PathParam("idca1") Long idCalificado, @PathParam("idca2") Long idCalificador,
+            @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
+        CalificacionEntity entity = logic.addRelacionCalificacion(idCalificacion, idTrayecto, idCalificado, idCalificador);
+        return new CalificacionDTO(entity);
+
+    }
+    
+    
+    
 
     /**
      * Se utiliza un método para convertir una lista de Entidades a DTOs.
