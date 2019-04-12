@@ -6,6 +6,8 @@
 package co.edu.uniandes.csw.carpooling.test.persistence;
 
 import co.edu.uniandes.csw.carpooling.entities.CalificacionEntity;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.persistence.CalificacionPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,11 @@ public class CalificacionPersistenceTest {
     UserTransaction utx;
 
     List<CalificacionEntity> data = new ArrayList<CalificacionEntity>();
+    
+    List<TrayectoEntity> trayectoData = new ArrayList<TrayectoEntity>();
 
+    List<UsuarioEntity> usuarioData = new ArrayList<UsuarioEntity>();
+    
     /**
      * Configuración inicial de la prueba.
      */
@@ -68,6 +74,7 @@ public class CalificacionPersistenceTest {
      */
     private void clearData() {
         em.createQuery("delete from CalificacionEntity").executeUpdate();
+        em.createQuery("delete from TrayectoEntity").executeUpdate();
     }
 
     /**
@@ -75,12 +82,34 @@ public class CalificacionPersistenceTest {
      */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
+        
         for (int i = 0; i < 3; i++) {
             CalificacionEntity entity = factory.manufacturePojo(CalificacionEntity.class);
-
             em.persist(entity);
-            data.add(entity);
+            data.add(entity); 
+            
         }
+        
+        for (int i = 0; i < 3; i++) {
+            TrayectoEntity entity = factory.manufacturePojo(TrayectoEntity.class);
+            em.persist(entity);
+            trayectoData.add(entity);
+            
+             
+        }
+        
+        for (int i = 0; i < 3; i++) {
+            UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
+            em.persist(entity);
+            usuarioData.add(entity);
+            
+        }
+        
+        
+        data.get(0).setTrayecto(trayectoData.get(0));
+        data.get(2).setTrayecto(trayectoData.get(0));
+        
+        
 
     }
 
@@ -116,11 +145,92 @@ public class CalificacionPersistenceTest {
      * Prueba obtener una calificación.
      */
     @Test
-    public void getCalificacionTest() {
+    public void CalificacionTest() {
         CalificacionEntity entity = data.get(0);
         CalificacionEntity newEntity = cp.find(entity.getId());
         Assert.assertNotNull(newEntity);
         Assert.assertEquals(entity.getPuntaje(), newEntity.getPuntaje());
     }
-//Faltan algunos tests, borrar esta linea al completarlos.
+
+    /**
+     * Prueba para encontrar todos las calificaciones.
+     */
+    @Test
+    public void findAllCalificacionTest(){
+        List<CalificacionEntity> lista = cp.findAll();
+        Assert.assertEquals(data.size(), lista.size());
+        for (CalificacionEntity ent : lista) {
+            boolean found = false;
+            for (CalificacionEntity entity : data) {
+                if (ent.getId().equals(entity.getId())) {
+                    found = true;
+                }
+            }
+            Assert.assertTrue(found);
+        }
+    }
+    
+    
+    
+    /**
+     * Prueba para consultar la lista de calificaciones de un trayecto.
+    
+    @Test
+    public void findCalificacionByTrayectoTest()
+    {
+        TrayectoEntity trayecto = trayectoData.get(0);
+        List<CalificacionEntity> lista = cp.findByTrayecto(trayecto.getId());
+        for(CalificacionEntity ent : lista)
+        {
+            
+            boolean found = false;
+            for(CalificacionEntity entity : data)
+            {
+                if(entity.getId().equals(ent.getId()))
+                {
+                    found = true;
+                }
+                
+            }
+            Assert.assertTrue(found);
+        }
+            
+    }
+    */
+    
+    /**
+     * Prueba para actualizar una calificación.
+     */
+    @Test
+    public void updateCalificacionrTest() {
+        CalificacionEntity entity = data.get(0);
+        PodamFactory factory = new PodamFactoryImpl();
+        CalificacionEntity newEntity = factory.manufacturePojo(CalificacionEntity.class);
+
+        newEntity.setId(entity.getId());
+
+        cp.update(newEntity);
+
+        CalificacionEntity resp = em.find(CalificacionEntity.class, entity.getId());
+
+        Assert.assertEquals(newEntity.getPuntaje(), resp.getPuntaje());
+    }
+
+    /**
+     * Prueba borrar una calificación.
+     */
+    @Test
+    public void deleteCalificacionTest() {
+        CalificacionEntity entity = data.get(0);
+        cp.delete(entity.getId());
+        CalificacionEntity deleted = em.find(CalificacionEntity.class, entity.getId());
+        Assert.assertNull(deleted);
+    }
+    
+    
+    
+     
+    
+    
+    
 }

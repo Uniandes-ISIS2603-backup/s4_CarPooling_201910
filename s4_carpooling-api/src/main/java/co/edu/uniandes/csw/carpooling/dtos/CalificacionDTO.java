@@ -14,9 +14,9 @@ import java.io.Serializable;
  */
 public class CalificacionDTO implements Serializable {
 
-    private int puntaje;
+    private Long id;
+    private Integer puntaje;
     private String comentario;
-    private int idTrayectoCalificacion;
     private UsuarioDTO calificado;
     private UsuarioDTO calificador;
     private TrayectoDTO trayecto;
@@ -32,16 +32,19 @@ public class CalificacionDTO implements Serializable {
      */
     public CalificacionDTO(CalificacionEntity entity) {
         if (entity != null) {
+            id = entity.getId();
             puntaje = entity.getPuntaje();
             comentario = entity.getComentario();
-            idTrayectoCalificacion = entity.getIdTrayectoCalificacion();
+            calificado = new UsuarioDTO(entity.getCalificado());
+            calificador = new UsuarioDTO(entity.getCalificador());
+            trayecto = new TrayectoDTO(entity.getTrayecto());
         }
     }
 
     /**
      * @return the puntaje
      */
-    public int getPuntaje() {
+    public Integer getPuntaje() {
         return puntaje;
     }
 
@@ -66,19 +69,6 @@ public class CalificacionDTO implements Serializable {
         this.comentario = comentario;
     }
 
-    /**
-     * @return the idTrayectoCalificacion
-     */
-    public int getIdTrayectoCalificacion() {
-        return idTrayectoCalificacion;
-    }
-
-    /**
-     * @param idTrayectoCalificacion the idTrayectoCalificacion to set
-     */
-    public void setIdTrayectoCalificacion(int idTrayectoCalificacion) {
-        this.idTrayectoCalificacion = idTrayectoCalificacion;
-    }
 
     /**
      * @return the calificado
@@ -130,7 +120,34 @@ public class CalificacionDTO implements Serializable {
         CalificacionEntity entity = new CalificacionEntity();
         entity.setPuntaje(puntaje);
         entity.setComentario(comentario);
-        entity.setIdTrayectoCalificacion(idTrayectoCalificacion);
+        
+        if(calificado != null)
+        {
+            entity.setCalificado(calificado.toEntity());
+        }
+        if(calificador != null)
+        {
+            entity.setCalificador(calificador.toEntity());
+        }
+        if(trayecto != null)
+        {
+            entity.setTrayecto(trayecto.toEntity());
+        }
+        
         return entity;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
 }
