@@ -24,14 +24,21 @@ insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (200,1000.1
 insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (300,1000.1,'Guajira2',6.083496730640107,-72.63334461217967);
 insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (400,1000.1,'Guajira3',6.083496730640107,-72.63334461217967);
 
-insert into UsuarioEntity (id, nombre, apellido,documento,celular,username,password,correo) 
-values (100,'Daniel','Peña',1111111,21111111,'dan1','APP','123@gmail.com');
+insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
+values ('Daniel','Peña',1111111,21111111,'dan','APP','123@gmail.com');
 
-insert into UsuarioEntity (id, nombre, apellido,documento,celular,username,password,correo) 
-values (200,'Isabela','Sarmiento',2222222,31111111,'IsaPro','1s4b3ll4','1234@gmail.com');
+insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
+values ('Isabela','Sarmiento',2222222,31111111,'IsaPro','1s4b3ll4','1234@gmail.com');
 
-insert into UsuarioEntity (id, nombre, apellido,documento,celular,username,password,correo) 
-values (300,'Julio','Morales',333333,41111111,'juliNightmare','juli1234','12345@gmail.com');
+insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
+values ('Julio','Morales',333333,41111111,'juliNightmare','juli1234','12345@gmail.com');
+
+insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
+values ('Alejandro','Caicedo',444444,51111111,'LatinAlejo','alejo234','123456@gmail.com');
+
+insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
+values ('Juan Felipe','García',555555,61111111,'juafe','juanfe1234','1234567@gmail.com');
+
 
 insert into PagoEntity (id, valor)
 values (100, 10);
