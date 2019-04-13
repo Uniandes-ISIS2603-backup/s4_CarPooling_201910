@@ -5,7 +5,8 @@ delete from UsuarioEntity;
 delete from PagoEntity;
 delete from InfoTCEntity;
 delete from VehiculoEntity;
-delete from CalificacionEntity
+delete from CalificacionEntity;
+delete from NotificacionEntity;
 
 insert into AlquilerEntity (id, nombre) values (100,'alquiler1');
 insert into AlquilerEntity (id, nombre) values (200,'alquiler2');
@@ -69,10 +70,10 @@ values (300, 3,'Azul3');
 
 
 insert into NotificacionEntity (id, mensaje)
-values (100, 'mensaje escrito')
+values (100, 'mensaje escrito');
 
 insert into NotificacionEntity (id, mensaje)
-values (200, 'mensaje escrito2')
+values (200, 'mensaje escrito2');
 
 insert into NotificacionEntity (id, mensaje)
-values (300, 'mensaje escrito3')
+values (300, 'mensaje escrito3');

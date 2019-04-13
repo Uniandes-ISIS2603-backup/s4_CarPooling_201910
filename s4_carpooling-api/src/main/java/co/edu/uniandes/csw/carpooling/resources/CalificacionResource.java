@@ -67,7 +67,7 @@ public class CalificacionResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List getCalificaciones() {
+    public List<CalificacionDTO> getCalificaciones() {
         List<CalificacionDTO> calificaciones = listEntityToDTO(logic.getCalificacion());
         return calificaciones;
     }

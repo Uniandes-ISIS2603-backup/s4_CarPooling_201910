@@ -66,7 +66,7 @@ public class NotificacionResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List getNotificaciones() {
+    public List<NotificacionDTO> getNotificaciones() {
         List<NotificacionDTO> Notificacions = listEntityToDTO(logic.getNotificacion());
         return Notificacions;
     }

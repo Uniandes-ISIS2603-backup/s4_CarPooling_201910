@@ -33,6 +33,8 @@ public class NotificacionDTO implements Serializable {
     public NotificacionDTO(NotificacionEntity entity) {
         if (entity != null) {
             mensaje = entity.getMensaje();
+            emisor = new UsuarioDTO(entity.getEmisor());
+            receptor = new UsuarioDTO(entity.getReceptor());
         }
     }
 
