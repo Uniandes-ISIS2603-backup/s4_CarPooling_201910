@@ -28,34 +28,35 @@ import uk.co.jemos.podam.api.PodamFactoryImpl;
 
 /**
  *
- * @author estudiante
+ * @author Alejo
  */
 @RunWith(Arquillian.class)
 public class TrayectoLogicTest {
-    
+
     @Inject
     private TrayectoLogic trayecto;
-    
+
     @PersistenceContext
     private EntityManager em;
-    
+
     @Inject
     private UserTransaction utx;
-    
+
     private List<TrayectoEntity> data = new ArrayList<TrayectoEntity>();
-    
+
     @Deployment
-    public static  JavaArchive createDeployment()
-    {
-         return ShrinkWrap.create(JavaArchive.class)
+    public static JavaArchive createDeployment() {
+        return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(TrayectoEntity.class.getPackage())
                 .addPackage(TrayectoLogic.class.getPackage())
                 .addPackage(TrayectoPersistence.class.getPackage())
                 .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource("META-INF/beans.xml", "beans.xml");
     }
-    
-    
+
+    /**
+     * Configuración inicial del test.
+     */
     @Before
     public void configTest() {
         try {
@@ -72,12 +73,18 @@ public class TrayectoLogicTest {
             }
         }
     }
-    
+
+    /**
+     * Limpiar las tablas implicadas.
+     */
     private void clearData() {
         em.createQuery("delete from TrayectoEntity").executeUpdate();
-        
+
     }
-    
+
+    /**
+     * Insertar los datos de prueba.
+     */
     private void insertData() {
         PodamFactory factory = new PodamFactoryImpl();
         for (int i = 0; i < 3; i++) {
@@ -87,11 +94,14 @@ public class TrayectoLogicTest {
             data.add(entity);
         }
     }
-    
-    
+
+    /**
+     * Prueba crear trayecto.
+     *
+     * @throws BusinessLogicException
+     */
     @Test
-    public void createTrayectoTest() throws BusinessLogicException
-    {
+    public void createTrayectoTest() throws BusinessLogicException {
         PodamFactory factory = new PodamFactoryImpl();
         TrayectoEntity newEntity = factory.manufacturePojo(TrayectoEntity.class);
         TrayectoEntity ae = trayecto.createEntity(newEntity);
@@ -99,9 +109,12 @@ public class TrayectoLogicTest {
         TrayectoEntity entity = em.find(TrayectoEntity.class, ae.getId());
         Assert.assertEquals(newEntity.getFechaInicial().getDay(), entity.getFechaInicial().getDay());
         Assert.assertEquals(newEntity.getId(), entity.getId());
-        
+
     }
-    
+
+    /**
+     * Prueba obtener todos los trayectos.
+     */
     @Test
     public void getTrayectosTest() {
         List<TrayectoEntity> list = trayecto.getTrayectos();
@@ -116,5 +129,5 @@ public class TrayectoLogicTest {
             Assert.assertTrue(found);
         }
     }
-    
+
 }

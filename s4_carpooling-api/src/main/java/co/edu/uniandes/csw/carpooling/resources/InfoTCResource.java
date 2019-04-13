@@ -100,8 +100,11 @@ public class InfoTCResource {
      */
     @PUT
     @Path("{id: \\d+}")
-    public InfoTCDTO updateInfoTC(@PathParam("id") Long id, InfoTCDTO info) throws BusinessLogicException {
+    public InfoTCDTO updateInfoTC(@PathParam("id") Long id, InfoTCDTO info) throws BusinessLogicException, WebApplicationException {
         InfoTCEntity entity = info.toEntity();
+        if (entity == null) {
+            throw new WebApplicationException("No existe el recurso que se quiere actualizar.");
+        }
         entity = logic.updateInfoTC(id, entity);
         return new InfoTCDTO(entity);
     }
@@ -130,7 +133,7 @@ public class InfoTCResource {
      * @param info
      * @return una lista de DTOs.
      */
-    private List<InfoTCDTO> listEntityToDTO(List<InfoTCEntity> info) {
+    public static List<InfoTCDTO> listEntityToDTO(List<InfoTCEntity> info) {
         List<InfoTCDTO> list = new ArrayList<>();
         for (InfoTCEntity entity : info) {
             list.add(new InfoTCDTO(entity));

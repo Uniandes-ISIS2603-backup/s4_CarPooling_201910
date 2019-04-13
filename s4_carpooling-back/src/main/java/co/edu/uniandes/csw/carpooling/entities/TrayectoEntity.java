@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -17,39 +18,43 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
+
 /**
  *
  * @author estudiante
  */
 @Entity
-public class TrayectoEntity extends BaseEntity implements Serializable{
-    
+public class TrayectoEntity extends BaseEntity implements Serializable {
+
     @Temporal(TemporalType.DATE)
     private Date fechaInicial;
+
     @Temporal(TemporalType.DATE)
     private Date fechaFinal;
-    
+
     private Integer estado;
-    
+
     @PodamExclude
     @ManyToOne
     private UsuarioEntity conductor;
-    
+
     @PodamExclude
     @ManyToMany(mappedBy = "trayectoActualPasajero")
     private List<UsuarioEntity> pasajeros;
-    
+
     @PodamExclude
     @OneToOne(orphanRemoval = true)
     private TrayectoInfoEntity infoTrayecto;
-    
+
     @PodamExclude
-    @OneToMany
-    private List<PagoEntity> pago;
-    
-    
-    public TrayectoEntity(){
-        
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PagoEntity> pago = new ArrayList<PagoEntity>();
+
+    /**
+     * Constructor vacío.
+     */
+    public TrayectoEntity() {
+
     }
 
     /**
@@ -109,8 +114,10 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     }
 
     /**
-   
-    /**
+     *
+     * /
+     *
+     **
      * @return the infoTrayecto
      */
     public TrayectoInfoEntity getInfoTrayecto() {
@@ -151,5 +158,5 @@ public class TrayectoEntity extends BaseEntity implements Serializable{
     public void setEstado(Integer estado) {
         this.estado = estado;
     }
-        
+
 }

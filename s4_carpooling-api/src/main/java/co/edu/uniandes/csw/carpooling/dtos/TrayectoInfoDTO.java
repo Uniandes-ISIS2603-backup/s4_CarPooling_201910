@@ -16,7 +16,6 @@ import java.util.Date;
  */
 public class TrayectoInfoDTO extends BaseEntity implements Serializable {
 
-
     private Integer costo;
     private Integer combustiblePrecio;
     private Integer duracionMins;
@@ -24,28 +23,44 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
     private Date horaLlegada;
     private VehiculoDTO carro;
 
-    public TrayectoInfoDTO(){
-        
+    /**
+     * Constructor vacío.
+     */
+    public TrayectoInfoDTO() {
+
     }
-    
-    public TrayectoInfoDTO(TrayectoInfoEntity entity){
-        
-        if(entity != null){
+
+    /**
+     * Constructor desde entidad.
+     *
+     * @param entity
+     */
+    public TrayectoInfoDTO(TrayectoInfoEntity entity) {
+
+        if (entity != null) {
             this.setId(entity.getId());
             this.horaSalida = entity.getHoraInicial();
-            if(entity.getCombustible() != null){
+            if (entity.getCombustible() != null) {
                 this.combustiblePrecio = entity.getCombustible();
-            }if(entity.getCosto() != null){
+            }
+            if (entity.getCosto() != null) {
                 this.costo = entity.getCosto();
-            }if(entity.getHoraFinal() != null){
+            }
+            if (entity.getHoraFinal() != null) {
                 this.horaSalida = entity.getHoraFinal();
-            }if(entity.getDuracion() != null){
+            }
+            if (entity.getDuracion() != null) {
                 this.duracionMins = entity.getDuracion();
             }
         }
     }
-    
-    public TrayectoInfoEntity toEntity(){
+
+    /**
+     * Método para convertir de DTO a entidad.
+     *
+     * @return entidad
+     */
+    public TrayectoInfoEntity toEntity() {
         TrayectoInfoEntity retorno = new TrayectoInfoEntity();
         retorno.setCombustible(combustiblePrecio);
         retorno.setCosto(costo);
@@ -53,7 +68,6 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
         retorno.setHoraInicial(getHoraSalida());
         return retorno;
     }
-
 
     /**
      * @return the costo
@@ -139,6 +153,4 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
         this.carro = carro;
     }
 
-
-    
 }

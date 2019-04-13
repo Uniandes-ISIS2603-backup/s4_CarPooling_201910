@@ -20,7 +20,6 @@ public class CalificacionEntity extends BaseEntity implements Serializable {
 
     private int puntaje;
     private String comentario;
-    private int idTrayectoCalificacion;
 
     @PodamExclude
     @ManyToOne
@@ -66,19 +65,6 @@ public class CalificacionEntity extends BaseEntity implements Serializable {
         this.comentario = comentario;
     }
 
-    /**
-     * @return the idTrayectoCalificacion
-     */
-    public int getIdTrayectoCalificacion() {
-        return idTrayectoCalificacion;
-    }
-
-    /**
-     * @param idTrayectoCalificacion the idTrayectoCalificacion to set
-     */
-    public void setIdTrayectoCalificacion(int idTrayectoCalificacion) {
-        this.idTrayectoCalificacion = idTrayectoCalificacion;
-    }
 
     /**
      * @return the calificado

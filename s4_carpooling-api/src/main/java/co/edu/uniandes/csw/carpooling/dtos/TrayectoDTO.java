@@ -16,54 +16,85 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *
  * @author estudiante
  */
-public class TrayectoDTO  extends BaseEntity implements Serializable {
-    
+public class TrayectoDTO implements Serializable {
+  
+    private Long id;
     
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaInicial;
+    
     @XmlJavaTypeAdapter(DateAdapter.class)
     private Date fechaFinal;
-    
+
     private UsuarioDTO conductor;
-    
+
     private TrayectoInfoDTO info;
-    
-    public TrayectoDTO(){
-        
+
+    /**
+     * Constructor vacío.
+     */
+    public TrayectoDTO() {
+
     }
-    
-    public TrayectoDTO(TrayectoEntity entity){
-        if(entity != null){
+
+    /**
+     * Constructor desde una entidad.
+     *
+     * @param entity
+     */
+    public TrayectoDTO(TrayectoEntity entity) {
+        if (entity != null) {
             this.setId(entity.getId());
 
             this.fechaInicial = entity.getFechaInicial();
+            this.fechaFinal = entity.getFechaFinal();
 
-            this.fechaInicial = entity.getFechaFinal();
-
-            if(entity.getConductor() != null){
+            if (entity.getConductor() != null) {
                 this.conductor = new UsuarioDTO(entity.getConductor());
-            }else{
+            } else {
                 this.conductor = null;
             }
-            if(entity.getInfoTrayecto() != null){
+            if (entity.getInfoTrayecto() != null) {
                 this.info = new TrayectoInfoDTO(entity.getInfoTrayecto());
+            } else {
+                this.info = null;
             }
         }
     }
-    
-    public TrayectoEntity toEntity(){
+
+    /**
+     * Convierte el DTO a una entidad.
+     *
+     * @return
+     */
+    public TrayectoEntity toEntity() {
         TrayectoEntity retorno = new TrayectoEntity();
+        retorno.setId(this.getId());
         retorno.setFechaFinal(this.getFechaFinal());
         retorno.setFechaInicial(this.getFechaInicial());
-        if(getInfo() != null){
+        if (getInfo() != null) {
             retorno.setInfoTrayecto((this.getInfo()).toEntity());
-        }if(getConductor() != null){
+        }
+        if (getConductor() != null) {
             retorno.setConductor(this.getConductor().toEntity());
         }
-        
         return retorno;
     }
+    
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
 
     /**
      * @return the fechaInicial
@@ -120,7 +151,4 @@ public class TrayectoDTO  extends BaseEntity implements Serializable {
     public void setInfo(TrayectoInfoDTO info) {
         this.info = info;
     }
-    
-    
-    
 }

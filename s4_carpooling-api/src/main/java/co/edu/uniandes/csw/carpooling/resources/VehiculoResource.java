@@ -11,6 +11,7 @@ import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -22,6 +23,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -32,53 +34,35 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
-public class VehiculoResource
-{
-        private static final Logger LOGGER = Logger.getLogger(VehiculoResource.class.getName());
-        
-        @Inject
-        private VehiculoLogic logic;
-        
-        @GET 
-        public List<VehiculoDTO> getVehiculos()
-        {
-            List<VehiculoDTO> lista = new ArrayList<>();
-            for (VehiculoEntity entity : logic.get())
-            {
-               lista.add(new VehiculoDTO(entity));
-            }
-            return lista;
+public class VehiculoResource {
+
+    private static final Logger LOGGER = Logger.getLogger(VehiculoResource.class.getName());
+
+    @Inject
+    private VehiculoLogic vehiculoLogic;
+
+    @GET
+    public List<VehiculoDTO> gets() {
+        List<VehiculoDTO> lista = new ArrayList<>();
+        for (VehiculoEntity entity : vehiculoLogic.get()) {
+            lista.add(new VehiculoDTO(entity));
         }
-        
-        @GET
-        @Path("{id: \\d+}")
-        @Produces(MediaType.APPLICATION_JSON)
-        public VehiculoDTO getVehiculo(@PathParam("id")Long id)
-        {
-         VehiculoEntity ent = logic.get(id);
-         return new VehiculoDTO(ent);
+        return lista;
+    }
+
+    @GET
+    @Path("{vehiculoId: \\d+}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public VehiculoDTO get(@PathParam("vehiculoId") Long vehiculoId) {
+        LOGGER.log(Level.INFO, "VehiculoResource get: input: {0}", vehiculoId);
+        VehiculoEntity vehiculoEntity = vehiculoLogic.get(vehiculoId);
+        if (vehiculoEntity == null) {
+            throw new WebApplicationException("El recurso /vehiculos/" + vehiculoId + " no existe.", 404);
         }
-        @POST 
-        public VehiculoDTO createVehiculo(VehiculoDTO vehiculo) throws BusinessLogicException 
-        {
-            VehiculoEntity entity = vehiculo.toEntity();
-            entity = logic.createVehiculo(entity);
-            return new VehiculoDTO(entity);
+
         }
-        @DELETE
-        @Path("{id: \\d+}")
-        public void deleteVehiculo(@PathParam("id")Long id) throws BusinessLogicException
-        {
-            logic.delete(id);
-        }
-        
-        @PUT
-        @Path ("{id: \\d+}")
-        public VehiculoDTO updateVehiculo(@PathParam("id")Long id, VehiculoDTO vehiculo)
-        {
-            VehiculoEntity entity = vehiculo.toEntity();
-            entity = logic.updateVehiculo(id, entity);
-            return new VehiculoDTO(entity);
-        }
+        vehiculoEntity = vehiculoLogic.updateVehiculo(vehiculoId, vehiculoEntity);
+        return new VehiculoDTO(vehiculoEntity);
+    }
 
 }

@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.carpooling.entities.InfoTCEntity;
 import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.PagoPersistence;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +59,25 @@ public class PagoLogic {
         List<PagoEntity> pagos = persistence.findAll();
         LOGGER.log(Level.INFO, "Termina proceso de consultar todos los pagos");
         return pagos;
+    }
+    
+    
+    /**
+     * Consulta toda la info de los pagos.
+     *
+     * @return Lista de toda la información de los pagos.
+     */
+    public List<InfoTCEntity> getAllInfo() {
+        LOGGER.log(Level.INFO, "Inicia proceso de consultar toda la información");
+        List<InfoTCEntity> info = new ArrayList<>();
+        List<PagoEntity> pagos = getPagos();
+        for (int i = 0; i < pagos.size(); i++) {
+            InfoTCEntity newInfo = pagos.get(i).getInfoTC();
+            info.add(newInfo);
+        }
+        
+        LOGGER.log(Level.INFO, "Termina proceso de consultar toda la información");
+        return info;
     }
 
     /**

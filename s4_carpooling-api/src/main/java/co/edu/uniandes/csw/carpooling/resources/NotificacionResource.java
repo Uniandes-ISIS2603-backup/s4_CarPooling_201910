@@ -23,14 +23,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author estudiante
  */
 @Path("notificaciones")
-@Produces("application/json")
-@Consumes("application/json")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
 public class NotificacionResource {
 
@@ -65,7 +66,7 @@ public class NotificacionResource {
      * encontradas en la aplicación. Si no hay ninguna retorna una lista vacía.
      */
     @GET
-    public List getNotificaciones() {
+    public List<NotificacionDTO> getNotificaciones() {
         List<NotificacionDTO> Notificacions = listEntityToDTO(logic.getNotificacion());
         return Notificacions;
     }
@@ -86,26 +87,17 @@ public class NotificacionResource {
         entity = logic.createNotificacion(entity);
         return new NotificacionDTO(entity);
     }
-
-    /**
-     * Actualiza la notificación con el id recibido.
-     *
-     * @param id Identificador de la notificación que se desea actualizar.
-     * @param notificacion {@link NotificacionDTO} La notificación que se desea
-     * guardar.
-     * @return BusinessLogicException {@link BusinessLogicException} - Error de
-     * lógica que se genera cuando no se encuentra la notificación a actualizar.
-     * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
-     * Error de lógica que se genera cuando no se puede actualizar la
-     * notificación.
-     */
-    @PUT
-    @Path("{id: \\d+}")
-    public NotificacionDTO updateNotificacion(@PathParam("id") Long id, NotificacionDTO notificacion) throws BusinessLogicException {
-        NotificacionEntity entity = notificacion.toEntity();
-        entity = logic.update(id, entity);
+    
+    
+    
+    @POST
+    @Path("{idN: \\d+}/{idE: \\d+}/{idR: \\d+}")
+    public NotificacionDTO addRelacion(@PathParam("idN") Long idNotificacion, @PathParam("idE") Long idEmisor, @PathParam("idR") Long idReceptor) throws BusinessLogicException {
+        NotificacionEntity entity = logic.addRelacionNotificacion(idNotificacion, idReceptor, idEmisor);
         return new NotificacionDTO(entity);
+
     }
+
 
     /**
      * Borra la notificación con el id asociado recibido en la URL.
@@ -120,7 +112,7 @@ public class NotificacionResource {
     public void deleteNotificacion(@PathParam("id") Long id) throws BusinessLogicException {
         NotificacionEntity entity = logic.getNotificacion(id);
         if (entity == null) {
-            throw new WebApplicationException("El recurso /Notificacions/" + id + "no existe.", 404);
+            throw new WebApplicationException("El recurso /Notificaciones/" + id + "no existe.", 404);
         }
         logic.deleteNotificacion(id);
     }
