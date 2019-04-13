@@ -64,7 +64,7 @@ public class InfoTCResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List getInfoTCs() {
+    public List<InfoTCDTO> getInfoTCs() {
         List<InfoTCDTO> InfoTCs = listEntityToDTO(logic.getInfoTCs());
         return InfoTCs;
     }

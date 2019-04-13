@@ -65,7 +65,7 @@ public class PagoResource {
      * aplicación. Si no hay ninguno retorna una lista vacía.
      */
     @GET
-    public List getPagos() {
+    public List<PagoDTO> getPagos() {
         List<PagoDTO> pagos = listEntityToDTO(logic.getPagos());
         return pagos;
     }
