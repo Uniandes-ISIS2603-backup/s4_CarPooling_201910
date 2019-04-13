@@ -80,8 +80,9 @@ public class PagoResource {
     @GET
     @Path("info")
     public List getAllInfo() {
-        List<InfoTCDTO> info = InfoTCResource.listEntityToDTO(logic.getAllInfo());
-        return info;
+//        List<InfoTCDTO> info = InfoTCResource.listEntityToDTO(logic.getAllInfo());
+//        return info;
+return null;
     }
 
     /**
