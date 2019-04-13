@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.carpooling.dtos.TrayectoInfoDTO;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoInfoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
