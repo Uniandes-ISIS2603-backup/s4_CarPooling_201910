@@ -6,6 +6,7 @@ delete from PagoEntity;
 delete from InfoTCEntity;
 delete from VehiculoEntity;
 delete from TrayectoEntity;
+delete from CalificacionEntity;
 delete from NotificacionEntity;
 
 
