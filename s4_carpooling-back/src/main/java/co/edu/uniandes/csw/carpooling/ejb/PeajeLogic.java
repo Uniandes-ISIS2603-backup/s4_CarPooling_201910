@@ -42,9 +42,9 @@ public class PeajeLogic {
         if (peajeEntity.getCosto() == null) {
             throw new BusinessLogicException("Costo de peaje invalido: \"" + peajeEntity.getCosto() + "\"");
         }
-        /**if (peajeEntity.getLatitud() == null) {
+        if (peajeEntity.getLatitud() == null) {
             throw new BusinessLogicException("Latitud de peaje invalido: \"" + peajeEntity.getLatitud() + "\"");
-        }*/
+        }
         if (peajeEntity.getLongitud() == null) {
             throw new BusinessLogicException("Longitud de peaje invalido: \"" + peajeEntity.getLongitud() + "\"");
         }
