@@ -59,36 +59,7 @@ public class VehiculoResource {
         if (vehiculoEntity == null) {
             throw new WebApplicationException("El recurso /vehiculos/" + vehiculoId + " no existe.", 404);
         }
-        VehiculoDTO vehiculoDetailDTO = new VehiculoDTO(vehiculoEntity);
-        LOGGER.log(Level.INFO, "VehiculoResource get: output: {0}", vehiculoDetailDTO);
-        return vehiculoDetailDTO;
-    }
 
-    @POST
-    public VehiculoDTO createVehiculo(VehiculoDTO vehiculo) throws BusinessLogicException {
-        VehiculoEntity entity = vehiculo.toEntity();
-        entity = vehiculoLogic.createVehiculo(entity);
-        return new VehiculoDTO(entity);
-    }
-
-    @DELETE
-    @PathParam("{vehiculoId: \\d+}")
-    public void deleteVehiculo(@PathParam("vehiculoId") Long vehiculoId) throws BusinessLogicException {
-        LOGGER.log(Level.INFO, "VehiculoResource get: input: {0}", vehiculoId);
-        VehiculoEntity vehiculoEntity = vehiculoLogic.get(vehiculoId);
-        if (vehiculoEntity == null) {
-            throw new WebApplicationException("El recurso /vehiculos/" + vehiculoId + " no existe.", 404);
-        }
-        vehiculoLogic.delete(vehiculoId);
-    }
-
-    @PUT
-    @PathParam("{vehiculoId: \\d+}")
-    public VehiculoDTO updateVehiculo(@PathParam("vehiculoId") Long vehiculoId, VehiculoDTO vehiculo) {
-        LOGGER.log(Level.INFO, "VehiculoResource get: input: {0}", vehiculoId);
-        VehiculoEntity vehiculoEntity = vehiculoLogic.get(vehiculoId);
-        if (vehiculoEntity == null) {
-            throw new WebApplicationException("El recurso /vehiculos/" + vehiculoId + " no existe.", 404);
         }
         vehiculoEntity = vehiculoLogic.updateVehiculo(vehiculoId, vehiculoEntity);
         return new VehiculoDTO(vehiculoEntity);
