@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.carpooling.test.persistence;
 
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
+import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,8 @@ public class UsuarioPersistenceTest {
     
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
 
-    
+    private List<VehiculoEntity> data2 = new ArrayList<VehiculoEntity>();
+
     @Deployment
     public static JavaArchive createDeployment (){
          return ShrinkWrap.create(JavaArchive.class)
@@ -90,10 +92,12 @@ public class UsuarioPersistenceTest {
         for (int i = 0; i < 3; i++) {
 
             UsuarioEntity entity = factory.manufacturePojo(UsuarioEntity.class);
-
+            VehiculoEntity entity2 = factory.manufacturePojo(VehiculoEntity.class);
+            
             em.persist(entity);
-
+            em.persist(entity2);
             data.add(entity);
+            data2.add(entity2);
         }
     }
 
@@ -184,6 +188,17 @@ public class UsuarioPersistenceTest {
 
         newEntity = usuarioPersistence.findByUserName(null);
         Assert.assertNull(newEntity);
+    }
+    
+    @Test
+    public void addVehiculo() {
+        UsuarioEntity usuario = data.get(0);
+        VehiculoEntity vehiculo = data2.get(0);
+        Assert.assertNotNull(vehiculo);
+        
+        usuario.addVehiculo(vehiculo);
+        VehiculoEntity vehiculo2 = usuario.getVehiculos().get(0);
+        Assert.assertEquals(vehiculo.getId(), vehiculo2.getId());
     }
     
     

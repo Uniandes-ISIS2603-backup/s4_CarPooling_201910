@@ -6,6 +6,9 @@
 package co.edu.uniandes.csw.carpooling.test.logic;
 
 import co.edu.uniandes.csw.carpooling.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.carpooling.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.carpooling.ejb.UsuarioVehiculoLogic;
+
 import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
 import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
@@ -44,6 +47,9 @@ public class UsuarioLogicTest {
     @Inject
     private UsuarioLogic usuarioLogic;
 
+    @Inject
+    private UsuarioVehiculoLogic usuarioVehiculoLogic;
+
     private PodamFactory factory = new PodamFactoryImpl();
 
     @PersistenceContext
@@ -53,6 +59,7 @@ public class UsuarioLogicTest {
     private UserTransaction utx;
 
     private List<UsuarioEntity> data = new ArrayList<UsuarioEntity>();
+    private List<VehiculoEntity> data2 = new ArrayList<VehiculoEntity>();
 
     private static final Logger LOGGER = Logger.getLogger(UsuarioLogicTest.class.getName());
 
@@ -99,9 +106,14 @@ public class UsuarioLogicTest {
      */
     private void insertData() {
         for (int i = 0; i < 3; i++) {
-            UsuarioEntity users = factory.manufacturePojo(UsuarioEntity.class);
+            UsuarioEntity users = new UsuarioEntity();
+            users = factory.manufacturePojo(UsuarioEntity.class);
+            VehiculoEntity vehiculo = new VehiculoEntity();
+            vehiculo = factory.manufacturePojo(VehiculoEntity.class);
             em.persist(users);
+            em.persist(vehiculo);
             data.add(users);
+            data2.add(vehiculo);
         }
     }
 
@@ -527,5 +539,29 @@ public class UsuarioLogicTest {
         configTest();
 
     }
+    
+    @Test
+    public void addVehiculo() {
+        UsuarioEntity usuario = data.get(0);
+        VehiculoEntity vehiculo = data2.get(0);
+        usuario.setVehiculos(new ArrayList<VehiculoEntity>());
+        UsuarioEntity mod = null;
+        try {
+            utx.begin();
+            mod = em.merge(usuario);
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                utx.rollback();
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+        Assert.assertNotNull(vehiculo);
+        usuarioVehiculoLogic.addVehiculo(mod.getUsername(), vehiculo.getId());
+       
+        Assert.assertEquals(vehiculo.getId(), mod.getVehiculos().get(0).getId());
+    }
+    
 
 }

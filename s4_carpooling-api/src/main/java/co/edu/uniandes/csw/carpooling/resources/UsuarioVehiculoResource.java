@@ -53,8 +53,9 @@ public class UsuarioVehiculoResource {
      * Error de lógica que se genera cuando no se encuentra el libro.
      */
     @POST
-    @Path ("{id: \\d+}")
+    @Path ("{vehiculoId: \\d+}")
     public VehiculoDTO addVehiculo(@PathParam("username") String usuariosId, @PathParam("vehiculosId") Long vehiculosId) {
+        
         if (vehiculoLogic.get(vehiculosId) == null) {
             throw new WebApplicationException("El recurso /vehiculo/" + vehiculosId + " no existe.", 404);
         }
