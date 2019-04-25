@@ -112,6 +112,7 @@ public class VehiculoDTO implements Serializable
         vehiculoEntity.setModelo(this.modelo);
         vehiculoEntity.setPlaca(this.placa);
         vehiculoEntity.setAlquilado(this.alquilado);
+        vehiculoEntity.setAlquilerInfo(this.alquilerInfo.toEntity());
         vehiculoEntity.setId(this.id);
         return vehiculoEntity;
     }

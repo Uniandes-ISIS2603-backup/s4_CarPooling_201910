@@ -136,7 +136,7 @@ public class AlquilerResource {
      * @throws BusinessLogicException Si no se encuentra alguno de los id
      * pasados por parámetro.
      */
-    @POST
+    @GET
     @Path("{idA: \\d+}/{idD: \\d+}/{idAr: \\d+}/{idS: \\d+}")
     public AlquilerDTO addRelacion(@PathParam("idA") Long idAlquiler, @PathParam("idD") Long idDueno, @PathParam("idAr") Long idArrendatario,
             @PathParam("idS") Long idSeguro) throws BusinessLogicException {

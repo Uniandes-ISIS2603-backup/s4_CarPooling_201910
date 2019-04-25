@@ -80,5 +80,17 @@ public class VehiculoResource
             entity = logic.updateVehiculo(id, entity);
             return new VehiculoDTO(entity);
         }
+        /**
+     * Añade las relaciones correspondientes.
+     *
+     * @param idVehiculo
+     * @param idAlquiler
+     */
+    @GET
+    @Path("{idV: \\d+}/{idA: \\d+}")
+    public VehiculoDTO addRelacion(@PathParam("idV") Long idVehiculo,@PathParam("idA") Long idAlquiler) throws BusinessLogicException {
+        VehiculoEntity entity = logic.addRelacionAlquiler(idVehiculo,idAlquiler);
+        return new VehiculoDTO(entity);
 
+    }
 }

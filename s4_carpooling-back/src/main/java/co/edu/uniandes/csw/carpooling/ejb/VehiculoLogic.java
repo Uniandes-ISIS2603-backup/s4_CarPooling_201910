@@ -64,6 +64,19 @@ public class VehiculoLogic
         }
         persistence.delete(id);
     }
+
+    public VehiculoEntity addRelacionAlquiler(Long idVehiculo,Long idAlquiler) throws BusinessLogicException {
+        AlquilerEntity alquiler = alquilerPersistence.find(idAlquiler);
+        VehiculoEntity vehiculo = persistence.find(idVehiculo);
+        if (alquiler == null) {
+            throw new BusinessLogicException("Alquiler: " + idAlquiler + " no existe");
+        }
+        if (vehiculo == null) {
+            throw new BusinessLogicException("vehiculo: " + idVehiculo + " no existe");
+        }
+        vehiculo.setAlquilerInfo(alquiler);
+        return persistence.update(vehiculo);   
+    }
     
     
   

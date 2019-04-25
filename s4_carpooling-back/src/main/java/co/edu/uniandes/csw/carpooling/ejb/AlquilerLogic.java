@@ -121,6 +121,7 @@ public class AlquilerLogic {
             throw new BusinessLogicException("Alquiler: " + idAlquiler + " no existe");
         }
         alquiler.setArrendatario(arrendatario);
+        arrendatario.setAlquilerArrendatario(alquiler);
         alquiler.setDuenio(dueno);
         alquiler.setSeguro(seguro);
         return persistence.update(alquiler);
