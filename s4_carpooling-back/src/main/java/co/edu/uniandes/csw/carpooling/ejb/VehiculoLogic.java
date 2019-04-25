@@ -42,7 +42,7 @@ public class VehiculoLogic
         return vehiculo;
     }
     
-    public VehiculoEntity get (Long id)
+    public VehiculoEntity get(Long id)
     {
         VehiculoEntity vehiculoEntity = persistence.find(id);
         return vehiculoEntity;

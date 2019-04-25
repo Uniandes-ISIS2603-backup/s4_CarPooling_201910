@@ -28,11 +28,11 @@ public class VehiculoPersistence {
         em.persist(vehiculoEntity);
         return vehiculoEntity;
     }
-    public VehiculoEntity find(Long vehiculoId)
+    
+    public VehiculoEntity find(Long id)
     {
-        
-        return em.find(VehiculoEntity.class, vehiculoId); 
-       
+        return em.find(VehiculoEntity.class, id); 
+ 
     }
     public List<VehiculoEntity> findAll()
     {

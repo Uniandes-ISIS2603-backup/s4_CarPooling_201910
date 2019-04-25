@@ -37,9 +37,13 @@ public class UsuarioVehiculoLogic {
      * libro.
      * @return El libro creado.
      */
-    public VehiculoEntity addVehiculo(String username, Long vehiculosId) {
+    public VehiculoEntity addVehiculo(String username, Long vehiculosId) throws Exception {
         VehiculoEntity vehiculoEntity = vehiculoPersistence.find(vehiculosId);
         UsuarioEntity usuarioEntity = usuarioPersistence.findByUserName(username);
+        if(usuarioEntity==null)
+            throw  new Exception("eror isa");
+        if(vehiculoEntity==null)
+            throw  new Exception("eror is2a");
         usuarioEntity.addVehiculo(vehiculoEntity);
         return vehiculoEntity;
     }

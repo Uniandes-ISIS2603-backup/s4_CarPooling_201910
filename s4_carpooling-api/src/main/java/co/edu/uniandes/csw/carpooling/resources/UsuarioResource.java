@@ -111,6 +111,29 @@ public class UsuarioResource {
         logic.deleteUsuario(username);
     }
     
+     /**
+     * Conexión con el servicio de libros para una editorial.
+     * {@link EditorialBooksResource}
+     *
+     * Este método conecta la ruta de /editorials con las rutas de /books que
+     * dependen de la editorial, es una redirección al servicio que maneja el
+     * segmento de la URL que se encarga de los libros de una editorial.
+     *
+     * @param editorialsId El ID de la editorial con respecto a la cual se
+     * accede al servicio.
+     * @return El servicio de libros para esta editorial en paricular.
+     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
+     * Error de lógica que se genera cuando no se encuentra la editorial.
+     */
+    @Path("{username: [a-zA-Z][a-zA-Z]*}/vehiculos")
+    public Class<UsuarioVehiculoResource> getUsuarioVehiculoResource(@PathParam("username") String username) {
+        if (logic.getUsuario(username) == null) {
+            throw new WebApplicationException("El recurso /usuario/" + username + " no existe.", 404);
+        }
+        return UsuarioVehiculoResource.class;
+    }
+
+    
     /**
      * Se utiliza un método para convertir una lista de Entidades a DTOs.
      * @param Usuario

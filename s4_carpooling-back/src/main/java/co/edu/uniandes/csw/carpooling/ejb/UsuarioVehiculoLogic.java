@@ -38,7 +38,7 @@ public class UsuarioVehiculoLogic {
      * @return El libro creado.
      */
     public VehiculoEntity addVehiculo(String username, Long vehiculosId) {
-        VehiculoEntity vehiculoEntity = vehiculoPersistence.find(vehiculosId);
+        VehiculoEntity vehiculoEntity = vehiculoPersistence.find(Long.valueOf("100"));
         UsuarioEntity usuarioEntity = usuarioPersistence.findByUserName(username);
         usuarioEntity.addVehiculo(vehiculoEntity);
         return vehiculoEntity;

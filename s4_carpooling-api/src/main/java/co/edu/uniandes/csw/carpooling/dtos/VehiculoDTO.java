@@ -13,7 +13,8 @@ import java.io.Serializable;
  * @author estudiante
  */
 public class VehiculoDTO implements Serializable
-{
+{    
+    private Long id;
     private String modelo;
     private String color;
     private String placa;
@@ -30,6 +31,7 @@ public class VehiculoDTO implements Serializable
     {
         if(ent != null)
         {
+            this.id = ent.getId();
             this.placa = ent.getPlaca();
             this.alquilado = ent.getAlquilado();
             this.modelo = ent.getModelo();
@@ -110,7 +112,7 @@ public class VehiculoDTO implements Serializable
         vehiculoEntity.setModelo(this.modelo);
         vehiculoEntity.setPlaca(this.placa);
         vehiculoEntity.setAlquilado(this.alquilado);
-        
+        vehiculoEntity.setId(this.id);
         return vehiculoEntity;
     }
 
@@ -126,6 +128,20 @@ public class VehiculoDTO implements Serializable
      */
     public void setAlquilerInfo(AlquilerDTO alquilerInfo) {
         this.alquilerInfo = alquilerInfo;
+    }
+
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
     }
    
 }
