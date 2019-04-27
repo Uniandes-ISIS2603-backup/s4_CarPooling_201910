@@ -9,6 +9,7 @@ delete from TrayectoEntity;
 delete from CalificacionEntity;
 delete from NotificacionEntity;
 
+delete from USUARIOENTITY_VEHICULOENTITY;
 
 insert into AlquilerEntity (id, nombre) values (100,'alquiler1');
 insert into AlquilerEntity (id, nombre) values (200,'alquiler2');
