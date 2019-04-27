@@ -25,8 +25,8 @@ private String placa;
 private Boolean alquilado;
 
 
- @PodamExclude
- @OneToOne(mappedBy="vehiculoAlquilado")
+@PodamExclude
+@OneToOne(mappedBy="vehiculoAlquilado")
 private AlquilerEntity alquilerInfo;
 
     public VehiculoEntity()
