@@ -35,13 +35,28 @@ public class VehiculoDTO implements Serializable
             this.placa = ent.getPlaca();
             this.alquilado = ent.getAlquilado();
             this.modelo = ent.getModelo();
-     
-        if(ent.getAlquilerInfo() != null)
-        {
-            this.alquilerInfo = new AlquilerDTO(ent.getAlquilerInfo());
-        }
+            this.color = ent.getColor();
+            if(ent.getAlquilerInfo() != null)
+            {
+                this.alquilerInfo = new AlquilerDTO(ent.getAlquilerInfo());
+            }else {
+                this.alquilerInfo = null;
+            }
         }
         
+    }
+    
+    public VehiculoEntity toEntity() {
+        VehiculoEntity vehiculoEntity = new VehiculoEntity();
+        vehiculoEntity.setModelo(this.modelo);
+        vehiculoEntity.setPlaca(this.placa);
+        vehiculoEntity.setAlquilado(this.alquilado);
+        if (this.alquilerInfo != null) {
+        vehiculoEntity.setAlquilerInfo(this.alquilerInfo.toEntity());
+        }
+        vehiculoEntity.setId(this.id);
+        vehiculoEntity.setColor(this.color);
+        return vehiculoEntity;
     }
     /**
      * @return the modelo
@@ -107,15 +122,7 @@ public class VehiculoDTO implements Serializable
      * @return La entidad del vehiculo asociado.
      */
     
-    public VehiculoEntity toEntity() {
-        VehiculoEntity vehiculoEntity = new VehiculoEntity();
-        vehiculoEntity.setModelo(this.modelo);
-        vehiculoEntity.setPlaca(this.placa);
-        vehiculoEntity.setAlquilado(this.alquilado);
-        vehiculoEntity.setAlquilerInfo(this.alquilerInfo.toEntity());
-        vehiculoEntity.setId(this.id);
-        return vehiculoEntity;
-    }
+    
 
     /**
      * @return the alquilerInfo

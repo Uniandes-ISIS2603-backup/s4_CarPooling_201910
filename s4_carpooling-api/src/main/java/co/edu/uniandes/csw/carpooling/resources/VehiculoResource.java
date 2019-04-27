@@ -58,13 +58,14 @@ public class VehiculoResource
          VehiculoEntity ent = logic.get(id);
          return new VehiculoDTO(ent);
         }
-        @POST 
-        public VehiculoDTO createVehiculo(VehiculoDTO vehiculo) throws BusinessLogicException 
-        {
+        
+        @POST
+        public VehiculoDTO createVehiculo(VehiculoDTO vehiculo) throws BusinessLogicException{
             VehiculoEntity entity = vehiculo.toEntity();
-            entity = logic.createVehiculo(entity);
-            return new VehiculoDTO(entity);
+            VehiculoEntity entity2 = logic.createVehiculo(entity);
+            return new VehiculoDTO(entity2);
         }
+        
         @DELETE
         @Path("{id: \\d+}")
         public void deleteVehiculo(@PathParam("id")Long id) throws BusinessLogicException

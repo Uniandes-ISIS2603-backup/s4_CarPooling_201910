@@ -26,7 +26,7 @@ private Boolean alquilado;
 
 
  @PodamExclude
-    @OneToOne(mappedBy="vehiculoAlquilado")
+ @OneToOne(mappedBy="vehiculoAlquilado")
 private AlquilerEntity alquilerInfo;
 
     public VehiculoEntity()
