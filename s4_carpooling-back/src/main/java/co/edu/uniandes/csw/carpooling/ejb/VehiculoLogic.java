@@ -28,11 +28,13 @@ public class VehiculoLogic
     
     public VehiculoEntity createVehiculo (VehiculoEntity vehiculo) throws BusinessLogicException
     {
+        Long idMetido = vehiculo.getId();
         if (persistence.find(vehiculo.getId()) != null)
         {
              throw new BusinessLogicException ("Ya existe el vehículo de placa: " + vehiculo.getPlaca());
         }
         vehiculo =  persistence.create(vehiculo);
+        vehiculo.setId(idMetido);
         return vehiculo;
     }
     
