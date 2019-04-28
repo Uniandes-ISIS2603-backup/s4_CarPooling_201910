@@ -36,12 +36,12 @@ public class TrayectoDetail extends TrayectoDTO implements Serializable {
     public TrayectoDetail(TrayectoEntity trayectoEntity) {
         super(trayectoEntity);
         pagos = new ArrayList<PagoDTO>();
-        /*if (trayectoEntity.getPagos()!=null){
+        if (trayectoEntity.getPago()!=null){
             pagos = new ArrayList<PagoDTO>();
-            for (PagoEntity pagoEntity: trayectoEntity.getPagos()){
+            for (PagoEntity pagoEntity: trayectoEntity.getPago()){
                 pagos.add(new PagoDTO(pagoEntity));
             }
-        }*/
+        }
         if (trayectoEntity.getPasajeros() != null) {
             pasajeros = new ArrayList<>();
             for (UsuarioEntity usuarioEntity : trayectoEntity.getPasajeros()) {
@@ -49,6 +49,27 @@ public class TrayectoDetail extends TrayectoDTO implements Serializable {
             }
         }
 
+    }
+    
+    @Override
+    public TrayectoEntity toEntity() {
+        TrayectoEntity entity = super.toEntity();
+        if (getPagos() != null) {
+
+            List<PagoEntity> pagosEntity = new ArrayList<>();
+            for (PagoDTO dtoNot : getPagos()) {
+                pagosEntity.add(dtoNot.toEntity());
+            }
+            entity.setPago(pagosEntity);
+        }
+        if (pasajeros != null) {
+            List<UsuarioEntity> usuarioEntity = new ArrayList<>();
+            for (UsuarioDTO dtoNot : getPasajeros()) {
+                usuarioEntity.add(dtoNot.toEntity());
+            }
+            entity.setPasajeros(usuarioEntity);
+        }
+        return entity;
     }
 
     /**
@@ -63,5 +84,19 @@ public class TrayectoDetail extends TrayectoDTO implements Serializable {
      */
     public void setPasajeros(List<UsuarioDTO> pasajeros) {
         this.pasajeros = pasajeros;
+    }
+
+    /**
+     * @return the pagos
+     */
+    public List<PagoDTO> getPagos() {
+        return pagos;
+    }
+
+    /**
+     * @param pagos the pagos to set
+     */
+    public void setPagos(List<PagoDTO> pagos) {
+        this.pagos = pagos;
     }
 }
