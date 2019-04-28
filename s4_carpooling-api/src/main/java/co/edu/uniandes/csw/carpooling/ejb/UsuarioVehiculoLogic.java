@@ -47,4 +47,11 @@ public class UsuarioVehiculoLogic {
         usuarioEntity.addVehiculo(vehiculoEntity);
         return vehiculoEntity;
     }
+
+    public VehiculoEntity createVehiculo(String username, VehiculoEntity vehiculo) {
+        VehiculoEntity vehiculoEntity = vehiculoPersistence.create(vehiculo);
+        UsuarioEntity usuarioEntity = usuarioPersistence.findByUserName(username);
+        usuarioEntity.addVehiculo(vehiculoEntity);
+        return vehiculoEntity;
+    }
 }

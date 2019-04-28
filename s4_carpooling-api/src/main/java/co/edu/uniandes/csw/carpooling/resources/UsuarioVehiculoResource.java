@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.carpooling.resources;
 import co.edu.uniandes.csw.carpooling.dtos.VehiculoDTO;
 import co.edu.uniandes.csw.carpooling.ejb.UsuarioVehiculoLogic;
 import co.edu.uniandes.csw.carpooling.ejb.VehiculoLogic;
+import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import java.util.List;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -68,5 +69,12 @@ public class UsuarioVehiculoResource {
             throw new WebApplicationException(e.getMessage());
         }
         return vehiculoDTO;
+    }
+    
+    
+    @POST
+    public VehiculoDTO createVehiculo(@PathParam("username") String username, VehiculoDTO vehiculo) throws BusinessLogicException {
+        VehiculoDTO nuevoReviewDTO = new VehiculoDTO(usuarioVehiculoLogic.createVehiculo(username, vehiculo.toEntity()));
+        return nuevoReviewDTO;
     }
 }
