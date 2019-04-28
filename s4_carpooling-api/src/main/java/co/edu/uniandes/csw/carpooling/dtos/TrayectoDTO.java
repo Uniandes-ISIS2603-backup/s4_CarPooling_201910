@@ -17,7 +17,9 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * @author estudiante
  */
 public class TrayectoDTO implements Serializable {
-  
+
+    private Integer estado;
+    
     private Long id;
     
     @XmlJavaTypeAdapter(DateAdapter.class)
@@ -45,7 +47,7 @@ public class TrayectoDTO implements Serializable {
     public TrayectoDTO(TrayectoEntity entity) {
         if (entity != null) {
             this.setId(entity.getId());
-
+            this.estado = entity.getEstado();
             this.fechaInicial = entity.getFechaInicial();
             this.fechaFinal = entity.getFechaFinal();
 
@@ -69,6 +71,7 @@ public class TrayectoDTO implements Serializable {
      */
     public TrayectoEntity toEntity() {
         TrayectoEntity retorno = new TrayectoEntity();
+        retorno.setEstado(this.estado);
         retorno.setId(this.getId());
         retorno.setFechaFinal(this.getFechaFinal());
         retorno.setFechaInicial(this.getFechaInicial());
@@ -150,5 +153,19 @@ public class TrayectoDTO implements Serializable {
      */
     public void setInfo(TrayectoInfoDTO info) {
         this.info = info;
+    }
+    
+    /**
+     * @return the estado
+     */
+    public int getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
 }

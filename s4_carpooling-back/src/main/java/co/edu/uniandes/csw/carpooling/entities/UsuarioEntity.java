@@ -346,4 +346,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void addVehiculo(VehiculoEntity vehiculoEntity) {
         vehiculos.add(vehiculoEntity);
     }
+
+    public void addTrayectoConductor(TrayectoEntity TrayectoEntity) {
+       trayectoActualConductor.add(TrayectoEntity);
+    }
 }

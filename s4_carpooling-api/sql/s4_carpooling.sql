@@ -89,5 +89,5 @@ insert into NotificacionEntity (id, mensaje)
 values (300, 'mensaje escrito3');
 
 
-insert into TrayectoEntity( fechafinal, fechainicial ) values
-('05/02/2019','09/20/1948');
+insert into TrayectoEntity( fechafinal, fechainicial, estado ) values
+('05/02/2019','09/20/1948', 0);

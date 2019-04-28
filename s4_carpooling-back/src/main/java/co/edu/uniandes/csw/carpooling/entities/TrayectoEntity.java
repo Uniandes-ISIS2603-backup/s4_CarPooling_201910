@@ -25,7 +25,13 @@ import uk.co.jemos.podam.common.PodamExclude;
  */
 @Entity
 public class TrayectoEntity extends BaseEntity implements Serializable {
+    
+    public static final int FUTURO = 0;
+    public static final int ACTUAL = 1;
+    public static final int PASADO = 2;
+    public static final int NO_REALIZADO = 3;
 
+    
     @Temporal(TemporalType.DATE)
     private Date fechaInicial;
 
