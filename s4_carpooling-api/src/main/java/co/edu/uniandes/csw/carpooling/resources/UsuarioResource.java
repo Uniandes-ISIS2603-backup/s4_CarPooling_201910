@@ -135,24 +135,25 @@ public class UsuarioResource {
     
     
     /**
-     * Conexión con el servicio de reseñas para un libro. {@link ReviewResource}
-     *
-     * Este método conecta la ruta de /books con las rutas de /reviews que
-     * dependen del libro, es una redirección al servicio que maneja el segmento
-     * de la URL que se encarga de las reseñas.
-     *
-     * @param booksId El ID del libro con respecto al cual se accede al
-     * servicio.
-     * @return El servicio de Reseñas para ese libro en paricular.\
-     * @throws WebApplicationException {@link WebApplicationExceptionMapper} -
-     * Error de lógica que se genera cuando no se encuentra el libro.
+     * Trayectos conductor
      */
     @Path("{username: [a-zA-Z][a-zA-Z]*}/trayectosConductor")
-    public Class<UsuarioTrayectoResource> getReviewResource(@PathParam("username") String username) {
+    public Class<UsuarioTrayectoResource> getTraycetosConductor(@PathParam("username") String username) {
         if (logic.getUsuario(username) == null) {
             throw new WebApplicationException("El recurso /usuario/" + username + "/trayectosConductor no existe.", 404);
         }
         return UsuarioTrayectoResource.class;
+    }
+    
+    /**
+     * Trayectos pasajero
+     */
+    @Path("{username: [a-zA-Z][a-zA-Z]*}/trayectosPasajero")
+    public Class<UsuarioTrayectoResource2> getTraycetosPasajero(@PathParam("username") String username) {
+        if (logic.getUsuario(username) == null) {
+            throw new WebApplicationException("El recurso /usuario/" + username + "/trayectosConductor no existe.", 404);
+        }
+        return UsuarioTrayectoResource2.class;
     }
     
     /**

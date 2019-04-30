@@ -350,4 +350,8 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     public void addTrayectoConductor(TrayectoEntity TrayectoEntity) {
        trayectoActualConductor.add(TrayectoEntity);
     }
+    
+     public void addTrayectoPasajero(TrayectoEntity TrayectoEntity) {
+       trayectoActualPasajero.add(TrayectoEntity);
+    }
 }

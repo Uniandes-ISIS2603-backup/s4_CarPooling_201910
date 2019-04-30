@@ -118,6 +118,15 @@ public class TrayectoEntity extends BaseEntity implements Serializable {
     public void setPasajeros(List<UsuarioEntity> pasajeros) {
         this.pasajeros = pasajeros;
     }
+    
+    /**
+     * @param pasajeros the pasajeros to set
+     */
+    public void addPasajero(UsuarioEntity pasajero) {
+        pasajeros.add(pasajero);
+    }
+    
+    
 
     /**
      *
