@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.carpooling.dtos.TrayectoDTO;
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoDetail;
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDTO;
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.carpooling.ejb.TrayectoCiudadLogic;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
@@ -67,8 +68,7 @@ public class TrayectoResource {
      */
     @GET
     public List<TrayectoDetail> darTrayectos() {
-
-
+        
         List<TrayectoDetail> listaTrayecto = listEntity2DetailDTO(trayectoLogic.getTrayectos());
         LOGGER.log(Level.INFO, "BookResource getBooks: output: {0}", listaTrayecto);
         return listaTrayecto;
@@ -132,16 +132,5 @@ public class TrayectoResource {
         TrayectoEntity entity = usuario.toEntity();
         entity = trayectoLogic.updateBook(trayectoId, entity);
         return new TrayectoDetail(entity);
-    }
-    
-    /**
-     * Conexion pago trayecto
-     */
-    @Path("{trayectoId: \\d+}/pagos")
-    public Class<TrayectoPagoResource> getReviewResource(@PathParam("trayectoId") Long trayectoId) {
-        if (trayectoLogic.getTrayeto(trayectoId) == null) {
-            throw new WebApplicationException("El recurso /trayecto/" + trayectoId + "/pagos no existe.", 404);
-        }
-        return TrayectoPagoResource.class;
     }
 }

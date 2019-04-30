@@ -56,6 +56,15 @@ public class TrayectoEntity extends BaseEntity implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PagoEntity> pago = new ArrayList<PagoEntity>();
 
+    
+    @PodamExclude
+    @OneToOne
+    private CiudadEntity origen;
+    
+    @PodamExclude
+    @OneToOne
+    private CiudadEntity destino;
+    
     /**
      * Constructor vacío.
      */
@@ -172,6 +181,34 @@ public class TrayectoEntity extends BaseEntity implements Serializable {
      */
     public void setEstado(Integer estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the origen
+     */
+    public CiudadEntity getOrigen() {
+        return origen;
+    }
+
+    /**
+     * @param origen the origen to set
+     */
+    public void setOrigen(CiudadEntity origen) {
+        this.origen = origen;
+    }
+
+    /**
+     * @return the destino
+     */
+    public CiudadEntity getDestino() {
+        return destino;
+    }
+
+    /**
+     * @param destino the destino to set
+     */
+    public void setDestino(CiudadEntity destino) {
+        this.destino = destino;
     }
 
 }

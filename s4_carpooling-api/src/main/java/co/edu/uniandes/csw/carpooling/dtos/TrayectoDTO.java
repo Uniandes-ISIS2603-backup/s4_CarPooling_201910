@@ -31,6 +31,10 @@ public class TrayectoDTO implements Serializable {
     private UsuarioDTO conductor;
 
     private TrayectoInfoDTO info;
+    
+    private CiudadDTO ciudadOrigen;
+    
+    private CiudadDTO ciudadDestino;
 
     /**
      * Constructor vacío.
@@ -50,6 +54,18 @@ public class TrayectoDTO implements Serializable {
             this.estado = entity.getEstado();
             this.fechaInicial = entity.getFechaInicial();
             this.fechaFinal = entity.getFechaFinal();
+            
+            if(entity.getDestino() != null){
+                this.ciudadDestino = new CiudadDTO( entity.getDestino());
+            }else{
+                this.ciudadDestino = null;
+            }
+            if(entity.getOrigen() != null){
+                this.ciudadDestino = new CiudadDTO( entity.getOrigen());
+            }else{
+                this.ciudadDestino = null;
+            }
+            
 
             if (entity.getConductor() != null) {
                 this.conductor = new UsuarioDTO(entity.getConductor());
@@ -168,4 +184,35 @@ public class TrayectoDTO implements Serializable {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    /**
+     * @return the ciudadOrigen
+     */
+    public CiudadDTO getCiudadOrigen() {
+        return ciudadOrigen;
+    }
+
+    /**
+     * @param ciudadOrigen the ciudadOrigen to set
+     */
+    public void setCiudadOrigen(CiudadDTO ciudadOrigen) {
+        this.ciudadOrigen = ciudadOrigen;
+    }
+
+    /**
+     * @return the ciudadDestino
+     */
+    public CiudadDTO getCiudadDestino() {
+        return ciudadDestino;
+    }
+
+    /**
+     * @param ciudadDestino the ciudadDestino to set
+     */
+    public void setCiudadDestino(CiudadDTO ciudadDestino) {
+        this.ciudadDestino = ciudadDestino;
+    }
+    
+    
+    
 }

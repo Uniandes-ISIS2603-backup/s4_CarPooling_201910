@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import uk.co.jemos.podam.common.PodamExclude;
 
 /**
  *
@@ -18,6 +20,15 @@ public class CiudadEntity extends BaseEntity implements Serializable {
     private String nombre;
     private String[] coordenadas;
 
+    
+    @PodamExclude
+    @OneToOne
+    private TrayectoEntity origen;
+    
+    @PodamExclude
+    @OneToOne
+    private TrayectoEntity destino;
+    
     public CiudadEntity() {
 
     }

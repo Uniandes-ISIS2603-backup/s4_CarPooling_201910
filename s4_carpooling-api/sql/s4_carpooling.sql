@@ -91,3 +91,11 @@ values (300, 'mensaje escrito3');
 
 insert into TrayectoEntity( fechafinal, fechainicial, estado ) values
 ('05/02/2019','09/20/1948', 0);
+
+
+Insert Into TrayectoInfoEntity(costo, duracion, combustible, horaFinal, horaInicial)values
+(24,24, 24, '20:20:20','10:10:10');
+
+
+Insert Into TrayectoInfoEntity(costo, duracion, combustible, horaFinal, horaInicial)values
+(42,42, 42, '20:20:20','10:10:10');
