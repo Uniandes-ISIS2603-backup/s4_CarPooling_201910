@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.carpooling.entities;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import uk.co.jemos.podam.common.PodamExclude;
@@ -23,9 +24,11 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
    @PodamExclude
    @ManyToOne()
    private UsuarioEntity duenio;
+   
    @PodamExclude
    @OneToOne(mappedBy="alquilerArrendatario")
    private UsuarioEntity arrendatario;
+      
    
    @PodamExclude
    @OneToOne
@@ -35,6 +38,8 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
    @PodamExclude
    @OneToOne
    private SeguroEntity seguro;
+   
+   
     public AlquilerEntity()
     {
         

@@ -104,10 +104,14 @@ public class AlquilerLogic {
      * @throws BusinessLogicException
      */
     public AlquilerEntity addRelacionAlquiler(Long idAlquiler, Long idDueno, Long idArrendatario, Long idSeguro) throws BusinessLogicException {
+        
         UsuarioEntity dueno = usuarioPersistence.find(idDueno);
         UsuarioEntity arrendatario = usuarioPersistence.find(idArrendatario);
         SeguroEntity seguro = seguroPersistence.find(idSeguro);
         AlquilerEntity alquiler = persistence.find(idAlquiler);
+        
+        
+        
         if (dueno == null) {
             throw new BusinessLogicException("Usuario dueño: " + idDueno + " no existe");
         }
@@ -120,8 +124,15 @@ public class AlquilerLogic {
         if (alquiler == null) {
             throw new BusinessLogicException("Alquiler: " + idAlquiler + " no existe");
         }
-        alquiler.setArrendatario(arrendatario);
+        
+        
+        //alquiler.setArrendatario(arrendatario);
+        //arrendatario.setAlquilerArrendatario(alquiler);
+        //usuarioPersistence.update(arrendatario);
         arrendatario.setAlquilerArrendatario(alquiler);
+        usuarioPersistence.update(arrendatario);
+        //alquiler.setArrendatario(arrendatario);
+        
         alquiler.setDuenio(dueno);
         alquiler.setSeguro(seguro);
         return persistence.update(alquiler);

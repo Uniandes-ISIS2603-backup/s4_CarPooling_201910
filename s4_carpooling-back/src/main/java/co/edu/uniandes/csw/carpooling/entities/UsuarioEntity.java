@@ -34,7 +34,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private String correo;
 
     @PodamExclude
-    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany
     private List<VehiculoEntity> vehiculos = new ArrayList<VehiculoEntity>();
 
     @PodamExclude
@@ -43,27 +43,27 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private List<AlquilerEntity> alquilerDuenio = new ArrayList<AlquilerEntity>();
 
     @PodamExclude
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     private AlquilerEntity alquilerArrendatario;
 
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
 
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
 
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
     private List<CalificacionEntity> calificaciones = new ArrayList<CalificacionEntity>();
 
     @PodamExclude
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     private PagoEntity pagoARecibir;
 
     @PodamExclude
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne
     private PagoEntity pagoAHacer;
 
     @PodamExclude
@@ -71,7 +71,7 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private List<TrayectoEntity> trayectoActualConductor;
 
     @PodamExclude
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private List<TrayectoEntity> trayectoActualPasajero;
 
     public UsuarioEntity() {
