@@ -71,21 +71,6 @@ public class PagoResource {
     }
 
     /**
-     * Busca y devuelve toda la información de los pagos que existen en la
-     * aplicacion.
-     *
-     * @return JSONArray {@link PagoDTO} - Los pagos encontrados en la
-     * aplicación. Si no hay ninguno retorna una lista vacía.
-     */
-    @GET
-    @Path("info")
-    public List getAllInfo() {
-//        List<InfoTCDTO> info = InfoTCResource.listEntityToDTO(logic.getAllInfo());
-//        return info;
-return null;
-    }
-
-    /**
      * Crea un nuevo pago.
      *
      * @param pago {@link PagoDTO} - El pago que se desea guardar.
