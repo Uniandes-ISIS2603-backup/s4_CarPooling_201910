@@ -139,4 +139,10 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable {
     public void setCupos(Integer cupos) {
         this.cupos = cupos;
     }
+    
+    
+    public void addPeaje(PeajeEntity peaje)
+    {
+        peajes.add(peaje);
+    }
 }

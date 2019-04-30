@@ -133,4 +133,15 @@ public class TrayectoResource {
         entity = trayectoLogic.updateBook(trayectoId, entity);
         return new TrayectoDetail(entity);
     }
+    
+    /**
+     * Conexion pago trayecto
+     */
+    @Path("{trayectoId: \\d+}/pagos")
+    public Class<TrayectoPagoResource> getReviewResource(@PathParam("trayectoId") Long trayectoId) {
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /trayecto/" + trayectoId + "/pagos no existe.", 404);
+        }
+        return TrayectoPagoResource.class;
+    }
 }

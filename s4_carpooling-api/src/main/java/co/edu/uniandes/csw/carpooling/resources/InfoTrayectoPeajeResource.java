@@ -3,29 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
 package co.edu.uniandes.csw.carpooling.resources;
 
-import co.edu.uniandes.csw.carpooling.dtos.TrayectoDetail;
-import co.edu.uniandes.csw.carpooling.ejb.UsuarioTrayectoLogic;
+import co.edu.uniandes.csw.carpooling.dtos.PeajeDTO;
+import co.edu.uniandes.csw.carpooling.dtos.TrayectoInfoDTO;
+import co.edu.uniandes.csw.carpooling.ejb.InfoTrayectoPeajeLogic;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
+import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
 
 /**
  *
  * @author estudiante
  */
-@Consumes(MediaType.APPLICATION_JSON)
-@Produces(MediaType.APPLICATION_JSON)
-class UsuarioTrayectoResource {
+@Produces("application/json")
+@Consumes("application/json")
+public class InfoTrayectoPeajeResource {
     
     @Inject
-    private UsuarioTrayectoLogic usuarioTrayectoLogic;
-    
+    private InfoTrayectoPeajeLogic logic;
+
     /**
      * Crea una nueva reseña con la informacion que se recibe en el cuerpo de la
      * petición y se regresa un objeto identico con un id auto-generado por la
@@ -38,12 +41,12 @@ class UsuarioTrayectoResource {
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando ya existe la reseña.
      */
+    @Path ("{peajesId: \\d+}")
     @POST
-    public TrayectoDetail creatTrayectoConductor(@PathParam("username") String username, TrayectoDetail trayecto) throws BusinessLogicException {
-        TrayectoDetail nuevoReviewDTO = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoConductor(username, trayecto.toEntity()));
-        return nuevoReviewDTO;
+    public TrayectoInfoDTO addPeaje(@PathParam("infoTrayectoId") Long infoTrayectoId, @PathParam("peajesId") Long peajeId) throws BusinessLogicException {
+        //Falta el toDTO;
+        //TrayectoInfoDTO nuevoDTO = new TrayectoInfoDTO(logic.addPeaje(infoTrayectoId, peajeId).toDTO());
+        return null;
     }
-    
- 
     
 }

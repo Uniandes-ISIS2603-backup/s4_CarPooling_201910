@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-class UsuarioTrayectoResource {
+class UsuarioTrayectoResource2 {
     
     @Inject
     private UsuarioTrayectoLogic usuarioTrayectoLogic;
@@ -39,8 +39,8 @@ class UsuarioTrayectoResource {
      * Error de lógica que se genera cuando ya existe la reseña.
      */
     @POST
-    public TrayectoDetail creatTrayectoConductor(@PathParam("username") String username, TrayectoDetail trayecto) throws BusinessLogicException {
-        TrayectoDetail nuevoReviewDTO = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoConductor(username, trayecto.toEntity()));
+    public TrayectoDetail creatTrayectoPasajero(@PathParam("username") String username, TrayectoDetail trayecto) throws BusinessLogicException {
+        TrayectoDetail nuevoReviewDTO = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoPasajero(username, trayecto.toEntity()));
         return nuevoReviewDTO;
     }
     
