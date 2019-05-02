@@ -38,7 +38,7 @@ public class TrayectoTrayectInfoResource {
     
     
     @POST
-    @Path ("idInfoTrayecto: \\d+}")
+    @Path ("{idInfoTrayecto: \\d+}")
     public TrayectoInfoDTO addInfoTrayecto(@PathParam("trayectoId") Long idTrayecto, @PathParam("idInfoTrayecto") Long idInfoTrayecto) {
         
         if (infoLogic.getTrayectoInfo(idInfoTrayecto) == null) {

@@ -34,7 +34,7 @@ public class TrayectoCiudadResource {
     @Inject
     private CiudadLogic ciudadLogic;
     
-    
+  /*  
     @POST
     @Path ("{idCiudadOrigen: \\d+}")
     public CiudadDTO addCiudadOrigen(@PathParam("trayectoId") Long idTrayecto, @PathParam("idCiudadOrigen") Long ciudadId) {
@@ -51,7 +51,7 @@ public class TrayectoCiudadResource {
             throw new WebApplicationException(e.getMessage());
         }
         return ciudadDTO;
-    }
+    }*/
     
     @POST
     @Path ("{idCiudadDestino: \\d+}")

@@ -136,11 +136,11 @@ public class TrayectoResource {
     
     
     @Path("{trayectoId: \\d+}/infoTrayecto")
-    public Class<TrayectoCiudadResource> getTrayectoInfoTrayecto(@PathParam("trayectoId") Long trayectoId) {
+    public Class<TrayectoTrayectInfoResource> getTrayectoInfoTrayecto(@PathParam("trayectoId") Long trayectoId) {
         if (trayectoLogic.getTrayeto(trayectoId) == null) {
             throw new WebApplicationException("El recurso /infoTrayecto/" + trayectoId + " no existe.", 404);
         }
-        return TrayectoCiudadResource.class;
+        return TrayectoTrayectInfoResource.class;
     }
     
     @Path("{trayectoId: \\d+}/ciudad")

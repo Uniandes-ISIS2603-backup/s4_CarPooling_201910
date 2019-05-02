@@ -26,8 +26,8 @@ public class TrayectoTrayectoInfoLogic {
     private TrayectoInfoPersistence info;
     
     
-    public TrayectoInfoEntity addInfoTrayecto(Long trayectoId, Long vehiculosId) {
-        TrayectoInfoEntity infoEntity = info.find(Long.valueOf("100"));
+    public TrayectoInfoEntity addInfoTrayecto(Long trayectoId, Long infoTrayectoId) {
+        TrayectoInfoEntity infoEntity = info.find(infoTrayectoId);
         TrayectoEntity trayectoEntity = trayecto.find(trayectoId);
         trayectoEntity.setInfoTrayecto(infoEntity);
         return infoEntity;
