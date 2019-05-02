@@ -39,7 +39,7 @@ public class TrayectoTrayectInfoResource {
     
     @POST
     @Path ("idInfoTrayecto: \\d+}")
-    public TrayectoInfoDTO addVehiculo(@PathParam("trayectoId") Long idTrayecto, @PathParam("idInfoTrayecto") Long idInfoTrayecto) {
+    public TrayectoInfoDTO addInfoTrayecto(@PathParam("trayectoId") Long idTrayecto, @PathParam("idInfoTrayecto") Long idInfoTrayecto) {
         
         if (infoLogic.getTrayectoInfo(idInfoTrayecto) == null) {
             throw new WebApplicationException("El recurso /InfoTrayecto/" + idInfoTrayecto + " no existe.", 404);

@@ -133,4 +133,22 @@ public class TrayectoResource {
         entity = trayectoLogic.updateBook(trayectoId, entity);
         return new TrayectoDetail(entity);
     }
+    
+    
+    @Path("{trayectoId: \\d+}/infoTrayecto")
+    public Class<TrayectoCiudadResource> getTrayectoInfoTrayecto(@PathParam("trayectoId") Long trayectoId) {
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /infoTrayecto/" + trayectoId + " no existe.", 404);
+        }
+        return TrayectoCiudadResource.class;
+    }
+    
+    @Path("{trayectoId: \\d+}/ciudad")
+    public Class<TrayectoCiudadResource> getTrayectoCiudad(@PathParam("trayectoId") Long trayectoId) {
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /ciudad/" + trayectoId + " no existe.", 404);
+        }
+        return TrayectoCiudadResource.class;
+    }
+    
 }
