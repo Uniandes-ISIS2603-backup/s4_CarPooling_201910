@@ -51,7 +51,6 @@ public class AlquilerPersistence {
      * @return Una lista de entidades.
      */
     public List<AlquilerEntity> findAll() {
-        //TypedQuery<AlquilerEntity> query = em.createQuery("select u from AlquilerEntity u", AlquilerEntity.class);
         TypedQuery query = em.createQuery("select u from AlquilerEntity u", AlquilerEntity.class);
         return query.getResultList();
     }

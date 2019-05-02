@@ -7,8 +7,13 @@ package co.edu.uniandes.csw.carpooling.ejb;
 
 import co.edu.uniandes.csw.carpooling.entities.InfoTCEntity;
 import co.edu.uniandes.csw.carpooling.entities.PagoEntity;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
+import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
+import co.edu.uniandes.csw.carpooling.persistence.InfoTCPersistence;
 import co.edu.uniandes.csw.carpooling.persistence.PagoPersistence;
+import co.edu.uniandes.csw.carpooling.persistence.TrayectoPersistence;
+import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -27,6 +32,12 @@ public class PagoLogic {
 
     @Inject
     private PagoPersistence persistence;
+    @Inject
+    private UsuarioPersistence usuarioPersistence;
+    @Inject
+    private TrayectoPersistence trayectoPersistence;
+    @Inject
+    private InfoTCPersistence infoPersistence;
 
     /**
      * Crea un pago.
@@ -123,5 +134,45 @@ public class PagoLogic {
         }
         persistence.delete(pagoId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el pago con id = {0}", pagoId);
+    }
+    /**
+     * Agrega las relaciones correspondientes.
+     *
+     * @param idPago
+     * @param idTrayecto
+     * @param idPasajero
+     * @param idConductor
+     * @param idInfoTc
+     * 
+     * @return La entidad con las relaciones.
+     * @throws BusinessLogicException
+     */
+    public PagoEntity addRelacionPago(Long idPago,Long idTrayecto,Long idPasajero,Long idConductor,Long idInfoTc) throws BusinessLogicException {
+        PagoEntity pago = persistence.find(idPago);
+        TrayectoEntity trayecto = trayectoPersistence.find(idTrayecto);
+        UsuarioEntity pasajero = usuarioPersistence.find(idPasajero);
+        UsuarioEntity conductor = usuarioPersistence.find(idConductor);
+        InfoTCEntity info = infoPersistence.find(idInfoTc);
+        if (trayecto == null) {
+            throw new BusinessLogicException("Trayecto: " + idTrayecto + " no existe");
+        }
+        if (pasajero == null) {
+            throw new BusinessLogicException("Trayecto: " + idPasajero + " no existe");
+        }
+        if (conductor == null) {
+            throw new BusinessLogicException("Seguro: " + idConductor + " no existe");
+        }
+        if (info == null) {
+            throw new BusinessLogicException("InfoTC: " + idInfoTc + " no existe");
+        }
+        pasajero.setPagoAHacer(pago);
+        conductor.setPagoARecibir(pago);
+        usuarioPersistence.update(pasajero);
+        usuarioPersistence.update(conductor);
+        pago.setInfoTC(info);
+        pago.setTrayecto(trayecto);
+        
+        return persistence.update(pago);
+
     }
 }

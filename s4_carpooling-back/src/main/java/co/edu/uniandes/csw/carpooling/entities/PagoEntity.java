@@ -34,7 +34,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
     private TrayectoEntity trayecto;
 
     @PodamExclude
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne
     private InfoTCEntity infoTC;
 
     public PagoEntity() {

@@ -8,10 +8,12 @@ package co.edu.uniandes.csw.carpooling.ejb;
 import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import co.edu.uniandes.csw.carpooling.entities.SeguroEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
+import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.AlquilerPersistence;
 import co.edu.uniandes.csw.carpooling.persistence.SeguroPersistence;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
+import co.edu.uniandes.csw.carpooling.persistence.VehiculoPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,10 +32,10 @@ public class AlquilerLogic {
     @Inject
     private SeguroPersistence seguroPersistence;
 
-    /*
+    
     @Inject 
     private VehiculoPersistence vehiculoPersistence;
-     */
+     
 
     /**
      * Crea un alquiler.
@@ -103,13 +105,13 @@ public class AlquilerLogic {
      * @return La entidad con las relaciones.
      * @throws BusinessLogicException
      */
-    public AlquilerEntity addRelacionAlquiler(Long idAlquiler, Long idDueno, Long idArrendatario, Long idSeguro) throws BusinessLogicException {
+    public AlquilerEntity addRelacionAlquiler(Long idAlquiler, Long idDueno, Long idArrendatario, Long idSeguro, Long idVehiculo) throws BusinessLogicException {
         
         UsuarioEntity dueno = usuarioPersistence.find(idDueno);
         UsuarioEntity arrendatario = usuarioPersistence.find(idArrendatario);
         SeguroEntity seguro = seguroPersistence.find(idSeguro);
         AlquilerEntity alquiler = persistence.find(idAlquiler);
-        
+        VehiculoEntity vehiculo = vehiculoPersistence.find(idVehiculo);
         
         
         if (dueno == null) {
@@ -124,15 +126,13 @@ public class AlquilerLogic {
         if (alquiler == null) {
             throw new BusinessLogicException("Alquiler: " + idAlquiler + " no existe");
         }
+        if (vehiculo == null) {
+            throw new BusinessLogicException("vehiculo: " + idVehiculo + " no existe");
+        }
         
-        
-        //alquiler.setArrendatario(arrendatario);
-        //arrendatario.setAlquilerArrendatario(alquiler);
-        //usuarioPersistence.update(arrendatario);
         arrendatario.setAlquilerArrendatario(alquiler);
         usuarioPersistence.update(arrendatario);
-        //alquiler.setArrendatario(arrendatario);
-        
+        alquiler.setVehiculoAlquilado(vehiculo);
         alquiler.setDuenio(dueno);
         alquiler.setSeguro(seguro);
         return persistence.update(alquiler);

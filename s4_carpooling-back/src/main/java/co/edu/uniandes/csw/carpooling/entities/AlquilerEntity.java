@@ -26,7 +26,7 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
    private UsuarioEntity duenio;
    
    @PodamExclude
-   @OneToOne(mappedBy="alquilerArrendatario")
+   @OneToOne(mappedBy="alquilerArrendatario", fetch=FetchType.LAZY)
    private UsuarioEntity arrendatario;
       
    
@@ -99,6 +99,20 @@ public class AlquilerEntity extends BaseEntity implements Serializable  {
      */
     public void setArrendatario(UsuarioEntity arrendatario) {
         this.arrendatario = arrendatario;
+    }
+
+    /**
+     * @return the vehiculoAlquilado
+     */
+    public VehiculoEntity getVehiculoAlquilado() {
+        return vehiculoAlquilado;
+    }
+
+    /**
+     * @param vehiculoAlquilado the vehiculoAlquilado to set
+     */
+    public void setVehiculoAlquilado(VehiculoEntity vehiculoAlquilado) {
+        this.vehiculoAlquilado = vehiculoAlquilado;
     }
 
  

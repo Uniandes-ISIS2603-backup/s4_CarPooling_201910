@@ -137,10 +137,10 @@ public class AlquilerResource {
      * pasados por parámetro.
      */
     @GET
-    @Path("{idA: \\d+}/{idD: \\d+}/{idAr: \\d+}/{idS: \\d+}")
+    @Path("{idA: \\d+}/{idD: \\d+}/{idAr: \\d+}/{idS: \\d+}/{idV: \\d+}")
     public AlquilerDTO addRelacion(@PathParam("idA") Long idAlquiler, @PathParam("idD") Long idDueno, @PathParam("idAr") Long idArrendatario,
-            @PathParam("idS") Long idSeguro) throws BusinessLogicException {
-        AlquilerEntity entity = logic.addRelacionAlquiler(idAlquiler, idDueno, idArrendatario, idSeguro);
+            @PathParam("idS") Long idSeguro, @PathParam("idV") Long idVehiculo) throws BusinessLogicException {
+        AlquilerEntity entity = logic.addRelacionAlquiler(idAlquiler, idDueno, idArrendatario, idSeguro,idVehiculo);
         return new AlquilerDTO(entity);
 
     }

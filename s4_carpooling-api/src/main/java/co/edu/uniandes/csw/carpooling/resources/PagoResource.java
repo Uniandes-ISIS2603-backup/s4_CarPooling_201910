@@ -141,4 +141,25 @@ public class PagoResource {
         }
         return list;
     }
+    /**
+     * Añade las relaciones correspondientes.
+     *
+     * @param idPago
+     * @param idTrayecto
+     * @param idPasajero
+     * @param idConductor
+     * @param idInfo
+     * @return El DTO con todas las relaciones.
+     * @throws BusinessLogicException Si no se encuentra alguno de los id
+     * pasados por parámetro.
+     */
+    @GET
+    @Path("{idP: \\d+}/{idT: \\d+}/{idPas: \\d+}/{idC: \\d+}/{idI: \\d+}")
+    public PagoDTO addRelacion(@PathParam("idP") Long idPago, @PathParam("idT") Long idTrayecto, @PathParam("idPas") Long idPasajero,
+            @PathParam("idC") Long idConductor, @PathParam("idI") Long idInfo) throws BusinessLogicException {
+        PagoEntity entity = logic.addRelacionPago(idPago, idTrayecto, idPasajero, idConductor,idInfo);
+        return new PagoDTO(entity);
+
+    }
+
 }

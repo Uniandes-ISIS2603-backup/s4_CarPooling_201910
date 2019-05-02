@@ -86,6 +86,8 @@ public class VehiculoResource
      *
      * @param idVehiculo
      * @param idAlquiler
+     * @return El DTO con todas las relaciones.
+     * @throws co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException
      */
     @GET
     @Path("{idV: \\d+}/{idA: \\d+}")

@@ -71,6 +71,8 @@ public class VehiculoLogic
             throw new BusinessLogicException("vehiculo: " + idVehiculo + " no existe");
         }
         vehiculo.setAlquilerInfo(alquiler);
+        alquiler.setVehiculoAlquilado(vehiculo);
+        alquilerPersistence.update(alquiler);
         return persistence.update(vehiculo);   
     }
     

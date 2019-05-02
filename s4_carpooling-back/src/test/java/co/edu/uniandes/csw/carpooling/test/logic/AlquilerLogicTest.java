@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.carpooling.ejb.AlquilerLogic;
 import co.edu.uniandes.csw.carpooling.entities.AlquilerEntity;
 import co.edu.uniandes.csw.carpooling.entities.SeguroEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
+import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.AlquilerPersistence;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class AlquilerLogicTest {
     private UsuarioEntity arrendatario;
     private UsuarioEntity dueno;
     private SeguroEntity seguro;
-    
+    private VehiculoEntity vehiculo;
     @Before
     public void setUp() {
         try {
@@ -68,7 +69,7 @@ public class AlquilerLogicTest {
         em.createQuery("delete from AlquilerEntity").executeUpdate();
         em.createQuery("delete from SeguroEntity").executeUpdate();
         em.createQuery("delete from UsuarioEntity").executeUpdate();
-        
+         em.createQuery("delete from VehiculoEntity").executeUpdate();
     }
 
 
@@ -86,7 +87,8 @@ public class AlquilerLogicTest {
         em.persist(dueno);
         seguro = factory.manufacturePojo(SeguroEntity.class);
         em.persist(seguro);
-        
+        vehiculo = factory.manufacturePojo(VehiculoEntity.class);
+        em.persist(vehiculo);
         
     }
 
@@ -132,7 +134,7 @@ public class AlquilerLogicTest {
     {
        
         AlquilerEntity entity = data.get(0);
-        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId());
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId(), vehiculo.getId());
         Assert.assertNotNull(resp);
         Assert.assertEquals(resp.getArrendatario(),arrendatario);
         Assert.assertEquals(resp.getDuenio(),dueno);
@@ -151,7 +153,7 @@ public class AlquilerLogicTest {
     {
         AlquilerEntity entity = data.get(0);
         
-        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), Long.MIN_VALUE, arrendatario.getId(), seguro.getId());
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), Long.MIN_VALUE, arrendatario.getId(), seguro.getId(),vehiculo.getId());
         
      
     }
@@ -164,7 +166,7 @@ public class AlquilerLogicTest {
     public void addSinSeguro() throws BusinessLogicException
     {
         AlquilerEntity entity = data.get(0);
-        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), Long.MIN_VALUE);
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), Long.MIN_VALUE,vehiculo.getId());
         
         
         
@@ -179,7 +181,7 @@ public class AlquilerLogicTest {
     public void addMismoArrendatario() throws BusinessLogicException
     {
         AlquilerEntity entity = data.get(0);
-        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), dueno.getId(), seguro.getId());
+        AlquilerEntity resp = alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), dueno.getId(), seguro.getId(),vehiculo.getId());
         
         
         
@@ -266,7 +268,7 @@ public class AlquilerLogicTest {
     {
         
        AlquilerEntity entity = data.get(0);
-       alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId());
+       alquilerLogic.addRelacionAlquiler(entity.getId(), dueno.getId(), arrendatario.getId(), seguro.getId(),vehiculo.getId());
        alquilerLogic.replaceRelacionArrendatario(entity.getId(), dueno.getId());
        
     }

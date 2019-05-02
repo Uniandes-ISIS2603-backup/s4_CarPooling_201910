@@ -34,9 +34,8 @@ public class AlquilerDTO implements Serializable {
             duenio = new UsuarioDTO(entity.getDuenio());
             seguro = new SeguroDTO(entity.getSeguro());
             id = entity.getId();
-            /*
             vehiculoAlquilado = new VehiculoDTO(entity.getVehiculoAlquilado());
-             */
+            
 
         }
     }
@@ -121,10 +120,6 @@ public class AlquilerDTO implements Serializable {
         if (duenio != null) {
             entity.setDuenio(duenio.toEntity());
         }
-        /*
-        entity.setArrendatario(arrendatario.toEntity);
-        entity.setduenio(duenio);
-         */
         if (seguro != null) {
             entity.setSeguro(seguro.toEntity());
         }
