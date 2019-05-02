@@ -37,7 +37,7 @@ public class TrayectoCiudadResource {
     
     @POST
     @Path ("{idCiudadOrigen: \\d+}")
-    public CiudadDTO addCiudadOrigen(@PathParam("trayectoId") Long idTrayecto, @PathParam("ciudadId") Long ciudadId) {
+    public CiudadDTO addCiudadOrigen(@PathParam("trayectoId") Long idTrayecto, @PathParam("idCiudadOrigen") Long ciudadId) {
         
         if (ciudadLogic.get(ciudadId) == null) {
             throw new WebApplicationException("El recurso /ciudad/" + ciudadId + " no existe.", 404);
@@ -55,7 +55,7 @@ public class TrayectoCiudadResource {
     
     @POST
     @Path ("{idCiudadDestino: \\d+}")
-    public CiudadDTO addCiudadDestino(@PathParam("trayectoId") Long idTrayecto, @PathParam("ciudadId") Long ciudadId) {
+    public CiudadDTO addCiudadDestino(@PathParam("trayectoId") Long idTrayecto, @PathParam("idCiudadDestino") Long ciudadId) {
         
         if (ciudadLogic.get(ciudadId) == null) {
             throw new WebApplicationException("El recurso /ciudad/" + ciudadId + " no existe.", 404);
