@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -63,7 +64,7 @@ public class TrayectoPersistence {
      */
     public List<TrayectoEntity> findAll() {
 
-        Query query = em.createQuery("select u from TrayectoEntity u");
+        TypedQuery query = em.createQuery("select u from TrayectoEntity u",TrayectoEntity.class);
         return query.getResultList();
     }
 

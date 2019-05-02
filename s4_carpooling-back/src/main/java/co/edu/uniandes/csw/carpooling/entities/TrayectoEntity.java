@@ -49,20 +49,20 @@ public class TrayectoEntity extends BaseEntity implements Serializable {
     private List<UsuarioEntity> pasajeros;
 
     @PodamExclude
-    @OneToOne(orphanRemoval = true)
+    @OneToOne(orphanRemoval = true, mappedBy = "infoTrayecto" )
     private TrayectoInfoEntity infoTrayecto;
 
     @PodamExclude
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "trayecto" )
     private List<PagoEntity> pago = new ArrayList<PagoEntity>();
 
     
     @PodamExclude
-    @OneToOne
+    @OneToOne(mappedBy = "origen")
     private CiudadEntity origen;
     
     @PodamExclude
-    @OneToOne
+    @OneToOne(mappedBy = "destino")
     private CiudadEntity destino;
     
     /**
