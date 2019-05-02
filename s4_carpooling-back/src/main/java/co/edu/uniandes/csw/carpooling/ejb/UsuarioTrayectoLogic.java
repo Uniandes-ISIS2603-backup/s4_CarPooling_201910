@@ -36,7 +36,7 @@ public class UsuarioTrayectoLogic {
     public TrayectoEntity addTrayectoPasajero(String username, TrayectoEntity toEntity) {
         TrayectoEntity trayectoEntity = trayectoPersistence.create(toEntity);
         UsuarioEntity usuarioEntity = usuarioPersistence.findByUserName(username);
-        //trayectoEntity.addPasajero(usuarioEntity);
+        trayectoEntity.addPasajero(usuarioEntity);
         usuarioEntity.addTrayectoPasajero(trayectoEntity);
         return trayectoEntity;
     }
