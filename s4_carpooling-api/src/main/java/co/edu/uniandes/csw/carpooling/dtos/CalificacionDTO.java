@@ -32,12 +32,26 @@ public class CalificacionDTO implements Serializable {
      */
     public CalificacionDTO(CalificacionEntity entity) {
         if (entity != null) {
-            id = entity.getId();
-            puntaje = entity.getPuntaje();
-            comentario = entity.getComentario();
-            calificado = new UsuarioDTO(entity.getCalificado());
-            calificador = new UsuarioDTO(entity.getCalificador());
-            trayecto = new TrayectoDTO(entity.getTrayecto());
+            this.id = entity.getId();
+            this.puntaje = entity.getPuntaje();
+            this.comentario = entity.getComentario();
+            if(entity.getCalificado() != null){
+                this.calificado = new UsuarioDTO(entity.getCalificado());
+            } else {
+                this.calificado = null;
+            }
+            
+            if(entity.getCalificador() != null){
+                this.calificador = new UsuarioDTO(entity.getCalificador());
+            } else {
+                this.calificador = null;
+            }
+            
+            if(entity.getTrayecto()!= null){
+                this.trayecto = new TrayectoDTO(entity.getTrayecto());
+            } else {
+                this.trayecto = null;
+            }
         }
     }
 
@@ -51,7 +65,7 @@ public class CalificacionDTO implements Serializable {
     /**
      * @param puntaje the puntaje to set
      */
-    public void setPuntaje(int puntaje) {
+    public void setPuntaje(Integer puntaje) {
         this.puntaje = puntaje;
     }
 

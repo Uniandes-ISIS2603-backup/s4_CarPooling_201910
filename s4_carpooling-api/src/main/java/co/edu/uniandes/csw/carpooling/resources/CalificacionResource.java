@@ -29,7 +29,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author estudiante
  */
-@Path("calificaciones")
+@Path("/calificaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -37,7 +37,7 @@ public class CalificacionResource {
 
     private static final Logger LOGGER = Logger.getLogger(CalificacionResource.class.getName());
 
-    //Falta completar los métodos para REST.
+  
     @Inject
     private CalificacionLogic logic;
 
@@ -68,7 +68,7 @@ public class CalificacionResource {
      */
     @GET
     public List<CalificacionDTO> getCalificaciones() {
-        List<CalificacionDTO> calificaciones = listEntityToDTO(logic.getCalificacion());
+        List<CalificacionDTO> calificaciones = listEntityToDTO(logic.getCalificaciones());
         return calificaciones;
     }
 
@@ -111,19 +111,9 @@ public class CalificacionResource {
     }
     
     
+   
     
-    
-    
-    @POST
-    @Path("{idC: \\d+}/{idca1: \\d+}/{idca2: \\d+}/{idT: \\d+}")
-    public CalificacionDTO addRelacion(@PathParam("idC") Long idCalificacion, @PathParam("idca1") Long idCalificado, @PathParam("idca2") Long idCalificador,
-            @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
-        CalificacionEntity entity = logic.addRelacionCalificacion(idCalificacion, idTrayecto, idCalificado, idCalificador);
-        return new CalificacionDTO(entity);
 
-    }
-    
-    
     
 
     /**
@@ -132,9 +122,9 @@ public class CalificacionResource {
      * @param calificacion
      * @return una lista de DTOs.
      */
-    private List<CalificacionDTO> listEntityToDTO(List<CalificacionEntity> calificacion) {
+    private List<CalificacionDTO> listEntityToDTO(List<CalificacionEntity> Calificacion) {
         List<CalificacionDTO> list = new ArrayList<>();
-        for (CalificacionEntity entity : calificacion) {
+        for (CalificacionEntity entity : Calificacion) {
             list.add(new CalificacionDTO(entity));
         }
         return list;

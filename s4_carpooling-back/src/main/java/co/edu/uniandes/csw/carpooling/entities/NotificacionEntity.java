@@ -26,6 +26,10 @@ public class NotificacionEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @ManyToOne
     private UsuarioEntity receptor;
+    
+    @PodamExclude
+    @ManyToOne
+    private TrayectoEntity trayecto;
 
     public NotificacionEntity() {
 
@@ -71,6 +75,20 @@ public class NotificacionEntity extends BaseEntity implements Serializable {
      */
     public void setReceptor(UsuarioEntity receptor) {
         this.receptor = receptor;
+    }
+
+    /**
+     * @return the trayecto
+     */
+    public TrayectoEntity getTrayecto() {
+        return trayecto;
+    }
+
+    /**
+     * @param trayecto the trayecto to set
+     */
+    public void setTrayecto(TrayectoEntity trayecto) {
+        this.trayecto = trayecto;
     }
 
 }

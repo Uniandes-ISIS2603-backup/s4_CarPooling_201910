@@ -14,9 +14,11 @@ import java.io.Serializable;
  */
 public class NotificacionDTO implements Serializable {
 
+    private Long id;
     private String mensaje;
     private UsuarioDTO receptor;
     private UsuarioDTO emisor;
+    private TrayectoDTO trayecto;
 
     /**
      * Constructor vacío.
@@ -32,12 +34,42 @@ public class NotificacionDTO implements Serializable {
      */
     public NotificacionDTO(NotificacionEntity entity) {
         if (entity != null) {
-            mensaje = entity.getMensaje();
-            emisor = new UsuarioDTO(entity.getEmisor());
-            receptor = new UsuarioDTO(entity.getReceptor());
+            this.id = entity.getId();
+            this.mensaje = entity.getMensaje();
+            
+            if(entity.getEmisor()!= null){
+                this.emisor = new UsuarioDTO(entity.getEmisor());
+            } else {
+                this.emisor = null;
+            }
+            if(entity.getReceptor()!= null){
+                this.receptor = new UsuarioDTO(entity.getReceptor());
+            } else {
+                this.receptor = null;
+            }
+            if(entity.getTrayecto()!= null){
+                this.trayecto = new TrayectoDTO(entity.getTrayecto());
+            } else {
+                this.trayecto = null;
+            }
         }
     }
 
+    
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     /**
      * @return the mensaje
      */
@@ -79,6 +111,8 @@ public class NotificacionDTO implements Serializable {
     public void setEmisor(UsuarioDTO emisor) {
         this.emisor = emisor;
     }
+    
+    
 
     /**
      * Crear una entidad a partir del DTO.
@@ -88,6 +122,31 @@ public class NotificacionDTO implements Serializable {
     public NotificacionEntity toEntity() {
         NotificacionEntity entity = new NotificacionEntity();
         entity.setMensaje(mensaje);
+        if(this.emisor != null){
+            entity.setEmisor(this.emisor.toEntity());
+        }
+        if(this.receptor != null){
+            entity.setReceptor(this.receptor.toEntity());
+        }
+        if(this.trayecto != null){
+            entity.setTrayecto(this.trayecto.toEntity());
+        }
         return entity;
     }
+
+    /**
+     * @return the trayecto
+     */
+    public TrayectoDTO getTrayecto() {
+        return trayecto;
+    }
+
+    /**
+     * @param trayecto the trayecto to set
+     */
+    public void setTrayecto(TrayectoDTO trayecto) {
+        this.trayecto = trayecto;
+    }
+    
+    
 }

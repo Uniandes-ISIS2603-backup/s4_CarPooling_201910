@@ -17,7 +17,6 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,9 +26,9 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author estudiante
+ * @author ja.morales11
  */
-@Path("notificaciones")
+@Path("/notificaciones")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @RequestScoped
@@ -67,7 +66,7 @@ public class NotificacionResource {
      */
     @GET
     public List<NotificacionDTO> getNotificaciones() {
-        List<NotificacionDTO> Notificacions = listEntityToDTO(logic.getNotificacion());
+        List<NotificacionDTO> Notificacions = listEntityToDTO(logic.getNotificaciones());
         return Notificacions;
     }
 
@@ -90,13 +89,7 @@ public class NotificacionResource {
     
     
     
-    @POST
-    @Path("{idN: \\d+}/{idE: \\d+}/{idR: \\d+}")
-    public NotificacionDTO addRelacion(@PathParam("idN") Long idNotificacion, @PathParam("idE") Long idEmisor, @PathParam("idR") Long idReceptor) throws BusinessLogicException {
-        NotificacionEntity entity = logic.addRelacionNotificacion(idNotificacion, idReceptor, idEmisor);
-        return new NotificacionDTO(entity);
-
-    }
+ 
 
 
     /**

@@ -44,9 +44,7 @@ public class CalificacionLogic {
         if (calificacion.getPuntaje() < 1 || calificacion.getPuntaje() > 5) {
             throw new BusinessLogicException("Datos inválidos, el puntaje no puede ser menor a 1 o mayor a 5");
         }
-        if (persistence.find(calificacion.getId()) != null) {
-            throw new BusinessLogicException("Ya existe una calificacion con ese id");
-        }
+        
         calificacion = persistence.create(calificacion);
         return calificacion;
     }
@@ -56,9 +54,9 @@ public class CalificacionLogic {
      *
      * @return
      */
-    public List<CalificacionEntity> getCalificacion() {
-        List<CalificacionEntity> calificacion = persistence.findAll();
-        return calificacion;
+    public List<CalificacionEntity> getCalificaciones() {
+        List<CalificacionEntity> calificaciones = persistence.findAll();
+        return calificaciones;
     }
 
     /**

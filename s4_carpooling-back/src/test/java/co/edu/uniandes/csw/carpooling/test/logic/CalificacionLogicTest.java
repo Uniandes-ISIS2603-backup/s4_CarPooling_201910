@@ -200,7 +200,7 @@ public class CalificacionLogicTest {
     @Test
     public void getCalificacionTest() {
 
-        List<CalificacionEntity> list = calificacionLogic.getCalificacion();
+        List<CalificacionEntity> list = calificacionLogic.getCalificaciones();
         Assert.assertEquals(data.size(), list.size());
         for (CalificacionEntity ent : list) {
             boolean found = false;

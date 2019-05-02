@@ -43,7 +43,7 @@ public class NotificacionLogic {
      *
      * @return Una lista con todas las entidades NotificacionEntity.
      */
-    public List<NotificacionEntity> getNotificacion() {
+    public List<NotificacionEntity> getNotificaciones() {
         List<NotificacionEntity> notificacion = persistence.findAll();
         return notificacion;
     }
