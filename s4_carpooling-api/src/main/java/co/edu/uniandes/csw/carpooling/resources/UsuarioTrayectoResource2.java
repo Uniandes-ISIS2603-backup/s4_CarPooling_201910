@@ -37,12 +37,12 @@ class UsuarioTrayectoResource2 {
      * autogenerado.
      * @throws BusinessLogicException {@link BusinessLogicExceptionMapper} -
      * Error de lógica que se genera cuando ya existe la reseña.
-     */
+     *
     @POST
     public TrayectoDetail creatTrayectoPasajero(@PathParam("username") String username, TrayectoDetail trayecto) throws BusinessLogicException {
         TrayectoDetail nuevoReviewDTO = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoPasajero(username, trayecto.toEntity()));
         return nuevoReviewDTO;
-    }
+    }*/
     
  
     
