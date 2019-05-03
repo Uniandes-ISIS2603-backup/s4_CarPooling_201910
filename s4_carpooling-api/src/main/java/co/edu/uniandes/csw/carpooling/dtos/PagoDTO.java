@@ -92,16 +92,16 @@ public class PagoDTO implements Serializable {
             this.id = pagoEntity.getId();
             this.valor = pagoEntity.getValor();
             if (pagoEntity.getInfoTC() != null) {
-                this.infoTC = new InfoTCDTO();
+                this.infoTC = new InfoTCDTO(pagoEntity.getInfoTC());
             }
             if (pagoEntity.getTrayecto() != null) {
-                this.trayecto =  new TrayectoDTO();
+                this.trayecto =  new TrayectoDTO(pagoEntity.getTrayecto());
             }
             if (pagoEntity.getUsuarioRecibe() != null) {
-                this.conductor = new UsuarioDTO();
+                this.conductor = new UsuarioDTO(pagoEntity.getUsuarioRecibe());
             }
             if (pagoEntity.getUsuarioHace() != null) {
-                this.pasajero = new UsuarioDTO();
+                this.pasajero = new UsuarioDTO(pagoEntity.getUsuarioHace());
             }
         }
     }
@@ -120,9 +120,9 @@ public class PagoDTO implements Serializable {
        // if (this.pasajero != null) {
        //     pagoEntity.setUsuarioHace(this.pasajero.toEntity();
        // }
-        //if (this.trayecto != null) {
-        //    pagoEntity.setTrayecto(this.trayecto.toEntity());
-        //}
+        if (this.trayecto != null) {
+            pagoEntity.setTrayecto(this.trayecto.toEntity());
+        }
         //El código del método toEntity no se ecnuentra implementado para las tres clases anteriores.
         return pagoEntity;
     }
