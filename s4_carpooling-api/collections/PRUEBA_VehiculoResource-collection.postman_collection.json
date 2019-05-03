@@ -1,0 +1,130 @@
+{
+	"info": {
+		"_postman_id": "0a9c75ad-6a84-4e65-a1ce-4ca007be6b78",
+		"name": "VehiculoResource-collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get especifico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://52a0903d.ngrok.io/s4_carpooling-api/api/vehiculos/1001",
+					"protocol": "http",
+					"host": [
+						"52a0903d",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"vehiculos",
+						"1001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get generico",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://52a0903d.ngrok.io/s4_carpooling-api/api/vehiculos",
+					"protocol": "http",
+					"host": [
+						"52a0903d",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"vehiculos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear vehiculo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"alquilado\": true,\n        \"color\": \"Rojo\",\n        \"id\": 11,\n        \"modelo\": \"Ford\",\n        \"placa\": \"8293\"\n    }"
+				},
+				"url": {
+					"raw": "http://52a0903d.ngrok.io/s4_carpooling-api/api/vehiculos",
+					"protocol": "http",
+					"host": [
+						"52a0903d",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"vehiculos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Agregarle a un usuario, un vehiculo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"alquilado\": true,\n        \"color\": \"Amarillo\",\n        \"modelo\": \"Volvo\",\n        \"placa\": \"ISA999\"\n    }"
+				},
+				"url": {
+					"raw": "http://52a0903d.ngrok.io/s4_carpooling-api/api/usuarios/IsaPro/vehiculos",
+					"protocol": "http",
+					"host": [
+						"52a0903d",
+						"ngrok",
+						"io"
+					],
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"usuarios",
+						"IsaPro",
+						"vehiculos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

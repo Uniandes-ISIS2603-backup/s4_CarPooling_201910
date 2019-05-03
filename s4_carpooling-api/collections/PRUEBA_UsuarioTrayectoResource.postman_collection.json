@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "feca3a7e-0842-4b34-bb9e-462778bdd4bb",
+		"name": "UsuarioTrayectoResource",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Agregar trayecto especifco",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"type\": \"trayectoDetail\",\n        \"fechaInicial\": \"1948-09-20\",\n        \"fechaFinal\": \"2019-05-02\",\n        \"estado\": 0,\n        \"id\": 5,\n        \"pagos\": [],\n        \"pasajeros\": []\n    }"
+				},
+				"url": {
+					"raw": "http://{{ip}}:{{puerto}}/s4_carpooling-api/api/trayectos",
+					"protocol": "http",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{puerto}}",
+					"path": [
+						"s4_carpooling-api",
+						"api",
+						"trayectos"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

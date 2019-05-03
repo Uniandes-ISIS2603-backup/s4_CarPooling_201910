@@ -33,10 +33,10 @@ public class UsuarioTrayectoLogic {
         return trayectoEntity;
     }
 
-    public TrayectoEntity addTrayectoPasajero(String username, TrayectoEntity toEntity) {
-        TrayectoEntity trayectoEntity = trayectoPersistence.create(toEntity);
+    public TrayectoEntity addTrayectoPasajero(String username, Long trayectoId) {
+        TrayectoEntity trayectoEntity = trayectoPersistence.find(trayectoId);
         UsuarioEntity usuarioEntity = usuarioPersistence.findByUserName(username);
-        //trayectoEntity.addPasajero(usuarioEntity);
+        trayectoEntity.addPasajero(usuarioEntity);
         usuarioEntity.addTrayectoPasajero(trayectoEntity);
         return trayectoEntity;
     }

@@ -5,9 +5,12 @@
  */
 package co.edu.uniandes.csw.carpooling.resources;
 
+import co.edu.uniandes.csw.carpooling.dtos.TrayectoDetail;
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDTO;
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDetailDTO;
+import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
 import co.edu.uniandes.csw.carpooling.ejb.UsuarioLogic;
+import co.edu.uniandes.csw.carpooling.ejb.UsuarioTrayectoLogic;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import java.util.ArrayList;
@@ -36,6 +39,13 @@ public class UsuarioResource {
     
     @Inject
     private UsuarioLogic logic;
+    
+    @Inject
+    private TrayectoLogic trayectoLogic;
+    
+    @Inject
+    private UsuarioTrayectoLogic usuarioTrayectoLogic;
+  
    
     /**
      * 
@@ -137,23 +147,31 @@ public class UsuarioResource {
     /**
      * Trayectos conductor
      */
+    @POST
     @Path("{username: [a-zA-Z][a-zA-Z]*}/trayectosConductor")
-    public Class<UsuarioTrayectoResource> getTraycetosConductor(@PathParam("username") String username) {
+    public TrayectoDetail getTraycetosConductor(@PathParam("username") String username, TrayectoDetail trayecto) {
         if (logic.getUsuario(username) == null) {
             throw new WebApplicationException("El recurso /usuario/" + username + "/trayectosConductor no existe.", 404);
         }
-        return UsuarioTrayectoResource.class;
+        TrayectoDetail nuevoReviewDTO = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoConductor(username, trayecto.toEntity()));
+        return nuevoReviewDTO;
+       
     }
     
     /**
-     * Trayectos pasajero
+     * Trayectos pasajero. El trayecto ya existe.
      */
-    @Path("{username: [a-zA-Z][a-zA-Z]*}/trayectosPasajero")
-    public Class<UsuarioTrayectoResource2> getTraycetosPasajero(@PathParam("username") String username) {
+    @POST
+    @Path("{username: [a-zA-Z][a-zA-Z]*}/trayectosPasajero/{trayectoId: \\d+}")
+    public TrayectoDetail getTraycetosPasajero(@PathParam("username") String username, @PathParam("trayectoId") Long trayectoId) {
         if (logic.getUsuario(username) == null) {
             throw new WebApplicationException("El recurso /usuario/" + username + "/trayectosConductor no existe.", 404);
         }
-        return UsuarioTrayectoResource2.class;
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El trayecto de id "+ trayectoId +" no existe.", 404);
+        }
+        TrayectoDetail trayecto = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoPasajero(username, trayectoId));
+        return trayecto;
     }
     
     /**

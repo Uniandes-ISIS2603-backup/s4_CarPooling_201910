@@ -20,7 +20,7 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class PagoEntity extends BaseEntity implements Serializable {
 
     private Double valor;
-
+    /*
     @PodamExclude
     @OneToOne(mappedBy = "pagoARecibir")
     private UsuarioEntity conductor;
@@ -28,7 +28,7 @@ public class PagoEntity extends BaseEntity implements Serializable {
     @PodamExclude
     @OneToOne(mappedBy = "pagoAHacer")
     private UsuarioEntity pasajero;
-
+    */
     @PodamExclude
     @ManyToOne
     private TrayectoEntity trayecto;
@@ -64,7 +64,8 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @return UsuarioEntity
      */
     public UsuarioEntity getUsuarioRecibe() {
-        return conductor;
+        //return conductor;
+        return null;
     }
 
     /**
@@ -73,7 +74,8 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @param pUsuarioEntity
      */
     public void setUsuarioRecibe(UsuarioEntity pUsuarioEntity) {
-        this.conductor = pUsuarioEntity;
+       // this.conductor = pUsuarioEntity;
+       pUsuarioEntity.setPagoARecibir(this);
     }
 
     /**
@@ -82,7 +84,8 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @return UsuarioEntity
      */
     public UsuarioEntity getUsuarioHace() {
-        return pasajero;
+        //return pasajero;
+        return null;
     }
 
     /**
@@ -91,7 +94,8 @@ public class PagoEntity extends BaseEntity implements Serializable {
      * @param pUsuarioEntity
      */
     public void setUsuarioHace(UsuarioEntity pUsuarioEntity) {
-        this.pasajero = pUsuarioEntity;
+       // this.pasajero = pUsuarioEntity;
+       pUsuarioEntity.setPagoAHacer(this);
     }
 
     /**
