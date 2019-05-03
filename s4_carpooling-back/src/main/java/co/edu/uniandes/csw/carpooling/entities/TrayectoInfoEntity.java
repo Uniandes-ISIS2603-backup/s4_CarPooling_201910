@@ -143,6 +143,62 @@ public class TrayectoInfoEntity extends BaseEntity implements Serializable {
     
     public void addPeaje(PeajeEntity peaje)
     {
-        peajes.add(peaje);
+        getPeajes().add(peaje);
+    }
+
+    /**
+     * @return the infoTrayecto
+     */
+    public TrayectoEntity getInfoTrayecto() {
+        return infoTrayecto;
+    }
+
+    /**
+     * @param infoTrayecto the infoTrayecto to set
+     */
+    public void setInfoTrayecto(TrayectoEntity infoTrayecto) {
+        this.infoTrayecto = infoTrayecto;
+    }
+
+    /**
+     * @return the paradas
+     */
+    public List<CiudadEntity> getParadas() {
+        return paradas;
+    }
+
+    /**
+     * @param paradas the paradas to set
+     */
+    public void setParadas(List<CiudadEntity> paradas) {
+        this.paradas = paradas;
+    }
+
+    /**
+     * @return the peajes
+     */
+    public List<PeajeEntity> getPeajes() {
+        return peajes;
+    }
+
+    /**
+     * @param peajes the peajes to set
+     */
+    public void setPeajes(List<PeajeEntity> peajes) {
+        this.peajes = peajes;
+    }
+
+    /**
+     * @return the vehiculo
+     */
+    public VehiculoEntity getVehiculo() {
+        return vehiculo;
+    }
+
+    /**
+     * @param vehiculo the vehiculo to set
+     */
+    public void setVehiculo(VehiculoEntity vehiculo) {
+        this.vehiculo = vehiculo;
     }
 }

@@ -49,7 +49,7 @@ public class TrayectoEntity extends BaseEntity implements Serializable {
     private List<UsuarioEntity> pasajeros;
 
     @PodamExclude
-    @OneToOne(orphanRemoval = true, mappedBy = "infoTrayecto" )
+    @OneToOne
     private TrayectoInfoEntity infoTrayecto;
 
     @PodamExclude
