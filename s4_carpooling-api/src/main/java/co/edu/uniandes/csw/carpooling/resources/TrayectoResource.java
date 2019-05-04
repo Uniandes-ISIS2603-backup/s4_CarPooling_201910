@@ -143,12 +143,19 @@ public class TrayectoResource {
         return TrayectoTrayectInfoResource.class;
     }
     
-    @Path("{trayectoId: \\d+}/ciudad")
-    public Class<TrayectoCiudadResource> getTrayectoCiudad(@PathParam("trayectoId") Long trayectoId) {
+    @Path("{trayectoId: \\d+}/ciudadOrigen")
+    public Class<TrayectoCiudadOrigenResource> getTrayectoCiudadOrigen(@PathParam("trayectoId") Long trayectoId) {
         if (trayectoLogic.getTrayeto(trayectoId) == null) {
-            throw new WebApplicationException("El recurso /ciudad/" + trayectoId + " no existe.", 404);
+            throw new WebApplicationException("El recurso /ciudadOrigen/" + trayectoId + " no existe.", 404);
         }
-        return TrayectoCiudadResource.class;
+        return TrayectoCiudadOrigenResource.class;
     }
     
+    @Path("{trayectoId: \\d+}/ciudadDestino")
+    public Class<TrayectoCiudadDestinoResource> getTrayectoCiudadDestino(@PathParam("trayectoId") Long trayectoId) {
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /ciudadDestino/" + trayectoId + " no existe.", 404);
+        }
+        return TrayectoCiudadDestinoResource.class;
+    }
 }
