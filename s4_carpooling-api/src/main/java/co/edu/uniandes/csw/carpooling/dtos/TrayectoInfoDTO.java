@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.carpooling.dtos;
 
 import co.edu.uniandes.csw.carpooling.entities.BaseEntity;
+import co.edu.uniandes.csw.carpooling.entities.CiudadEntity;
 import co.edu.uniandes.csw.carpooling.entities.NotificacionEntity;
 import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
@@ -28,6 +29,8 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
     private Date horaLlegada;
     private VehiculoDTO carro;
     private List<PeajeDTO> peajes;
+    private List<CiudadDTO> paradas;
+
 
     /**
      * Constructor vacío.
@@ -58,13 +61,19 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
             if (entity.getDuracion() != null) {
                 this.duracionMins = entity.getDuracion();
             }
-                
+           
             if (entity.getPeajes()!= null) {
             peajes = new ArrayList<PeajeDTO>();
                 for (PeajeEntity peaje : entity.getPeajes()) {
                     peajes.add(new PeajeDTO(peaje));
                 }
-            }        
+            }
+            if (entity.getParadas()!= null) {
+            paradas = new ArrayList<CiudadDTO>();
+                for (CiudadEntity peaje : entity.getParadas()) {
+                    paradas.add(new CiudadDTO(peaje));
+                }
+            }
         }
     }
 
@@ -85,6 +94,13 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
                 peajes.add(dto.toEntity());
             }
             retorno.setPeajes(peajes);
+        }
+        if (getParadas() != null) {
+            List<CiudadEntity> paradas = new ArrayList<CiudadEntity>();
+            for (CiudadDTO dto : getParadas()) {
+                paradas.add(dto.toEntity());
+            }
+            retorno.setParadas(paradas);
         }
         return retorno;
     }
@@ -185,6 +201,20 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
      */
     public void setCarro(VehiculoDTO carro) {
         this.carro = carro;
+    }
+
+    /**
+     * @return the ciudades
+     */
+    public List<CiudadDTO> getParadas() {
+        return paradas;
+    }
+
+    /**
+     * @param ciudades the ciudades to set
+     */
+    public void setCiudades(List<CiudadDTO> ciudades) {
+        this.paradas = ciudades;
     }
 
 }
