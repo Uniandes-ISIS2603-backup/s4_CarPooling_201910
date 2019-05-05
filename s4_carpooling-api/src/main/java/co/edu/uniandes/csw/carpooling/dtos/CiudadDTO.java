@@ -15,7 +15,8 @@ import java.io.Serializable;
 public class CiudadDTO implements Serializable {
 
     private String nombre;
-    private String[] coordenadas;
+    private Long lat;
+    private Long lon;
 
     /**
      * @return the nombre
@@ -31,19 +32,7 @@ public class CiudadDTO implements Serializable {
         this.nombre = nombre;
     }
 
-    /**
-     * @return the coordenadas
-     */
-    public String[] getCoordenadas() {
-        return coordenadas;
-    }
-
-    /**
-     * @param coordenadas the coordenadas to set
-     */
-    public void setCoordenadas(String[] coordenadas) {
-        this.coordenadas = coordenadas;
-    }
+    
 
     /**
      * Constructor vacío.
@@ -60,7 +49,8 @@ public class CiudadDTO implements Serializable {
     public CiudadDTO(CiudadEntity entity) {
         if (entity != null) {
             this.nombre = entity.getNombre();
-            this.coordenadas = entity.getCoordenadas();
+            this.lat = entity.getLat();
+            this.lon = entity.getLon();
         }
     }
 
@@ -71,8 +61,37 @@ public class CiudadDTO implements Serializable {
      */
     public CiudadEntity toEntity() {
         CiudadEntity ce = new CiudadEntity();
-        ce.setCoordenadas(coordenadas);
+        ce.setLat(this.lat);
+        ce.setLon(this.lon);
         ce.setNombre(nombre);
         return ce;
+    }
+
+    /**
+     * @return the lat
+     */
+    public Long getLat() {
+        return lat;
+    }
+
+    /**
+     * @param lat the lat to set
+     */
+    public void setLat(Long lat) {
+        this.lat = lat;
+    }
+
+    /**
+     * @return the lon
+     */
+    public Long getLon() {
+        return lon;
+    }
+
+    /**
+     * @param lon the lon to set
+     */
+    public void setLon(Long lon) {
+        this.lon = lon;
     }
 }

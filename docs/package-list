@@ -1,5 +1,5 @@
-co.edu.uniandes.csw.carpooling.adapters
-co.edu.uniandes.csw.carpooling.dtos
-co.edu.uniandes.csw.carpooling.filters
-co.edu.uniandes.csw.carpooling.mappers
-co.edu.uniandes.csw.carpooling.resources
+co.edu.uniandes.csw.carpooling.ejb
+co.edu.uniandes.csw.carpooling.entities
+co.edu.uniandes.csw.carpooling.exceptions
+co.edu.uniandes.csw.carpooling.persistence
+co.edu.uniandes.csw.carpooling.podam

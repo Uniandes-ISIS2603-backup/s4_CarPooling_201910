@@ -58,11 +58,11 @@ public class TrayectoEntity extends BaseEntity implements Serializable {
 
     
     @PodamExclude
-    @OneToOne(mappedBy = "origen")
+    @OneToOne
     private CiudadEntity origen;
     
     @PodamExclude
-    @OneToOne(mappedBy = "destino")
+    @OneToOne
     private CiudadEntity destino;
     
     /**

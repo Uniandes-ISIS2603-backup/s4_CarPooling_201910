@@ -99,3 +99,14 @@ Insert Into TrayectoInfoEntity(costo, duracion, combustible, horaFinal, horaInic
 
 Insert Into TrayectoInfoEntity(costo, duracion, combustible, horaFinal, horaInicial)values
 (42,42, 42, '20:20:20','10:10:10');
+
+
+Insert into ciudadEntity(nombre, lat,lon)
+values('Bogotá',10000,100);
+
+Insert into ciudadEntity(nombre, lat,lon)
+values('Cali',4200,100);
+
+
+Insert into ciudadEntity(nombre, lat,lon)
+values('Bogotá',23000,1040);

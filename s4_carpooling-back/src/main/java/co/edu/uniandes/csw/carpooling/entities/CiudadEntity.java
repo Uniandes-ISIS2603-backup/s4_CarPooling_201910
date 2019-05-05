@@ -18,7 +18,8 @@ import uk.co.jemos.podam.common.PodamExclude;
 public class CiudadEntity extends BaseEntity implements Serializable {
 
     private String nombre;
-    private String[] coordenadas;
+    private Long lat;
+    private Long lon;
 
     
     @PodamExclude
@@ -48,17 +49,62 @@ public class CiudadEntity extends BaseEntity implements Serializable {
     }
 
     /**
-     * @return the coordenadas
+     * @return the lat
      */
-    public String[] getCoordenadas() {
-        return coordenadas;
+    public Long getLat() {
+        return lat;
     }
 
     /**
-     * @param coordenadas the coordenadas to set
+     * @param lat the lat to set
      */
-    public void setCoordenadas(String[] coordenadas) {
-        this.coordenadas = coordenadas;
+    public void setLat(Long lat) {
+        this.lat = lat;
     }
+
+    /**
+     * @return the lon
+     */
+    public Long getLon() {
+        return lon;
+    }
+
+    /**
+     * @param lon the lon to set
+     */
+    public void setLon(Long lon) {
+        this.lon = lon;
+    }
+
+    /**
+     * @return the origen
+     */
+    public TrayectoEntity getOrigen() {
+        return origen;
+    }
+
+    /**
+     * @param origen the origen to set
+     */
+    public void setOrigen(TrayectoEntity origen) {
+        this.origen = origen;
+    }
+
+    /**
+     * @return the destino
+     */
+    public TrayectoEntity getDestino() {
+        return destino;
+    }
+
+    /**
+     * @param destino the destino to set
+     */
+    public void setDestino(TrayectoEntity destino) {
+        this.destino = destino;
+    }
+
+    
+    
 
 }
