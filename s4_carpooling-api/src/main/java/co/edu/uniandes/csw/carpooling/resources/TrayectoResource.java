@@ -5,12 +5,14 @@
  */
 package co.edu.uniandes.csw.carpooling.resources;
 
+import co.edu.uniandes.csw.carpooling.dtos.PagoDTO;
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoDTO;
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoDetail;
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDTO;
 import co.edu.uniandes.csw.carpooling.dtos.UsuarioDetailDTO;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoCiudadLogic;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoLogic;
+import co.edu.uniandes.csw.carpooling.ejb.TrayectoPagoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
@@ -44,6 +46,9 @@ public class TrayectoResource {
 
     @Inject
     private TrayectoLogic trayectoLogic;
+    
+    @Inject
+    private TrayectoPagoLogic trayectoPagoLogic;
 
     /**
      * Obtiene el trayecto.
@@ -132,6 +137,16 @@ public class TrayectoResource {
         TrayectoEntity entity = usuario.toEntity();
         entity = trayectoLogic.updateBook(trayectoId, entity);
         return new TrayectoDetail(entity);
+    }
+    
+    @POST
+    @Path("{trayectoId: \\d+}/pagos")
+    public PagoDTO getTrayectoPago(@PathParam("trayectoId") Long trayectoId, PagoDTO pago) {
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /infoTrayecto/" + trayectoId + " no existe.", 404);
+        }
+        PagoDTO nuevoPagoDTO = new PagoDTO(trayectoPagoLogic.createPago(trayectoId, pago.toEntity()));
+        return nuevoPagoDTO;
     }
     
     

@@ -9,6 +9,8 @@ delete from TrayectoEntity;
 delete from CalificacionEntity;
 delete from NotificacionEntity;
 
+
+delete from USUARIOENTITY_TRAYECTOENTITY;
 delete from USUARIOENTITY_VEHICULOENTITY;
 
 insert into AlquilerEntity (id, nombre) values (100,'alquiler1');
@@ -30,13 +32,13 @@ insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password
 values ('Daniel','Peña',1111111,21111111,'dan','APP','123@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Isabela','Sarmiento',2222222,31111111,'IsaPro','1s4b3ll4','1234@gmail.com');
+values ('Isabela','Sarmiento',2222222,31111111,'isamasar','1s4b3ll4','1234@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Julio','Morales',333333,41111111,'juliNightmare','juli1234','12345@gmail.com');
+values ('Julio','Morales',333333,41111111,'julio','juli1234','12345@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Alejandro','Caicedo',444444,51111111,'LatinAlejo','alejo234','123456@gmail.com');
+values ('Alejandro','Caicedo',444444,51111111,'latinalejo','alejo234','123456@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
 values ('Juan Felipe','García',555555,61111111,'juafe','juanfe1234','1234567@gmail.com');
