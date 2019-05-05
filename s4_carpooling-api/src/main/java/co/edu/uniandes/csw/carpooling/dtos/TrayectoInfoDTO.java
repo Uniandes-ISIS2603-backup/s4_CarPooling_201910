@@ -6,9 +6,14 @@
 package co.edu.uniandes.csw.carpooling.dtos;
 
 import co.edu.uniandes.csw.carpooling.entities.BaseEntity;
+import co.edu.uniandes.csw.carpooling.entities.NotificacionEntity;
+import co.edu.uniandes.csw.carpooling.entities.PeajeEntity;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -22,6 +27,7 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
     private Date horaSalida;
     private Date horaLlegada;
     private VehiculoDTO carro;
+    private List<PeajeDTO> peajes;
 
     /**
      * Constructor vacío.
@@ -52,6 +58,13 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
             if (entity.getDuracion() != null) {
                 this.duracionMins = entity.getDuracion();
             }
+                
+            if (entity.getPeajes()!= null) {
+            peajes = new ArrayList<PeajeDTO>();
+                for (PeajeEntity peaje : entity.getPeajes()) {
+                    peajes.add(new PeajeDTO(peaje));
+                }
+            }        
         }
     }
 
@@ -66,6 +79,13 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
         retorno.setCosto(costo);
         retorno.setDuracion(duracionMins);
         retorno.setHoraInicial(getHoraSalida());
+        if (getPeajes() != null) {
+            List<PeajeEntity> peajes = new ArrayList<PeajeEntity>();
+            for (PeajeDTO dto : getPeajes()) {
+                peajes.add(dto.toEntity());
+            }
+            retorno.setPeajes(peajes);
+        }
         return retorno;
     }
 
@@ -81,6 +101,20 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
      */
     public void setCosto(Integer costo) {
         this.costo = costo;
+    }
+
+    /**
+     * @return the peajes
+     */
+    public List<PeajeDTO> getPeajes() {
+        return peajes;
+    }
+
+    /**
+     * @param peajes the peajes to set
+     */
+    public void setPeajes(List<PeajeDTO> peajes) {
+        this.peajes = peajes;
     }
 
     /**

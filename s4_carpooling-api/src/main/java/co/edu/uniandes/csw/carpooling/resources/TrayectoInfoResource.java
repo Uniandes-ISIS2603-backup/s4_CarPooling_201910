@@ -124,6 +124,14 @@ public class TrayectoInfoResource {
         LOGGER.info("BookResource deleteBook: output: void");
     }
     
+    @Path("{infoId: \\d+}/peajes")
+    public Class<InfoTrayectoPeajeResource> getInfoTrayPeajeResource(@PathParam("infoId") Long idInfoTrayecto) {
+        if (infoLogic.getTrayectoInfo(idInfoTrayecto) == null) {
+            throw new WebApplicationException("El recurso /infoTrayecto/" + idInfoTrayecto + " no existe.", 404);
+        }
+        return InfoTrayectoPeajeResource.class;
+    }
+    
     
     
 }

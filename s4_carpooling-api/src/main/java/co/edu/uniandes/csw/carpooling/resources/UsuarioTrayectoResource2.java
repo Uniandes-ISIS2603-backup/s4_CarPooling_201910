@@ -21,7 +21,7 @@ import javax.ws.rs.core.MediaType;
  */
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-class UsuarioTrayectoResource2 {
+public class UsuarioTrayectoResource2 {
     
     @Inject
     private UsuarioTrayectoLogic usuarioTrayectoLogic;
