@@ -6,9 +6,11 @@
 package co.edu.uniandes.csw.carpooling.ejb;
 
 import co.edu.uniandes.csw.carpooling.entities.NotificacionEntity;
+import co.edu.uniandes.csw.carpooling.entities.TrayectoEntity;
 import co.edu.uniandes.csw.carpooling.entities.UsuarioEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.NotificacionPersistence;
+import co.edu.uniandes.csw.carpooling.persistence.TrayectoPersistence;
 import co.edu.uniandes.csw.carpooling.persistence.UsuarioPersistence;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -26,6 +28,9 @@ public class NotificacionLogic {
 
     @Inject
     private UsuarioPersistence usuarioPersistence;
+    
+    @Inject
+    private TrayectoPersistence trayectoPersistence; 
 
     /**
      * Crea una notificación.
@@ -82,7 +87,7 @@ public class NotificacionLogic {
         persistence.delete(idNotificacion);
     }
 
-    /**
+     /**
      * Añadir las relaciones.
      *
      * @param idNotificacion
@@ -110,5 +115,76 @@ public class NotificacionLogic {
         notificacion.setReceptor(receptor);
         return persistence.update(notificacion);
     }
+    
+    /**
+     * Reemplaza la relación con el emisor.
+     *
+     * @param idCalificacion
+     * @param usernameEmisor
+     * @return Un calificacion con un nuevo emisor.
+     * @throws BusinessLogicException
+     */
+    public NotificacionEntity replaceRelacionEmisor(Long idCalificacion, String usernameEmisor) throws BusinessLogicException {
+        NotificacionEntity notificacion = persistence.find(idCalificacion);
+        UsuarioEntity emisor = usuarioPersistence.findByUserName(usernameEmisor);
+        if (emisor == null || notificacion == null || emisor.equals(notificacion.getReceptor())) {
+            throw new BusinessLogicException("Relacion de notificacion no valida");
+        }
+       
+        notificacion.setEmisor(emisor);
+        emisor.addNotificacionEnviada(notificacion);
+        usuarioPersistence.update(emisor);
+        return persistence.update(notificacion);
+    }
+    
+     /**
+     * Reemplaza la relación con el receptor.
+     *
+     * @param idCalificacion
+     * @param usernameReceptor
+     * @return Una calificacion con un nuevo receptor.
+     * @throws BusinessLogicException
+     */
+    public NotificacionEntity replaceRelacionReceptor(Long idCalificacion, String usernameReceptor) throws BusinessLogicException {
+        NotificacionEntity notificacion = persistence.find(idCalificacion);
+        UsuarioEntity receptor = usuarioPersistence.findByUserName(usernameReceptor);
+        if (receptor == null || notificacion == null || receptor.equals(notificacion.getEmisor()) ) {
+            throw new BusinessLogicException("Relacion de notificacion no valida");
+        }
+        notificacion.setReceptor(receptor);
+        receptor.addNotificacionRecibida(notificacion);
+        usuarioPersistence.update(receptor);
+        return persistence.update(notificacion);
+    }
+    
+    
+    
+    
+    /**
+     * Reemplaza la relación con el trayecto.
+     *
+     * @param idCalificacion
+     * @param idTrayecto
+     * @return Una calificacion con un nuevo trayecto.
+     * @throws BusinessLogicException
+     */
+    public NotificacionEntity replaceRelacionTrayecto(Long idCalificacion, Long idTrayecto) throws BusinessLogicException {
+        NotificacionEntity calificacion = persistence.find(idCalificacion);
+        TrayectoEntity trayecto = trayectoPersistence.find(idTrayecto);
+        if (trayecto == null || calificacion == null) {
+            throw new BusinessLogicException("Relacion de calificación no valida");
+        }
+        calificacion.setTrayecto(trayecto);
+        return persistence.update(calificacion);
+    }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

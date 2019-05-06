@@ -18,6 +18,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -110,6 +111,69 @@ public class NotificacionResource {
         logic.deleteNotificacion(id);
     }
 
+    
+    
+     /**
+     * Reemplaza el emisor.
+     *
+     * @param idNotificacion
+     * @param idEmisor
+     * @return El DTO con el nuevo emisor.
+     * @throws BusinessLogicException .
+     */
+    @PUT
+    @Path("{idN: \\d+}/emisor/{idEm: [a-zA-Z][a-zA-Z]*}")
+    public NotificacionDTO ReplaceEmisor(@PathParam("idN") Long idNotificacion, @PathParam("idEm") String idEmisor) throws BusinessLogicException {
+
+        NotificacionEntity entity;
+        entity = logic.replaceRelacionEmisor(idNotificacion, idEmisor);
+        return new NotificacionDTO(entity);
+    }
+
+    
+     /**
+     * Reemplaza el receptor.
+     *
+     * @param idNotificacion
+     * @param idReceptor
+     * @return El DTO con el nuevo receptor.
+     * @throws BusinessLogicException .
+     */
+    @PUT
+    @Path("{idN2: \\d+}/receptor/{idRe: [a-zA-Z][a-zA-Z]*}")
+    public NotificacionDTO ReplaceCalificador(@PathParam("idN2") Long idNotificacion, @PathParam("idRe") String idReceptor) throws BusinessLogicException {
+
+        NotificacionEntity entity;
+        entity = logic.replaceRelacionReceptor(idNotificacion, idReceptor);
+        return new NotificacionDTO(entity);
+    }
+    
+    
+    /**
+     * Reemplaza el trayecto.
+     *
+     * @param idNotificacion
+     * @param idTrayecto
+     * @return El DTO con el nuevo trayecto.
+     * @throws BusinessLogicException .
+     */
+    @PUT
+    @Path("{idN3: \\d+}/trayecto/{idT:  \\d+}")
+    public NotificacionDTO ReplaceTrayecto(@PathParam("idN3") Long idNotificacion, @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
+
+        NotificacionEntity entity;
+        entity = logic.replaceRelacionTrayecto(idNotificacion, idTrayecto);
+        return new NotificacionDTO(entity);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * Se utiliza un método para convertir una lista de Entidades a DTOs.
      *

@@ -47,11 +47,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private AlquilerEntity alquilerArrendatario;
 
     @PodamExclude
-    @OneToMany
+    @OneToMany(mappedBy = "emisor")
     private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
 
     @PodamExclude
-    @OneToMany
+    @OneToMany(mappedBy = "receptor")
     private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
 
     @PodamExclude
@@ -354,4 +354,16 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
      public void addTrayectoPasajero(TrayectoEntity TrayectoEntity) {
        trayectoActualPasajero.add(TrayectoEntity);
     }
+     
+     public void addCalificacionRecibida(CalificacionEntity calificacionEntity ){
+         calificaciones.add(calificacionEntity);
+     }
+     
+     public void addNotificacionRecibida(NotificacionEntity notificacionEntity ){
+         notificacionRecibida.add(notificacionEntity);
+     }
+     
+     public void addNotificacionEnviada(NotificacionEntity notificacionEntity){
+         notificacionEnviada.add(notificacionEntity);
+     }
 }

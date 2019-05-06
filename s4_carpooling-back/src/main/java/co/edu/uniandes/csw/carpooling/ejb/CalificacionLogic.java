@@ -79,6 +79,7 @@ public class CalificacionLogic {
         persistence.delete(idCalificacion);
     }
 
+    
     /**
      * Agrega las relaciones correspondientes a la calificación.
      *
@@ -116,5 +117,69 @@ public class CalificacionLogic {
         return persistence.update(calificacion);
 
     }
+    
+    
+    
+    /**
+     * Reemplaza la relación con el calificador.
+     *
+     * @param idCalificacion
+     * @param usernameCalificador
+     * @return Un calificacion con un nuevo calificado.
+     * @throws BusinessLogicException
+     */
+    public CalificacionEntity replaceRelacionCalificador(Long idCalificacion, String usernameCalificador) throws BusinessLogicException {
+        CalificacionEntity calificacion = persistence.find(idCalificacion);
+        UsuarioEntity calificador = usuarioPersistence.findByUserName(usernameCalificador);
+        if (calificador == null || calificacion == null || calificador.equals(calificacion.getCalificado())) {
+            throw new BusinessLogicException("Relacion de calificación no valida");
+        }
+       
+        calificacion.setCalificador(calificador);
+        return persistence.update(calificacion);
+    }
+    
+     /**
+     * Reemplaza la relación con el calificado.
+     *
+     * @param idCalificacion
+     * @param usernameCalificado
+     * @return Una calificacion con un nuevo calificado.
+     * @throws BusinessLogicException
+     */
+    public CalificacionEntity replaceRelacionCalificado(Long idCalificacion, String usernameCalificado) throws BusinessLogicException {
+        CalificacionEntity calificacion = persistence.find(idCalificacion);
+        UsuarioEntity calificado = usuarioPersistence.findByUserName(usernameCalificado);
+        if (calificado == null || calificacion == null || calificado.equals(calificacion.getCalificador()) ) {
+            throw new BusinessLogicException("Relacion de calificación no valida");
+        }
+        calificacion.setCalificado(calificado);
+        calificado.addCalificacionRecibida(calificacion);
+        usuarioPersistence.update(calificado);
+        return persistence.update(calificacion);
+    }
+    
+    
+    
+    
+    /**
+     * Reemplaza la relación con el trayecto.
+     *
+     * @param idCalificacion
+     * @param idTrayecto
+     * @return Una calificacion con un nuevo trayecto.
+     * @throws BusinessLogicException
+     */
+    public CalificacionEntity replaceRelacionTrayecto(Long idCalificacion, Long idTrayecto) throws BusinessLogicException {
+        CalificacionEntity calificacion = persistence.find(idCalificacion);
+        TrayectoEntity trayecto = trayectoPersistence.find(idTrayecto);
+        if (trayecto == null || calificacion == null) {
+            throw new BusinessLogicException("Relacion de calificación no valida");
+        }
+        calificacion.setTrayecto(trayecto);
+        return persistence.update(calificacion);
+    }
+    
+    
 
 }
