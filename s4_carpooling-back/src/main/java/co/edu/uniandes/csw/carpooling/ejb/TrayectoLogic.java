@@ -36,9 +36,9 @@ public class TrayectoLogic {
      */
     public TrayectoEntity createEntity(TrayectoEntity trayecto) throws BusinessLogicException {
         LOGGER.log(Level.INFO, "Inicia proceso de creación del Trayecto");
-        if (trayecto.getFechaInicial() == null) {
+        /*if (trayecto.getFechaInicial() == null) {
             throw new BusinessLogicException("Datos invalidos, la fecha incicial no puede ser null");
-        }
+        }*/
         if (persistence.find(trayecto.getId()) != null) {
             throw new BusinessLogicException("Datos invalidos, ya existe un trayecto con este id");
         }
