@@ -43,20 +43,12 @@ public class PagoInfoTCResource {
      * @return 
      */
     @POST
-    @Path ("{InfoId: \\d+}")
-    public InfoTCDTO addInfo(@PathParam("pagoId") Long pagoId, @PathParam("infoId") Long infoId) {
-        
+    @Path ("{infoId: \\d+}")
+    public InfoTCDTO addInfo(@PathParam("id") Long pagoId, @PathParam("infoId") Long infoId) {
         if (infoLogic.getInfoTC(infoId) == null) {
             throw new WebApplicationException("El recurso /info/" + infoId + " no existe.", 404);
         }
-        InfoTCDTO infoDTO = null;
-        try {
-            infoDTO = new InfoTCDTO(pagoInfoLogic.addInfo(pagoId, infoId));
-        }
-        catch (Exception e)
-        {
-            throw new WebApplicationException(e.getMessage());
-        }
+        InfoTCDTO infoDTO = new InfoTCDTO(pagoInfoLogic.addInfo(pagoId, infoId));
         return infoDTO;
     }
     
@@ -68,7 +60,7 @@ public class PagoInfoTCResource {
      * @throws BusinessLogicException 
      */
     @POST
-    public InfoTCDTO createInfo(@PathParam("pagoId") Long pagoId, InfoTCDTO info) throws BusinessLogicException {
+    public InfoTCDTO createInfo(@PathParam("id") Long pagoId, InfoTCDTO info) throws BusinessLogicException {
         InfoTCDTO infoDTO = new InfoTCDTO(pagoInfoLogic.createInfo(pagoId, info.toEntity()));
         return infoDTO;
     }
