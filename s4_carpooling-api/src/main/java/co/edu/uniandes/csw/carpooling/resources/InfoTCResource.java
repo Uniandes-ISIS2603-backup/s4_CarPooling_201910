@@ -28,7 +28,7 @@ import javax.ws.rs.WebApplicationException;
  *
  * @author jf.garcia
  */
-@Path("pagos/info")
+@Path("info")
 @Produces("application/json")
 @Consumes("application/json")
 @RequestScoped

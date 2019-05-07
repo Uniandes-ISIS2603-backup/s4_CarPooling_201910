@@ -129,6 +129,19 @@ public class PagoResource {
     }
 
     /**
+     * Devuelve la asociación.
+     * @param pagoId
+     * @return
+     */
+    @Path("{id: \\d+}/info")
+    public Class<PagoInfoTCResource> getPagoInfoTCResource(@PathParam("id") Long pagoId) {
+        if (logic.getPago(pagoId) == null) {
+            throw new WebApplicationException("El recurso /pago/" + pagoId + " no existe.", 404);
+        }
+        return PagoInfoTCResource.class;
+    }
+
+    /**
      * Se utiliza un método para convertir una lista de Entidades a DTOs.
      *
      * @param pago
@@ -141,6 +154,7 @@ public class PagoResource {
         }
         return list;
     }
+
     /**
      * Añade las relaciones correspondientes.
      *
@@ -157,7 +171,7 @@ public class PagoResource {
     @Path("{idP: \\d+}/{idT: \\d+}/{idPas: \\d+}/{idC: \\d+}/{idI: \\d+}")
     public PagoDTO addRelacion(@PathParam("idP") Long idPago, @PathParam("idT") Long idTrayecto, @PathParam("idPas") Long idPasajero,
             @PathParam("idC") Long idConductor, @PathParam("idI") Long idInfo) throws BusinessLogicException {
-        PagoEntity entity = logic.addRelacionPago(idPago, idTrayecto, idPasajero, idConductor,idInfo);
+        PagoEntity entity = logic.addRelacionPago(idPago, idTrayecto, idPasajero, idConductor, idInfo);
         return new PagoDTO(entity);
 
     }
