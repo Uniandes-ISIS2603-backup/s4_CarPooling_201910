@@ -82,9 +82,13 @@ public class NotificacionResource {
      * Error de lógica que se genera cuando ya existe la notificación.
      */
     @POST
-    public NotificacionDTO createNotificacion(NotificacionDTO Notificacion) throws BusinessLogicException {
-        NotificacionEntity entity = Notificacion.toEntity();
+    @Path("emisor/{idE: [a-zA-Z][a-zA-Z]*}/receptor/{idR: [a-zA-Z][a-zA-Z]*}/trayecto/{idT:  \\d+}")
+    public NotificacionDTO createNotificacion(NotificacionDTO notificacion, @PathParam("idE") String idEmisor, @PathParam("idR") String idReceptor, @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
+        NotificacionEntity entity = notificacion.toEntity();
         entity = logic.createNotificacion(entity);
+        entity = logic.replaceRelacionEmisor(entity.getId(), idEmisor);
+        entity = logic.replaceRelacionReceptor(entity.getId(), idReceptor);
+        entity = logic.replaceRelacionTrayecto(entity.getId(), idTrayecto);
         return new NotificacionDTO(entity);
     }
     
@@ -111,60 +115,7 @@ public class NotificacionResource {
         logic.deleteNotificacion(id);
     }
 
-    
-    
-     /**
-     * Reemplaza el emisor.
-     *
-     * @param idNotificacion
-     * @param idEmisor
-     * @return El DTO con el nuevo emisor.
-     * @throws BusinessLogicException .
-     */
-    @PUT
-    @Path("{idN: \\d+}/emisor/{idEm: [a-zA-Z][a-zA-Z]*}")
-    public NotificacionDTO ReplaceEmisor(@PathParam("idN") Long idNotificacion, @PathParam("idEm") String idEmisor) throws BusinessLogicException {
-
-        NotificacionEntity entity;
-        entity = logic.replaceRelacionEmisor(idNotificacion, idEmisor);
-        return new NotificacionDTO(entity);
-    }
-
-    
-     /**
-     * Reemplaza el receptor.
-     *
-     * @param idNotificacion
-     * @param idReceptor
-     * @return El DTO con el nuevo receptor.
-     * @throws BusinessLogicException .
-     */
-    @PUT
-    @Path("{idN2: \\d+}/receptor/{idRe: [a-zA-Z][a-zA-Z]*}")
-    public NotificacionDTO ReplaceCalificador(@PathParam("idN2") Long idNotificacion, @PathParam("idRe") String idReceptor) throws BusinessLogicException {
-
-        NotificacionEntity entity;
-        entity = logic.replaceRelacionReceptor(idNotificacion, idReceptor);
-        return new NotificacionDTO(entity);
-    }
-    
-    
-    /**
-     * Reemplaza el trayecto.
-     *
-     * @param idNotificacion
-     * @param idTrayecto
-     * @return El DTO con el nuevo trayecto.
-     * @throws BusinessLogicException .
-     */
-    @PUT
-    @Path("{idN3: \\d+}/trayecto/{idT:  \\d+}")
-    public NotificacionDTO ReplaceTrayecto(@PathParam("idN3") Long idNotificacion, @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
-
-        NotificacionEntity entity;
-        entity = logic.replaceRelacionTrayecto(idNotificacion, idTrayecto);
-        return new NotificacionDTO(entity);
-    }
+  
     
     
     

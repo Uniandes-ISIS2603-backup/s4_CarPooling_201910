@@ -76,6 +76,10 @@ public class CalificacionLogic {
      * @param idCalificacion
      */
     public void deleteCalificacion(Long idCalificacion) {
+        CalificacionEntity calificacion = persistence.find(idCalificacion);
+        UsuarioEntity calificado = calificacion.getCalificado();
+        calificado.removeCalificacionRecibida(calificacion);
+        usuarioPersistence.update(calificado);
         persistence.delete(idCalificacion);
     }
 

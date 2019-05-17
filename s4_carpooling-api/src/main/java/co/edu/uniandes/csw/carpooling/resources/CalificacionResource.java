@@ -84,9 +84,13 @@ public class CalificacionResource {
      * tarjetas asociadas.
      */
     @POST
-    public CalificacionDTO createCalificacion(CalificacionDTO calificacion) throws BusinessLogicException {
+    @Path("calificado/{idCa1: [a-zA-Z][a-zA-Z]*}/calificador/{idCa2: [a-zA-Z][a-zA-Z]*}/trayecto/{idT:  \\d+}")
+    public CalificacionDTO createCalificacion(CalificacionDTO calificacion, @PathParam("idCa1") String idCalificado, @PathParam("idCa2") String idCalificador, @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
         CalificacionEntity entity = calificacion.toEntity();
         entity = logic.createCalificacion(entity);
+        entity = logic.replaceRelacionCalificado(entity.getId(), idCalificado);
+        entity = logic.replaceRelacionCalificador(entity.getId(), idCalificador);
+        entity = logic.replaceRelacionTrayecto(entity.getId(), idTrayecto);
         return new CalificacionDTO(entity);
     }
 
@@ -110,60 +114,7 @@ public class CalificacionResource {
         logic.deleteCalificacion(id);
     }
     
-    
-   
-     /**
-     * Reemplaza el calificado.
-     *
-     * @param idCalificacion
-     * @param idCalificado
-     * @return El DTO con el nuevo calificado.
-     * @throws BusinessLogicException .
-     */
-    @PUT
-    @Path("{idC: \\d+}/calificado/{idCa: [a-zA-Z][a-zA-Z]*}")
-    public CalificacionDTO ReplaceCalificado(@PathParam("idC") Long idCalificacion, @PathParam("idCa") String idCalificado) throws BusinessLogicException {
-
-        CalificacionEntity entity;
-        entity = logic.replaceRelacionCalificado(idCalificacion, idCalificado);
-        return new CalificacionDTO(entity);
-    }
-
-    
-     /**
-     * Reemplaza el calificador.
-     *
-     * @param idCalificacion
-     * @param idCalificador
-     * @return El DTO con el nuevo calificador.
-     * @throws BusinessLogicException .
-     */
-    @PUT
-    @Path("{idC2: \\d+}/calificador/{idCal: [a-zA-Z][a-zA-Z]*}")
-    public CalificacionDTO ReplaceCalificador(@PathParam("idC2") Long idCalificacion, @PathParam("idCal") String idCalificador) throws BusinessLogicException {
-
-        CalificacionEntity entity;
-        entity = logic.replaceRelacionCalificador(idCalificacion, idCalificador);
-        return new CalificacionDTO(entity);
-    }
-    
-    
-    /**
-     * Reemplaza el trayecto.
-     *
-     * @param idCalificacion
-     * @param idTrayecto
-     * @return El DTO con el nuevo trayecto.
-     * @throws BusinessLogicException .
-     */
-    @PUT
-    @Path("{idC3: \\d+}/trayecto/{idT:  \\d+}")
-    public CalificacionDTO ReplaceTrayecto(@PathParam("idC3") Long idCalificacion, @PathParam("idT") Long idTrayecto) throws BusinessLogicException {
-
-        CalificacionEntity entity;
-        entity = logic.replaceRelacionTrayecto(idCalificacion, idTrayecto);
-        return new CalificacionDTO(entity);
-    }
+ 
     
     
     

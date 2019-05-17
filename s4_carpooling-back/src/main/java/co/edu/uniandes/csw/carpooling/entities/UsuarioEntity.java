@@ -47,11 +47,11 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
     private AlquilerEntity alquilerArrendatario;
 
     @PodamExclude
-    @OneToMany(mappedBy = "emisor")
+    @OneToMany(mappedBy = "emisor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotificacionEntity> notificacionEnviada = new ArrayList<NotificacionEntity>();
 
     @PodamExclude
-    @OneToMany(mappedBy = "receptor")
+    @OneToMany(mappedBy = "receptor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NotificacionEntity> notificacionRecibida = new ArrayList<NotificacionEntity>();
 
     @PodamExclude
@@ -359,11 +359,23 @@ public class UsuarioEntity extends BaseEntity implements Serializable {
          calificaciones.add(calificacionEntity);
      }
      
+     public void removeCalificacionRecibida(CalificacionEntity calificacionEntity){
+         calificaciones.remove(calificacionEntity);
+     }
+     
      public void addNotificacionRecibida(NotificacionEntity notificacionEntity ){
          notificacionRecibida.add(notificacionEntity);
      }
      
+     public void removeNotificacionRecibida(NotificacionEntity notificacionEntity){
+         notificacionRecibida.remove(notificacionEntity);
+     }
+     
      public void addNotificacionEnviada(NotificacionEntity notificacionEntity){
          notificacionEnviada.add(notificacionEntity);
+     }
+     
+     public void removeNotificacionEnviada (NotificacionEntity notificacionEntity){
+         notificacionEnviada.remove(notificacionEntity);
      }
 }

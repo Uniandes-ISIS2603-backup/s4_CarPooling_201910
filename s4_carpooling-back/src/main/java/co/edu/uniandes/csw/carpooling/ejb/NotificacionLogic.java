@@ -84,6 +84,14 @@ public class NotificacionLogic {
      * @param idNotificacion El id de la entidad a borrar.
      */
     public void deleteNotificacion(Long idNotificacion) {
+        NotificacionEntity notificacion = persistence.find(idNotificacion);
+        UsuarioEntity emisor = notificacion.getEmisor();
+        UsuarioEntity receptor = notificacion.getReceptor();
+        emisor.removeNotificacionEnviada(notificacion);
+        receptor.removeNotificacionRecibida(notificacion);
+        usuarioPersistence.update(emisor);
+        usuarioPersistence.update(receptor);
+        
         persistence.delete(idNotificacion);
     }
 
