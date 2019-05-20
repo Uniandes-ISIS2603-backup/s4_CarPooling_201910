@@ -6,8 +6,11 @@
 package co.edu.uniandes.csw.carpooling.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import uk.co.jemos.podam.common.PodamExclude;
 
 /**
@@ -17,7 +20,16 @@ import uk.co.jemos.podam.common.PodamExclude;
 @Entity
 public class NotificacionEntity extends BaseEntity implements Serializable {
 
+    public static final int SOLICITUD = 0;
+    public static final int INFORMACION = 1;
+    
+    
     private String mensaje;
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    
+    private boolean leido;
+    private Integer tipo;
 
     @PodamExclude
     @ManyToOne
@@ -90,5 +102,49 @@ public class NotificacionEntity extends BaseEntity implements Serializable {
     public void setTrayecto(TrayectoEntity trayecto) {
         this.trayecto = trayecto;
     }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    /**
+     * @return the leido
+     */
+    public boolean isLeido() {
+        return leido;
+    }
+
+    /**
+     * @param leido the leído to set
+     */
+    public void setLeido(boolean leido) {
+        this.leido = leido;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
+    }
+
+    
 
 }

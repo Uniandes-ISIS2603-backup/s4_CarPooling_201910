@@ -5,8 +5,11 @@
  */
 package co.edu.uniandes.csw.carpooling.dtos;
 
+import co.edu.uniandes.csw.carpooling.adapters.DateAdapter;
 import co.edu.uniandes.csw.carpooling.entities.NotificacionEntity;
 import java.io.Serializable;
+import java.util.Date;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -19,7 +22,13 @@ public class NotificacionDTO implements Serializable {
     private UsuarioDTO receptor;
     private UsuarioDTO emisor;
     private TrayectoDTO trayecto;
-
+    
+    @XmlJavaTypeAdapter(DateAdapter.class)
+    private Date fecha;
+    
+    private boolean leido;
+    private Integer tipo;
+    
     /**
      * Constructor vacío.
      */
@@ -36,6 +45,9 @@ public class NotificacionDTO implements Serializable {
         if (entity != null) {
             this.id = entity.getId();
             this.mensaje = entity.getMensaje();
+            this.fecha = entity.getFecha();
+            this.leido = entity.isLeido();
+            this.tipo = entity.getTipo();
             
             if(entity.getEmisor()!= null){
                 this.emisor = new UsuarioDTO(entity.getEmisor());
@@ -122,6 +134,11 @@ public class NotificacionDTO implements Serializable {
     public NotificacionEntity toEntity() {
         NotificacionEntity entity = new NotificacionEntity();
         entity.setMensaje(mensaje);
+        entity.setFecha(fecha);
+        entity.setLeido(leido);
+        entity.setTipo(tipo);
+        
+        
         if(this.emisor != null){
             entity.setEmisor(this.emisor.toEntity());
         }
@@ -146,6 +163,48 @@ public class NotificacionDTO implements Serializable {
      */
     public void setTrayecto(TrayectoDTO trayecto) {
         this.trayecto = trayecto;
+    }
+
+    /**
+     * @return the fecha
+     */
+    public Date getFecha() {
+        return fecha;
+    }
+
+    /**
+     * @param fecha the fecha to set
+     */
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    /**
+     * @return the leido
+     */
+    public boolean isLeido() {
+        return leido;
+    }
+
+    /**
+     * @param leido the leido to set
+     */
+    public void setLeido(boolean leido) {
+        this.leido = leido;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public Integer getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
     
     
