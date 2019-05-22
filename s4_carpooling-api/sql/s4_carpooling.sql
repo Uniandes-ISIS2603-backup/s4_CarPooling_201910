@@ -1,4 +1,4 @@
-xdelete from AlquilerEntity;
+delete from AlquilerEntity;
 delete from SeguroEntity;
 delete from PeajeEntity;
 delete from UsuarioEntity;

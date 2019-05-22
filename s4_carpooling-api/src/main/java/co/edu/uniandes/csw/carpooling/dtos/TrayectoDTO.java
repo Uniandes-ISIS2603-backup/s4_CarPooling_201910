@@ -57,12 +57,7 @@ public class TrayectoDTO implements Serializable {
             if(entity.getDestino() != null){
                 this.ciudadDestino = new CiudadDTO( entity.getDestino());
             }if(entity.getOrigen() != null){
-                this.ciudadDestino = new CiudadDTO( entity.getOrigen());
-            }
-            if(entity.getOrigen() != null){
-                this.ciudadDestino = new CiudadDTO( entity.getOrigen());
-            }else{
-                this.ciudadDestino = null;
+                this.ciudadOrigen = new CiudadDTO( entity.getOrigen());
             }
             
 
@@ -98,7 +93,7 @@ public class TrayectoDTO implements Serializable {
         }if(getCiudadDestino() != null){
             retorno.setDestino(this.getCiudadDestino().toEntity());
         }if(getCiudadOrigen() != null){
-            retorno.setDestino(this.getCiudadOrigen().toEntity());
+            retorno.setOrigen(this.getCiudadOrigen().toEntity());
         }
         return retorno;
     }
