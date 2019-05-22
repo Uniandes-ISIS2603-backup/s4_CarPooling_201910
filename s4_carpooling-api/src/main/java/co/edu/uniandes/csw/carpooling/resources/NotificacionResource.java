@@ -93,7 +93,17 @@ public class NotificacionResource {
     }
     
     
-    
+    @PUT
+    @Path("{id: \\d+}")
+    public NotificacionDTO updateNotificacion(@PathParam("id") Long id, NotificacionDTO notificacion) {
+        NotificacionEntity find = logic.getNotificacion(id);
+        if (find == null) {
+            throw new WebApplicationException("El recurso notificacion id: " + id + " no existe", 404);
+        }
+        NotificacionEntity entity = notificacion.toEntity();
+        entity = logic.update(id, entity);
+        return new NotificacionDTO(entity);
+    }
  
 
 
