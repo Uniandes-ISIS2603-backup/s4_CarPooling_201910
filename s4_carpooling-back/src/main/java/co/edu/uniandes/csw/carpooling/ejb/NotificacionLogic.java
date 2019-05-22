@@ -73,7 +73,7 @@ public class NotificacionLogic {
      */
     public NotificacionEntity update(Long idNotificacion, NotificacionEntity newNotificacion) {
         NotificacionEntity notificacion = getNotificacion(idNotificacion);
-        notificacion.setMensaje(newNotificacion.getMensaje());
+        notificacion.setLeido(newNotificacion.isLeido());
         persistence.update(notificacion);
         return notificacion;
     }
