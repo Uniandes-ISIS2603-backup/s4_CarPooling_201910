@@ -61,7 +61,9 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
             if (entity.getDuracion() != null) {
                 this.duracionMins = entity.getDuracion();
             }
-           
+            if (entity.getVehiculo()!= null) {
+                this.carro = new VehiculoDTO(entity.getVehiculo());
+            }
             if (entity.getPeajes()!= null) {
             peajes = new ArrayList<PeajeDTO>();
                 for (PeajeEntity peaje : entity.getPeajes()) {
@@ -88,6 +90,9 @@ public class TrayectoInfoDTO extends BaseEntity implements Serializable {
         retorno.setCosto(costo);
         retorno.setDuracion(duracionMins);
         retorno.setHoraInicial(getHoraSalida());
+        if(carro!=null){
+        retorno.setVehiculo(carro.toEntity());
+        }
         if (getPeajes() != null) {
             List<PeajeEntity> peajes = new ArrayList<PeajeEntity>();
             for (PeajeDTO dto : getPeajes()) {

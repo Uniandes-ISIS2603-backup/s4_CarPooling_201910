@@ -6,7 +6,9 @@
 package co.edu.uniandes.csw.carpooling.resources;
 
 import co.edu.uniandes.csw.carpooling.dtos.TrayectoInfoDTO;
+import co.edu.uniandes.csw.carpooling.dtos.VehiculoDTO;
 import co.edu.uniandes.csw.carpooling.ejb.TrayectoInfoLogic;
+import co.edu.uniandes.csw.carpooling.ejb.VehiculoLogic;
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import java.io.Serializable;
@@ -40,6 +42,8 @@ public class TrayectoInfoResource {
     
     @Inject
     private TrayectoInfoLogic infoLogic;
+    @Inject
+    private VehiculoLogic vehiculoLogic;
     
     /**
      * Crea un trayecto.
@@ -110,6 +114,18 @@ public class TrayectoInfoResource {
         TrayectoInfoDTO detailDTO = new TrayectoInfoDTO(infoLogic.updateTrayecoInfo(infoId,  info.toEntity()));
         LOGGER.log(Level.INFO, "BookResource updateBook: output: {0}", detailDTO);
         return detailDTO;
+    }
+    @POST
+    @Path("{trayectoId: \\d+}/vehiculo/{idV: \\d+}")
+    public VehiculoDTO addVehiculo(@PathParam("trayectoId") Long trayectoId,@PathParam("idV") Long vehiculoId) {
+        if (infoLogic.getTrayectoInfo(trayectoId) == null) {
+            throw new WebApplicationException("El recurso /trayectoInfo/" + trayectoId + " no existe.", 404);
+        }
+        if (vehiculoLogic.get(vehiculoId) == null) {
+            throw new WebApplicationException("El recurso /vehiculo/" + vehiculoId + " no existe.", 404);
+        }
+        
+        return new VehiculoDTO(infoLogic.addVehiculo(trayectoId,vehiculoId));
     }
     
     
