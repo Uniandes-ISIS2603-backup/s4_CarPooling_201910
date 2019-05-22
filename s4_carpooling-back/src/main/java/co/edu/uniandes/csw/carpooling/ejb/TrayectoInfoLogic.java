@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.carpooling.ejb;
 
 import co.edu.uniandes.csw.carpooling.entities.TrayectoInfoEntity;
+import co.edu.uniandes.csw.carpooling.entities.VehiculoEntity;
 import co.edu.uniandes.csw.carpooling.exceptions.BusinessLogicException;
 import co.edu.uniandes.csw.carpooling.persistence.TrayectoInfoPersistence;
+import co.edu.uniandes.csw.carpooling.persistence.VehiculoPersistence;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,8 @@ public class TrayectoInfoLogic {
 
     @Inject
     private TrayectoInfoPersistence persistence;
-
+    @Inject
+    private VehiculoPersistence vehiculoPersistence;
     /**
      * Crea un trayecto.
      *
@@ -100,5 +103,11 @@ public class TrayectoInfoLogic {
         LOGGER.log(Level.INFO, "Inicia proceso de borrar el libro con id = {0}", infoId);
         persistence.delete(infoId);
         LOGGER.log(Level.INFO, "Termina proceso de borrar el libro con id = {0}", infoId);
+    } 
+    public VehiculoEntity addVehiculo(Long trayectoId,Long vehiculoId) {
+        VehiculoEntity vehiculoEntity = vehiculoPersistence.find(vehiculoId);
+        TrayectoInfoEntity trayectoEntity = persistence.find(trayectoId);
+        trayectoEntity.setVehiculo(vehiculoEntity);
+        return vehiculoEntity;
     }
 }
