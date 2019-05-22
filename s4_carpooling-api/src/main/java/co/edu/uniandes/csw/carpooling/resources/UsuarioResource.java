@@ -175,6 +175,23 @@ public class UsuarioResource {
     }
     
     /**
+     * Trayectos pasajero. El trayecto ya existe.
+     */
+    @PUT
+    @Path("{username: [a-zA-Z][a-zA-Z]*}/trayectosPasajero/{trayectoId: \\d+}")
+    public TrayectoDetail addTraycetosPasajero(@PathParam("username") String username, @PathParam("trayectoId") Long trayectoId) {
+        if (logic.getUsuario(username) == null) {
+            throw new WebApplicationException("El recurso /usuario/" + username + "/trayectosConductor no existe.", 404);
+        }
+        if (trayectoLogic.getTrayeto(trayectoId) == null) {
+            throw new WebApplicationException("El trayecto de id "+ trayectoId +" no existe.", 404);
+        }
+        TrayectoDetail trayecto = new TrayectoDetail(usuarioTrayectoLogic.addTrayectoPasajero(username, trayectoId));
+        return trayecto;
+    }
+    
+    
+    /**
      * Se utiliza un método para convertir una lista de Entidades a DTOs.
      * @param Usuario
      * @return una lista de DTOs.
