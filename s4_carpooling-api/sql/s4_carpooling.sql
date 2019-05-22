@@ -23,25 +23,38 @@ insert into SeguroEntity (id, tipo) values (200,'Platino');
 insert into SeguroEntity (id, tipo) values (300,'Cuarzo');
 insert into SeguroEntity (id, tipo) values (400,'Esmeralda');
 
-insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (100,1000.1,'Guajira',6.083496730640107,-72.63334461217967);
-insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (200,1000.1,'Guajira1',6.083496730640107,-72.63334461217967);
-insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (300,1000.1,'Guajira2',6.083496730640107,-72.63334461217967);
-insert into PeajeEntity (id, costo, nombre,latitud, longitud) values (400,1000.1,'Guajira3',6.083496730640107,-72.63334461217967);
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Chinauta');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Mondoñedo');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Circasia');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Río Sogamoso	');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Cajamarca');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Honda');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Paso de La Torre');
+INSERT INTO APP.PEAJEENTITY (COSTO, LATITUD, LONGITUD, NOMBRE) 
+	VALUES (10000.1, 6.083496730640107, -72.63334461217967, 'Puerto Colombia');
+
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Daniel','Peña',1111111,21111111,'dan','APP','123@gmail.com');
+values ('Daniel','Peña',1111111,21111111,'dan','APP','im.sarmientom@uniandes.edu.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Isabela','Sarmiento',2222222,31111111,'isamasar','1s4b3ll4','1234@gmail.com');
+values ('Isabela','Sarmiento',2222222,31111111,'isamasar','APP','1234@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Julio','Morales',333333,41111111,'julio','juli1234','12345@gmail.com');
+values ('Julio','Morales',333333,41111111,'julio','APP','12345@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Alejandro','Caicedo',444444,51111111,'latinalejo','alejo234','123456@gmail.com');
+values ('Alejandro','Caicedo',444444,51111111,'latinalejo','APP','123456@gmail.com');
 
 insert into UsuarioEntity ( nombre, apellido,documento,celular,username,password,correo) 
-values ('Juan Felipe','García',555555,61111111,'juafe','juanfe1234','1234567@gmail.com');
+values ('Juan Felipe','García',555555,61111111,'juafelipe','APP','1234567@gmail.com');
 
 
 insert into PagoEntity (id, valor)
@@ -103,12 +116,41 @@ Insert Into TrayectoInfoEntity(costo, duracion, combustible, horaFinal, horaInic
 (42,42, 42, '20:20:20','10:10:10');
 
 
-Insert into ciudadEntity(nombre, lat,lon)
-values('Bogotá',10000,100);
-
-Insert into ciudadEntity(nombre, lat,lon)
-values('Cali',4200,100);
-
-
-Insert into ciudadEntity(nombre, lat,lon)
-values('Bogotá',23000,1040);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (4, -74, 'Bogotá', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (3, -76, 'Cali', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (6, -75, 'Medellin', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (10, -74, 'Barranquilla', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (10, -75, 'Cartagena', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (7, -72, 'Cúcuta', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (7, -73, 'Bucaramanga', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (4, -75, 'Pereira', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (11, -74, 'Santa Marta', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (4, -75, 'Ibagué', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (6, -75, 'Bello', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (1, -77, 'Pasto', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (5, -75, 'Manizales', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (2, -75, 'Neiva', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (4, -73, 'Villavicencio', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (4, -75, 'Armenia', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (10, -73, 'Valledupar', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (8, -75, 'Montería', NULL, NULL);
+INSERT INTO APP.CIUDADENTITY (LAT, LON, NOMBRE, DESTINO_ID, ORIGEN_ID) 
+	VALUES (8, -75, 'Ayapel', NULL, NULL);

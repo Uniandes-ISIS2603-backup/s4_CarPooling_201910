@@ -112,6 +112,7 @@ public class TrayectoInfoResource {
         return detailDTO;
     }
     
+    
      @DELETE
     @Path("{infoId: \\d+}")
     public void deleteTrayecto(@PathParam("infoId") Long infoId) throws BusinessLogicException {
