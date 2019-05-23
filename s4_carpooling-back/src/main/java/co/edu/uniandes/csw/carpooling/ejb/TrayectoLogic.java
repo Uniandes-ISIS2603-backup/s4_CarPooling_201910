@@ -96,7 +96,7 @@ public class TrayectoLogic {
     public List<PagoEntity> getPago(Long idTrayecto) {
         TrayectoEntity entity = persistence.find(idTrayecto);
         List<PagoEntity> pago = null;
-        if (entity == null) {
+        if (entity != null) {
             pago = entity.getPago();
         }
         return pago;

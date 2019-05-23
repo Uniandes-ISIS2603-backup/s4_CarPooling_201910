@@ -55,4 +55,16 @@ public class TrayectoTrayectInfoResource {
         return dto;
     }
     
+    @POST
+    public TrayectoInfoDTO addInfoTrayecto(@PathParam("trayectoId") Long idTrayecto, TrayectoInfoDTO infoTrayecto) {
+        TrayectoInfoDTO dto = null;
+        try {
+            dto  = new TrayectoInfoDTO(trayectoInfoTrayectoLogic.addInfoTrayecto(idTrayecto, infoTrayecto.toEntity()));
+        }
+        catch (Exception e)
+        {
+            throw new WebApplicationException(e.getMessage());
+        }
+        return dto;
+    }
 }

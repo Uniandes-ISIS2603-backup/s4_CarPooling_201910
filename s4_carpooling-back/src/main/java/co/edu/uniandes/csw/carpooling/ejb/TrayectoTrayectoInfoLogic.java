@@ -27,10 +27,19 @@ public class TrayectoTrayectoInfoLogic {
     
     
     public TrayectoInfoEntity addInfoTrayecto(Long trayectoId, Long infoTrayectoId) {
-        TrayectoInfoEntity infoEntity = info.find(Long.parseLong("1"));
-        TrayectoEntity trayectoEntity = trayecto.find(Long.parseLong("1"));
+        TrayectoInfoEntity infoEntity = info.find(infoTrayectoId);
+        TrayectoEntity trayectoEntity = trayecto.find(trayectoId);
         trayectoEntity.setInfoTrayecto(infoEntity);
         trayecto.update(trayectoEntity);
+       // infoEntity.setInfoTrayecto(trayectoEntity);
+        
+        return infoEntity;
+    }
+    
+    public TrayectoInfoEntity addInfoTrayecto(Long trayectoId,TrayectoInfoEntity infoTrayecto) {
+        TrayectoInfoEntity infoEntity = info.create(infoTrayecto);
+        TrayectoEntity trayectoEntity = trayecto.find(trayectoId);
+        trayectoEntity.setInfoTrayecto(infoEntity);
        // infoEntity.setInfoTrayecto(trayectoEntity);
         
         return infoEntity;
